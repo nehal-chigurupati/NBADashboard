@@ -11,7 +11,7 @@ def load_data():
     nickname = [team["nickname"] for team in team_data]
     city = [team["city"] for team in team_data]
     state = [team["state"] for team in team_data]
-    year_founded = [team["year_founded"] for team in team_data]
+    year_founded = [str(team["year_founded"]) for team in team_data]
 
     out_dict = {
         "Abbreviation": abbrev,

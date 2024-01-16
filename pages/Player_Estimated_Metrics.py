@@ -27,7 +27,7 @@ season = st.text_input("Season (ex: 2023-24): ")
 season_type_options = ["Regular Season", "Playoffs", "Pre Season", "All Star"]
 season_type = st.selectbox("Season Type: ", season_type_options)
 
-if season and season_type_options:
+if season and season_type:
     data_load_state = st.text("Loading " + season + " " + season_type + " stats...")
     data = load_data(season=season, season_type=season_type)
     data_load_state.text("Done! Currently using cached data.")

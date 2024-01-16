@@ -20,8 +20,9 @@ def load_data(player_name, per_mode):
     player_id = get_player_id(player_name)
     career_stats = playercareerstats.PlayerCareerStats(player_id=player_id, per_mode36=per_mode)
     career_stats = career_stats.get_data_frames()[0]
-    career_stats["PLAYER_ID"] = career_stats["PLAYER_ID"].astype(str)
-    career_stats["TEAM_ID"] = career_stats["TEAM_ID"].astype(str)
+
+    for column in career_stats.columns:
+        career_stats[column] = career_stats[column].astype(str)
     return career_stats
 
 
