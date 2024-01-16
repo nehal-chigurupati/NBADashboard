@@ -11,7 +11,7 @@ def load_data():
     for player in players.get_players():
         player_first_names.append(player["first_name"])
         player_last_names.append(player["last_name"])
-        player_id.append(player["id"])
+        player_id.append(str(player["id"]))
         player_active.append(player["is_active"])
 
     out_dict = {

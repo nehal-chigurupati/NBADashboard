@@ -19,13 +19,15 @@ def get_player_id(full_name):
 def load_data(player_name, per_mode):
     player_id = get_player_id(player_name)
     career_stats = playercareerstats.PlayerCareerStats(player_id=player_id, per_mode36=per_mode)
+    career_stats = career_stats.get_data_frames()[0]
+    career_stats["PLAYER_ID"] = career_stats["PLAYER_ID"].astype(str)
+    career_stats["TEAM_ID"] = career_stats["TEAM_ID"].astype(str)
+    return career_stats
 
-    return career_stats.get_data_frames()[0]
 
-
+st.header("Player Basic Stats")
 player_name = st.text_input("Player name: ")
 
-timespan = st.selectbox("Timespan: ", ["Career", "2023-24"])
 
 per_mode = st.selectbox("Per: ", ["Per Game", "Totals", "Per 36"])
 if per_mode == "Per Game":
