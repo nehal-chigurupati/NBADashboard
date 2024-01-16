@@ -20,8 +20,7 @@ season_type_options = ["Regular Season", "Playoffs", "Pre Season", "All Star"]
 season_type = st.selectbox("Season Type: ", season_type_options)
 
 if season and season_type:
-    if season and season_type:
-        data_load_state = st.text("Loading games...")
-        data = load_data(season=season, season_type_all_star=season_type)
-        data_load_state.text("Done! Currently using cached data.")
-        st.write(data)
+    data_load_state = st.text("Loading games...")
+    data = load_data(season=season, season_type_all_star=season_type)
+    data_load_state.text("Done! Currently using cached data.")
+    st.write(data)
