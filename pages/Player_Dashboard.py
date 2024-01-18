@@ -83,6 +83,9 @@ def get_moving_averages(df):
     out = {"GAME_NUMBER": game_indices, "3P_PCT": three_pt_pct, "FG_PCT": fg_pct, "FT_PCT": ft_pct, "TOTAL_PLUS_MINUS": total_plus_minus}
     return pd.DataFrame(out)
 
+def get_active_players():
+    player_dicts = players.get_active_players()
+    return [i["full_name"] for i in player_dicts]
 
 def get_player_career_stats(player_id):
     return playercareerstats.PlayerCareerStats(player_id=player_id).get_data_frames()[0]
@@ -206,7 +209,7 @@ def load_player_game_data(player_name, season, season_type="Regular Season"):
 
 st.set_page_config(layout="wide")
 with st.expander("Player"):
-    player_name = st.text_input("")
+    player_name = st.selectbox("Select player", get_active_players(), index=get_active_players().index("Donovan Mitchell"))
 
 if player_name: 
     st.title(player_name)
