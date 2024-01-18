@@ -179,7 +179,6 @@ def load_estimated_metrics_player(player_name, timespan, season_type):
     else:
         df = playerestimatedmetrics.PlayerEstimatedMetrics(season=timespan, season_type=season_type)
         df = df.get_data_frames()[0]
-        print(df)
         for column in df.columns:
             df[column] = df[column].astype(str)
         
@@ -206,11 +205,11 @@ def load_player_game_data(player_name, season, season_type="Regular Season"):
 
 
 st.set_page_config(layout="wide")
-st.header("Player Dashboard")
 with st.expander("Player"):
     player_name = st.text_input("")
 
 if player_name: 
+    st.title(player_name)
     st.header("Seasonal Basic Stats")
     with st.expander("Per Mode"):
         per_mode = st.selectbox("", ["Per Game", "Totals", "Per 36"], index=0)
