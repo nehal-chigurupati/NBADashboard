@@ -25,6 +25,7 @@ def load_data():
 
     return pd.DataFrame(out_dict)
 
+st.set_page_config(layout="wide")
 st.header("Basic team info")
 
 data = load_data()

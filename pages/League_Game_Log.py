@@ -12,6 +12,7 @@ def load_data(season_type_all_star, season):
     
     return data
 
+st.set_page_config(layout="wide")
 st.header("League Game Log")
 
 season = st.text_input("Season (ex: 2023-24): ")

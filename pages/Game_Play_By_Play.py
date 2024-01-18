@@ -13,6 +13,7 @@ def load_data(game_id):
     
     return data
 
+st.set_page_config(layout="wide")
 st.header("Game Play by Play")
 game_id = st.text_input("Enter the game ID:")
 

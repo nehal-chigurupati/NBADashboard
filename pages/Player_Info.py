@@ -23,7 +23,7 @@ def load_data():
     
     return pd.DataFrame(out_dict)
 
-
+st.set_page_config(layout="wide")
 st.header("All player info")
 data = load_data()
 st.write(data)
