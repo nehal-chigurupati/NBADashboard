@@ -16,16 +16,15 @@ def get_active_games():
     data = scoreboard.ScoreBoard().games.get_dict()
 
     for game in data:
-        #for now, don't filter to see if it is final
-        if game["gameStatusText"] != "a":
+        if game["gameStatusText"] == "ACTIVE":
             away_team = game["awayTeam"]["teamName"]
             home_team = game["homeTeam"]["teamName"]
             game_id = str(game["gameId"])
         
             games[away_team + " @ " + home_team] = game_id
-
     return games
 
+#Get player name given their ID
 def get_player_name_from_id(player_id):
     player = players.find_player_by_id(player_id)
     if player:
@@ -34,6 +33,7 @@ def get_player_name_from_id(player_id):
         return None
 
 
+#Get scoreboard data
 @st.cache_data
 def load_scoreboard_data(game_id):
     data = scoreboard.ScoreBoard().games.get_dict()
@@ -42,6 +42,7 @@ def load_scoreboard_data(game_id):
             return i
     return None
 
+#Get play by play data
 @st.cache_data
 def load_playbyplay_data(game_id, is_active):
     if is_active:
@@ -50,9 +51,9 @@ def load_playbyplay_data(game_id, is_active):
         data = playbyplayv3.PlayByPlayV3(game_id).get_data_frames()[0]
     return data
 
-placeholder = st.empty()
+#Get user input for game
 active_games = get_active_games()
-game_id = None
+game=None
 if len(active_games.keys()) == 0:
     st.subheader("No active games")
 else:
@@ -61,35 +62,44 @@ else:
         game_id = active_games[game]
 
 
-if game_id:
+#Once game id is provided, begin collecting data
+if game:
+    #Load data
     data_load_state = st.text("Refreshing...")
     scoreboard_data = load_scoreboard_data(game_id)
     pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
     data_load_state.text("Done!")
 
+    #Set title to current game
     st.title(game)
 
+    #Put current score up
     if scoreboard_data["gameStatusText"] == "Final":
         st.subheader(str(scoreboard_data["awayTeam"]["score"]) + "-" + str(scoreboard_data["homeTeam"]["score"]) + " (Final)")
     else: 
         st.subheader(str(scoreboard_data["awayTeam"]["score"]) + "-" + str(scoreboard_data["homeTeam"]["score"]))
 
+    #Add refresh button (need to add live updating support)
     if st.button("Refresh Data"):
             data_load_state = st.text("Refreshing...")
             pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
             scoreboard_data = load_scoreboard_data(game_id)
             data_load_state.text("Refreshed at " + str(datetime.now()))
     
+    #Quarter by quarter breakdown of score
     with st.expander("Score Breakdown", expanded=True):
+        #Separate page into columns, one for each quarter score plot
         cols = st.columns(len(np.unique(pbp_data["period"])))
         
         for i in range(len(cols)):
             with cols[i]:
+                #Collect last score from each period
                 period_data = pbp_data[pbp_data["period"] == np.unique(pbp_data["period"])[i]]
                 period_last_row = pbp_data[pbp_data["period"] == np.unique(pbp_data["period"])[i]].iloc[-1]
                 period_last_score = str(period_last_row["scoreAway"]) + "-" + str(period_last_row["scoreHome"])
-                period_margin = str(int(period_last_row["scoreAway"]) - int(period_last_row["scoreHome"]))
 
+                #Get margin for each period
+                period_margin = str(int(period_last_row["scoreAway"]) - int(period_last_row["scoreHome"]))
                 if int(period_margin) == 0:
                     period_margin = "**Tie**"
                 elif int(period_margin) < 0:
@@ -99,6 +109,7 @@ if game_id:
 
                 score_string = (period_last_score + ", " + period_margin)
 
+                #Plot scores
                 scoreboard_plot = px.scatter(
                     pbp_data[pbp_data["period"] == np.unique(pbp_data["period"])[i]], 
                     x="actionNumber", 
@@ -122,9 +133,11 @@ if game_id:
                     )
                 st.plotly_chart(scoreboard_plot, use_container_width=True)
     
+    #Display play by play data
     st.subheader("Play by play")
     print(pbp_data.columns)
 
+    #Isolate useful data
     player_names = []
     for index, row in pbp_data.iterrows():
         player_names.append(get_player_name_from_id(row["personId"]))
@@ -141,6 +154,10 @@ if game_id:
                             "Action Type",
                             "Player Name"
                         ]
+    #Flip order of rows in dataframe so most recent actions are displayed first
+    filtered_pbp = filtered_pbp.iloc[::-1]
+
+    #Only show 5 most recent plays by default
     expand_pbp = st.checkbox("Show full table")
     if expand_pbp:
         st.write(filtered_pbp)
