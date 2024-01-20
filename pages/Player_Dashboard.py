@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from nba_api.stats.endpoints import playercareerstats, playerestimatedmetrics, playergamelog
+from nba_api.stats.endpoints import playercareerstats, playerestimatedmetrics, playergamelog, teamplayeronoffsummary
 from nba_api.stats.static import players
 from scipy.stats import binom, norm
 import plotly.express as px
@@ -46,6 +46,20 @@ def bayesian_3pt_percentage_with_credible_interval(historical_pct, current_attem
     }
 
     return pd.DataFrame(out)
+
+def get_player_team(player_id):
+    # Get player career stats
+    career = playercareerstats.PlayerCareerStats(player_id=player_id)
+    career_data = career.get_data_frames()[0]
+
+    # Check if the player has played any games
+    if career_data.empty:
+        return None
+
+    # Get the most recent team ID
+    latest_season = career_data['TEAM_ID'].iloc[-1]
+
+    return latest_season if latest_season != 0 else None
 
 #Moving average util
 def get_moving_averages(df):
@@ -206,6 +220,11 @@ def load_player_game_data(player_name, season, season_type="Regular Season"):
 
     return data
 
+@st.cache_data
+def load_on_off_data(player_id):
+    team_id = get_player_team(player_id)
+    return teamplayeronoffsummary.TeamPlayerOnOffSummary(team_id).get_data_frames()
+
 
 st.set_page_config(layout="wide")
 with st.expander("Player"):
@@ -254,9 +273,12 @@ if player_name:
         st.header("Advanced Shooting Stats")
         st.subheader("Bayesian 3P%")
         data_load_state = st.text("Loading stats...")
-        data = load_bayes_data(player_name=player_name)
-        data_load_state.text("Done! Currently using cached data.")
-        st.table(data)
+        try:
+            data = load_bayes_data(player_name=player_name)
+            data_load_state.text("Done! Currently using cached data.")
+            st.table(data)
+        except:
+            st.out("Error computing b3P%.")
 
     st.header("Moving averages")
     with st.expander("Params"):
@@ -271,7 +293,7 @@ if player_name:
     moving_avg_fig = px.line(moving_average_data, x="GAME_NUMBER", y=stat_type, markers=True)
     st.plotly_chart(moving_avg_fig, use_container_width=True)
 
-    st.header("Rating")
+    st.header("Ratings")
     with st.expander("Params"):
         season_type_on_off_figs = st.selectbox("Season Type:", season_type_options, index=0)
         rating = st.selectbox("Rating:", ["Net Rating", "Offensive Rating", "Defensive Rating"], index=0)
@@ -320,4 +342,15 @@ if player_name:
         st.table(game_log_data)
     else:
         st.table(game_log_data.head(5))
+    
+    with st.expander("Team On/Off", expanded=False):
+        data_load_state = st.text("Loading stats...")
+        data = load_on_off_data(get_player_id(player_name))
+        data = st.text("Using cached data.")
+        cols = st.columns(len(data))
+        for i in range(len(data)):
+            with cols[i]:
+                st.write(data[i])
+
+
 

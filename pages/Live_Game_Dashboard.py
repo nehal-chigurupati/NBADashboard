@@ -16,7 +16,7 @@ def get_active_games():
     data = scoreboard.ScoreBoard().games.get_dict()
 
     for game in data:
-        if game["gameStatusText"] == "ACTIVE":
+        if int(game["period"]) > 0:
             away_team = game["awayTeam"]["teamName"]
             home_team = game["homeTeam"]["teamName"]
             game_id = str(game["gameId"])
@@ -46,7 +46,10 @@ def load_scoreboard_data(game_id):
 @st.cache_data
 def load_playbyplay_data(game_id, is_active):
     if is_active:
-        data = playbyplay.PlayByPlay(game_id).get_data_frames()[0]
+        data = playbyplay.PlayByPlay(game_id).get_dict()
+        data = data["game"]["actions"]
+        data = pd.json_normalize(data)
+        print(data)
     else:
         data = playbyplayv3.PlayByPlayV3(game_id).get_data_frames()[0]
     return data
