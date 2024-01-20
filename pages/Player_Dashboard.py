@@ -7,6 +7,13 @@ from scipy.stats import binom, norm
 import plotly.express as px
 import plotly.graph_objects as go
 
+#Compute z-score
+def compute_z_score(element, column):
+    mean = column.mean()
+    std_dev = column.std()
+    z_score = (element - mean) / std_dev
+    return z_score
+
 #Bayesian 3P% utils
 def bayesian_3pt_percentage_with_credible_interval(historical_pct, current_attempts, current_made, prior_std=0.1, credible_level=0.95):
 
@@ -252,7 +259,6 @@ if player_name:
             st.table(data.head(5))
 
     col1, col2 = st.columns(2)
-
     with col1: 
         st.header("Estimated Metrics")
         with st.expander("Params"):
@@ -268,7 +274,38 @@ if player_name:
         estimated_data = load_estimated_metrics_player(player_name=player_name, timespan=timespan, season_type=season_type)
         data_load_state.text("Done! Currently using cached data.")
         st.table(estimated_data)
-    
+
+        st.subheader("Z-Scores")
+        z_score_stats = [
+            "E_OFF_RATING",
+            "E_DEF_RATING",
+            "E_NET_RATING",
+            "E_AST_RATIO",
+            "E_OREB_PCT",
+            "E_DREB_PCT",
+            "E_REB_PCT",
+            "E_TOV_PCT",
+            "E_USG_PCT",
+            "E_PACE",
+        ]
+
+        z_score_stat = st.selectbox("Stat:", z_score_stats, index=2)
+        #Calculate z-scores for each of the stats
+        z_score_seasons = [i for i in timespan_options if i != "Career"]
+        z_scores = []
+        for season in z_score_seasons:
+            e_metrics_season = playerestimatedmetrics.PlayerEstimatedMetrics(season=season, season_type=season_type, league_id="00")
+            e_metrics_season = e_metrics_season.get_data_frames()[0]
+            player_raw_stat = e_metrics_season[e_metrics_season["PLAYER_ID"] == get_player_id(player_name)][z_score_stat].iloc[0]
+            z_scores.append(compute_z_score(player_raw_stat, e_metrics_season[z_score_stat]))
+        
+        z_score_data = pd.DataFrame({"Season": z_score_seasons, "Z-Score": z_scores})
+        z_score_plot = px.line(z_score_data, x="Season", y="Z-Score", markers=True)
+        st.plotly_chart(z_score_plot, use_container_width=True)
+
+
+
+
     with col2:
         st.header("Advanced Shooting Stats")
         st.subheader("Bayesian 3P%")
@@ -277,6 +314,19 @@ if player_name:
             data = load_bayes_data(player_name=player_name)
             data_load_state.text("Done! Currently using cached data.")
             st.table(data)
+            st.subheader("Comparative 3PT Shooting")
+
+            seasons = []
+            diffs = []
+            for index, row in career_data.iterrows():
+                seasons.append(row["SEASON_ID"])
+                season_3p_perc = float(career_data[career_data["SEASON_ID"] == row["SEASON_ID"]]["FG3M"].iloc[0]) / float(career_data[career_data["SEASON_ID"] == row["SEASON_ID"]]["FG3A"].iloc[0])
+                diffs.append(float(data["Bayesian 3P%"].iloc[0]) - season_3p_perc)
+
+            diffs_df = pd.DataFrame({"Season": seasons, "b3P%-s3P%": diffs})
+            comp_shooting_scatter = px.scatter(diffs_df, x="Season", y="b3P%-s3P%")
+            st.plotly_chart(comp_shooting_scatter, use_container_width=True)
+
         except:
             st.text("Insufficient 3P volume to compute.")
 
@@ -343,18 +393,15 @@ if player_name:
     else:
         st.table(game_log_data.head(5))
     
-    with st.expander("Team On/Off", expanded=False):
+    with st.expander("Team On/Off", expanded=True):
         data_load_state = st.text("Loading stats...")
         data = load_on_off_data(get_player_id(player_name))
         data_load_state = st.text("Using cached data.")
         st.markdown("Team plus/minus: " + str(data[0]["PLUS_MINUS"].tolist()[0]))
-        col1, col2 = st.columns(2)
-        with col1:
-            on_court_plus_minus = px.scatter(data[1], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="On court plus/minus")
-            st.plotly_chart(on_court_plus_minus)
-        with col2:
-            off_court_plus_minus = px.scatter(data[2], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="Off court plus/minus")
-            st.plotly_chart(off_court_plus_minus)
+        on_court_plus_minus = px.scatter(data[1], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="On court plus/minus")
+        st.plotly_chart(on_court_plus_minus, use_container_width=True)
+        off_court_plus_minus = px.scatter(data[2], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="Off court plus/minus")
+        st.plotly_chart(off_court_plus_minus, use_container_width=True)
 
 
 
