@@ -298,8 +298,9 @@ if player_name:
             e_metrics_season = e_metrics_season.get_data_frames()[0]
             player_raw_stat = e_metrics_season[e_metrics_season["PLAYER_ID"] == get_player_id(player_name)][z_score_stat].iloc[0]
             z_scores.append(compute_z_score(player_raw_stat, e_metrics_season[z_score_stat]))
-        
         z_score_data = pd.DataFrame({"Season": z_score_seasons, "Z-Score": z_scores})
+        z_score_data["Season"] = z_score_data["Season"].astype(str)
+        z_score_data["Z-Score"] = z_score_data["Z-Score"].astype(float)
         z_score_plot = px.line(z_score_data, x="Season", y="Z-Score", markers=True)
         st.plotly_chart(z_score_plot, use_container_width=True)
 
