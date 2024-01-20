@@ -346,7 +346,7 @@ if player_name:
     with st.expander("Team On/Off", expanded=False):
         data_load_state = st.text("Loading stats...")
         data = load_on_off_data(get_player_id(player_name))
-        data = st.text("Using cached data.")
+        data_load_state = st.text("Using cached data.")
         cols = st.columns(len(data))
         for i in range(len(data)):
             with cols[i]:
