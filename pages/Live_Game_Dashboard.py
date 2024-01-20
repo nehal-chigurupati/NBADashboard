@@ -103,7 +103,7 @@ if game:
             scoreboard_data = load_scoreboard_data(game_id)
             away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
             data_load_state.text("ForcRefreshed at " + str(datetime.now()))
-    auto_refresh = st.checkbox(label="Autorefresh", default=True)
+    auto_refresh = st.checkbox(label="Autorefresh", value=True)
     
     #Quarter by quarter breakdown of score
     with st.expander("Score Breakdown", expanded=True):
@@ -229,15 +229,16 @@ if game:
         st.subheader(scoreboard_data["awayTeam"]["teamTricode"])
         st.text("Player Stats")
         st.write(away_team_data)
-        st.text("Team Stats")
-        st.write(away_team_statistics)
 
 
         st.subheader(scoreboard_data["homeTeam"]["teamTricode"])
         st.text("Player Stats")
         st.write(home_team_data)
-        st.text("Team Stats")
-        st.write(home_team_statistics)
+
+        st.subheader("Comparison")
+        out_comp = pd.concat([away_team_statistics, home_team_statistics])
+        out_comp.insert(loc=0, column="Team", value=[scoreboard_data["awayTeam"]["teamTricode"], scoreboard_data["homeTeam"]["teamTricode"]])
+        st.write(out_comp)
     
 
 
