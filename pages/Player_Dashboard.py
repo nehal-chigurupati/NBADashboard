@@ -278,7 +278,7 @@ if player_name:
             data_load_state.text("Done! Currently using cached data.")
             st.table(data)
         except:
-            st.out("Error computing b3P%.")
+            st.text("Insufficient 3P volume to compute.")
 
     st.header("Moving averages")
     with st.expander("Params"):
