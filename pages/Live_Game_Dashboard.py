@@ -256,4 +256,4 @@ while True:
     time.sleep(5)
 
     # Refresh the page
-    st.experimental_rerun()
+    st.rerun()
