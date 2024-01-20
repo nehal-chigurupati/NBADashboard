@@ -84,6 +84,7 @@ if game:
     data_load_state = st.text("Refreshing...")
     scoreboard_data = load_scoreboard_data(game_id)
     pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
+    away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
     data_load_state.text("Done!")
     data_load_state.text("Last Refreshed at " + str(datetime.now()))
     #Set title to current game
@@ -100,6 +101,7 @@ if game:
             data_load_state = st.text("Refreshing...")
             pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
             scoreboard_data = load_scoreboard_data(game_id)
+            away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
             data_load_state.text("ForcRefreshed at " + str(datetime.now()))
     
     #Quarter by quarter breakdown of score
@@ -180,9 +182,6 @@ if game:
         st.write(filtered_pbp.head(5))
     
     with st.expander("Player Stats", expanded=True):
-        data_load_state = st.text("Loading box score...")
-        away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
-        data_load_state = st.text("Using cached data.")
 
         stat_options = [
             "statistics.points",
