@@ -103,6 +103,7 @@ if game:
             scoreboard_data = load_scoreboard_data(game_id)
             away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
             data_load_state.text("ForcRefreshed at " + str(datetime.now()))
+    auto_refresh = st.checkbox(label="Autorefresh", default=True)
     
     #Quarter by quarter breakdown of score
     with st.expander("Score Breakdown", expanded=True):
@@ -245,14 +246,15 @@ if game:
 placeholder = st.empty()
 
 # Loop for refreshing data
-while True:
-    # Update this part to fetch your live data
-    scoreboard_data = load_scoreboard_data(game_id)
-    pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
-    away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
+if auto_refresh:
+    while True:
+        # Update this part to fetch your live data
+        scoreboard_data = load_scoreboard_data(game_id)
+        pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
+        away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
 
-    # Wait for a seconds before the next update 
-    time.sleep(5)
+        # Wait for a seconds before the next update 
+        time.sleep(5)
 
-    # Refresh the page
-    st.rerun()
+        # Refresh the page
+        st.rerun()
