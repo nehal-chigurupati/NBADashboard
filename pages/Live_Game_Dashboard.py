@@ -294,7 +294,7 @@ if game:
         ]
         out_comp = pd.concat([away_team_statistics, home_team_statistics])
         out_comp.insert(loc=0, column="Team", value=[scoreboard_data["awayTeam"]["teamTricode"], scoreboard_data["homeTeam"]["teamTricode"]])
-        comp_bar_select = st.selectbox("Stat:", comp_stat_options, index=comp_stat_options.index("fieldGoalsPercentage"))
+        comp_bar_select = st.selectbox("Stat:", comp_stat_options, index=comp_stat_options.index("benchPoints"))
         comp_bar_graph = px.bar(out_comp, x="Team", y=comp_bar_select)
         st.plotly_chart(comp_bar_graph, user_container_width=True)
         st.write(out_comp)
