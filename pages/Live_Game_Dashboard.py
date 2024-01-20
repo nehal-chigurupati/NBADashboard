@@ -236,8 +236,67 @@ if game:
         st.write(home_team_data)
 
         st.subheader("Comparison")
+        comp_stat_options = [
+            "assists",
+            "assistsTurnoverRatio",
+            "benchPoints",
+            "biggestLead",
+            "biggestLeadScore",
+            "biggestScoringRun",
+            "biggestScoringRunScore",
+            "blocks",
+            "blocksReceived",
+            "fastBreakPointsAttempted",
+            "fastBreakPointsMade",
+            "fastBreakPointsPercentage",
+            "fieldGoalsAttempted",
+            "fieldGoalsEffectiveAdjusted",
+            "fieldGoalsMade",
+            "fieldGoalsPercentage",
+            "foulsOffensive",
+            "foulsDrawn",
+            "foulsPersonal",
+            "foulsTeam",
+            "foulsTechnical",
+            "foulsTeamTechnical",
+            "freeThrowsAttempted",
+            "freeThrowsMade",
+            "freeThrowsPercentage",
+            "points",
+            "pointsAgainst",
+            "pointsFastBreak",
+            "pointsFromTurnovers",
+            "pointsInThePaint",
+            "pointsInThePaintAttempted",
+            "pointsInThePaintMade",
+            "pointsInThePaintPercentage",
+            "pointsSecondChance",
+            "reboundsDefensive",
+            "reboundsOffensive",
+            "reboundsPersonal",
+            "reboundsTeam",
+            "reboundsTeamDefensive",
+            "reboundsTeamOffensive",
+            "reboundsTotal",
+            "steals",
+            "threePointersAttempted",
+            "threePointersMade",
+            "threePointersPercentage",
+            "timesTied",
+            "trueShootingAttempts",
+            "trueShootingPercentage",
+            "turnovers",
+            "turnoversTeam",
+            "turnoversTotal",
+            "twoPointsAttempted",
+            "twoPointersMade",
+            "twoPointersPercentage"
+        ]
         out_comp = pd.concat([away_team_statistics, home_team_statistics])
         out_comp.insert(loc=0, column="Team", value=[scoreboard_data["awayTeam"]["teamTricode"], scoreboard_data["homeTeam"]["teamTricode"]])
+        comp_bar_select = st.selectbox("Stat:", comp_stat_options, index=comp_stat_options.index("fieldGoalsPercentage"))
+        comp_bar_graph = px.bar(out_comp, x="Team", y=comp_bar_select)
+        st.plotly_chart(comp_bar_graph, user_container_width=True)
         st.write(out_comp)
     
 
