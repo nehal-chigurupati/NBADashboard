@@ -1,11 +1,12 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from nba_api.live.nba.endpoints import scoreboard, playbyplay
+from nba_api.live.nba.endpoints import scoreboard, playbyplay, boxscore
 from nba_api.stats.static import players
 from nba_api.stats.endpoints import playbyplayv3
 import plotly.express as px
 from datetime import datetime
+import time
 
 st.set_page_config(layout="wide")
 
@@ -34,7 +35,7 @@ def get_player_name_from_id(player_id):
 
 
 #Get scoreboard data
-@st.cache_data
+
 def load_scoreboard_data(game_id):
     data = scoreboard.ScoreBoard().games.get_dict()
     for i in data:
@@ -43,16 +44,28 @@ def load_scoreboard_data(game_id):
     return None
 
 #Get play by play data
-@st.cache_data
+
 def load_playbyplay_data(game_id, is_active):
     if is_active:
         data = playbyplay.PlayByPlay(game_id).get_dict()
         data = data["game"]["actions"]
         data = pd.json_normalize(data)
-        print(data)
     else:
         data = playbyplayv3.PlayByPlayV3(game_id).get_data_frames()[0]
     return data
+
+#Get box score for game
+
+def load_box_score_data(game_id):
+    data = boxscore.BoxScore(game_id=game_id).get_dict()
+    away_team_players = pd.json_normalize(data["game"]["awayTeam"]["players"])
+    home_team_players = pd.json_normalize(data["game"]["homeTeam"]["players"])
+
+    away_team_statistics = pd.json_normalize(data["game"]["awayTeam"]["statistics"])
+    home_team_statistics = pd.json_normalize(data["game"]["homeTeam"]["statistics"])
+
+    return away_team_players, home_team_players, away_team_statistics, home_team_statistics
+
 
 #Get user input for game
 active_games = get_active_games()
@@ -72,7 +85,7 @@ if game:
     scoreboard_data = load_scoreboard_data(game_id)
     pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
     data_load_state.text("Done!")
-
+    data_load_state.text("Last Refreshed at " + str(datetime.now()))
     #Set title to current game
     st.title(game)
 
@@ -83,11 +96,11 @@ if game:
         st.subheader(str(scoreboard_data["awayTeam"]["score"]) + "-" + str(scoreboard_data["homeTeam"]["score"]))
 
     #Add refresh button (need to add live updating support)
-    if st.button("Refresh Data"):
+    if st.button("Force Refresh"):
             data_load_state = st.text("Refreshing...")
             pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
             scoreboard_data = load_scoreboard_data(game_id)
-            data_load_state.text("Refreshed at " + str(datetime.now()))
+            data_load_state.text("ForcRefreshed at " + str(datetime.now()))
     
     #Quarter by quarter breakdown of score
     with st.expander("Score Breakdown", expanded=True):
@@ -138,7 +151,6 @@ if game:
     
     #Display play by play data
     st.subheader("Play by play")
-    print(pbp_data.columns)
 
     #Isolate useful data
     player_names = []
@@ -166,14 +178,82 @@ if game:
         st.write(filtered_pbp)
     else:
         st.write(filtered_pbp.head(5))
+    
+    with st.expander("Player Stats", expanded=True):
+        data_load_state = st.text("Loading box score...")
+        away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
+        data_load_state = st.text("Using cached data.")
 
-    col1, col2 = st.columns(2)
-
-    with col1:
+        stat_options = [
+            "statistics.points",
+            "statistics.assists",
+            "statistics.reboundsDefensive",
+            "statistics.reboundsOffensive",
+            "statistics.reboundsTotal"
+            "statistics.blocks",
+            "statistics.blocksReceived",
+            "statistics.fieldGoalsAttempted",
+            "statistics.FieldGoalsMade",
+            "statistics.fieldGoalsPercentage",
+            "statistics.foulsOffensive",
+            "statistics.foulsDrawn",
+            "statistics.foulsPersonal",
+            "statistics.foulsTechnical",
+            "statistics.freeThrowsAttempted",
+            "statistics.freeThrowsMade",
+            "statistics.freeThrowsPercentage",
+            "statistics.plusMinusPoints",
+            "statistics.pointsFastBreak",
+            "statistics.pointsInThePaint",
+            "statistics.pointsSecondChance",
+            "statistics.steals",
+            "statistics.threePointersAttempted",
+            "statistics.threePointersMade",
+            "statistics.threePointersPercentage",
+            "statistics.turnovers",
+            "statistics.twoPointersAttempted",
+            "statistics.twoPointersMade",
+            "statistics.twoPointersPercentage",
+        ]
+        player_display_stat = st.selectbox("Stat:", stat_options, index=stat_options.index("statistics.plusMinusPoints"))
         st.subheader(scoreboard_data["awayTeam"]["teamTricode"])
+        fig_away = px.bar(away_team_data, x="name", y=player_display_stat)
+        st.plotly_chart(fig_away, use_container_width=True)
 
-
-    with col2:
         st.subheader(scoreboard_data["homeTeam"]["teamTricode"])
+        fig_home = px.bar(home_team_data, x="name", y=player_display_stat)
+        st.plotly_chart(fig_home, use_container_width=True)
+
+    with st.expander("Box Score"):
+
+        st.subheader(scoreboard_data["awayTeam"]["teamTricode"])
+        st.text("Player Stats")
+        st.write(away_team_data)
+        st.text("Team Stats")
+        st.write(away_team_statistics)
 
 
+        st.subheader(scoreboard_data["homeTeam"]["teamTricode"])
+        st.text("Player Stats")
+        st.write(home_team_data)
+        st.text("Team Stats")
+        st.write(home_team_statistics)
+    
+
+
+
+# Placeholder for live data
+placeholder = st.empty()
+
+# Loop for refreshing data
+while True:
+    # Update this part to fetch your live data
+    scoreboard_data = load_scoreboard_data(game_id)
+    pbp_data = load_playbyplay_data(game_id, scoreboard_data["gameStatusText"] != "Final")
+    away_team_data, home_team_data, away_team_statistics, home_team_statistics = load_box_score_data(game_id)
+
+    # Wait for a seconds before the next update 
+    time.sleep(5)
+
+    # Refresh the page
+    st.experimental_rerun()

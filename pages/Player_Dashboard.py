@@ -347,10 +347,14 @@ if player_name:
         data_load_state = st.text("Loading stats...")
         data = load_on_off_data(get_player_id(player_name))
         data_load_state = st.text("Using cached data.")
-        cols = st.columns(len(data))
-        for i in range(len(data)):
-            with cols[i]:
-                st.write(data[i])
+        st.markdown("Team plus/minus: " + str(data[0]["PLUS_MINUS"].tolist()[0]))
+        col1, col2 = st.columns(2)
+        with col1:
+            on_court_plus_minus = px.scatter(data[1], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="On court plus/minus")
+            st.plotly_chart(on_court_plus_minus)
+        with col2:
+            off_court_plus_minus = px.scatter(data[2], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="Off court plus/minus")
+            st.plotly_chart(off_court_plus_minus)
 
 
 
