@@ -1,0 +1,1621 @@
+[{
+    "data_sets": {
+        "ASTLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "AST",
+            "AST_RANK"
+        ],
+        "BLKLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "BLK",
+            "BLK_RANK"
+        ],
+        "DREBLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "DREB",
+            "DREB_RANK"
+        ],
+        "FG3ALeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FG3A",
+            "FG3A_RANK"
+        ],
+        "FG3MLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FG3M",
+            "FG3M_RANK"
+        ],
+        "FG3_PCTLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FG3_PCT",
+            "FG3_PCT_RANK"
+        ],
+        "FGALeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FGA",
+            "FGA_RANK"
+        ],
+        "FGMLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FGM",
+            "FGM_RANK"
+        ],
+        "FG_PCTLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FG_PCT",
+            "FG_PCT_RANK"
+        ],
+        "FTALeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FTA",
+            "FTA_RANK"
+        ],
+        "FTMLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FTM",
+            "FTM_RANK"
+        ],
+        "FT_PCTLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "FT_PCT",
+            "FT_PCT_RANK"
+        ],
+        "GPLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "GP",
+            "GP_RANK"
+        ],
+        "OREBLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "OREB",
+            "OREB_RANK"
+        ],
+        "PFLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "PF",
+            "PF_RANK"
+        ],
+        "PTSLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "PTS",
+            "PTS_RANK"
+        ],
+        "REBLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "REB",
+            "REB_RANK"
+        ],
+        "STLLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "STL",
+            "STL_RANK"
+        ],
+        "TOVLeaders": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "TOV",
+            "TOV_RANK"
+        ]
+    },
+    "endpoint": "AllTimeLeadersGrids",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "LeagueID": null,
+        "PerMode": null,
+        "SeasonType": null,
+        "TopX": null
+    },
+    "parameters": [
+        "LeagueID",
+        "PerMode",
+        "SeasonType",
+        "TopX"
+    ],
+    "required_parameters": [
+        "LeagueID",
+        "PerMode",
+        "SeasonType",
+        "TopX"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "AssistLeaders": [
+            "RANK",
+            "TEAM_ID",
+            "TEAM_ABBREVIATION",
+            "TEAM_NAME",
+            "AST"
+        ]
+    },
+    "endpoint": "AssistLeaders",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "LeagueID": "^\\d{2}$",
+        "PerMode": "^(Totals)|(PerGame)$",
+        "PlayerOrTeam": "^(Player)|(Team)$",
+        "Season": "^(\\d{4}-\\d{2})$",
+        "SeasonType": "^(Regular Season)|(Pre Season)|(Playoffs)|(Pre-Season)$"
+    },
+    "parameters": [
+        "LeagueID",
+        "PerMode",
+        "PlayerOrTeam",
+        "Season",
+        "SeasonType"
+    ],
+    "required_parameters": [
+        "LeagueID",
+        "PerMode",
+        "PlayerOrTeam",
+        "Season",
+        "SeasonType"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "AssistTracker": [
+            "ASSISTS"
+        ]
+    },
+    "endpoint": "AssistTracker",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [
+        "College",
+        "Conference",
+        "Country",
+        "DateFrom",
+        "DateTo",
+        "Division",
+        "DraftPick",
+        "DraftYear",
+        "GameScope",
+        "Height",
+        "LastNGames",
+        "LeagueID",
+        "Location",
+        "Month",
+        "OpponentTeamID",
+        "Outcome",
+        "PORound",
+        "PerMode",
+        "PlayerExperience",
+        "PlayerPosition",
+        "Season",
+        "SeasonSegment",
+        "SeasonType",
+        "StarterBench",
+        "TeamID",
+        "VsConference",
+        "VsDivision",
+        "Weight"
+    ],
+    "parameter_patterns": {
+        "College": null,
+        "Conference": "((East)|(West))?",
+        "Country": null,
+        "DateFrom": null,
+        "DateTo": null,
+        "Division": "((Atlantic)|(Central)|(Northwest)|(Pacific)|(Southeast)|(Southwest))?",
+        "DraftPick": null,
+        "DraftYear": null,
+        "GameScope": "((Yesterday)|(Last 10))?",
+        "Height": null,
+        "LastNGames": null,
+        "LeagueID": null,
+        "Location": "^((Home)|(Road))?$",
+        "Month": null,
+        "OpponentTeamID": null,
+        "Outcome": "^((W)|(L))?$",
+        "PORound": null,
+        "PerMode": "^(Totals)|(PerGame)$",
+        "PlayerExperience": "((Rookie)|(Sophomore)|(Veteran))?",
+        "PlayerPosition": "((F)|(C)|(G)|(C-F)|(F-C)|(F-G)|(G-F))?",
+        "Season": null,
+        "SeasonSegment": "^((Post All-Star)|(Pre All-Star))?$",
+        "SeasonType": "^(Regular Season)|(Pre Season)|(Playoffs)|(All Star)$",
+        "StarterBench": "((Starters)|(Bench))?",
+        "TeamID": null,
+        "VsConference": "^((East)|(West))?$",
+        "VsDivision": "^((Atlantic)|(Central)|(Northwest)|(Pacific)|(Southeast)|(Southwest)|(East)|(West))?$",
+        "Weight": null
+    },
+    "parameters": [
+        "College",
+        "Conference",
+        "Country",
+        "DateFrom",
+        "DateTo",
+        "Division",
+        "DraftPick",
+        "DraftYear",
+        "GameScope",
+        "Height",
+        "LastNGames",
+        "LeagueID",
+        "Location",
+        "Month",
+        "OpponentTeamID",
+        "Outcome",
+        "PORound",
+        "PerMode",
+        "PlayerExperience",
+        "PlayerPosition",
+        "Season",
+        "SeasonSegment",
+        "SeasonType",
+        "StarterBench",
+        "TeamID",
+        "VsConference",
+        "VsDivision",
+        "Weight"
+    ],
+    "required_parameters": [],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "GAME_ID",
+            "TEAM_ID",
+            "TEAM_ABBREVIATION",
+            "TEAM_CITY",
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "START_POSITION",
+            "COMMENT",
+            "MIN",
+            "E_OFF_RATING",
+            "OFF_RATING",
+            "E_DEF_RATING",
+            "DEF_RATING",
+            "E_NET_RATING",
+            "NET_RATING",
+            "AST_PCT",
+            "AST_TOV",
+            "AST_RATIO",
+            "OREB_PCT",
+            "DREB_PCT",
+            "REB_PCT",
+            "TM_TOV_PCT",
+            "EFG_PCT",
+            "TS_PCT",
+            "USG_PCT",
+            "E_USG_PCT",
+            "E_PACE",
+            "PACE",
+            "PACE_PER40",
+            "POSS",
+            "PIE"
+        ],
+        "TeamStats": [
+            "GAME_ID",
+            "TEAM_ID",
+            "TEAM_NAME",
+            "TEAM_ABBREVIATION",
+            "TEAM_CITY",
+            "MIN",
+            "E_OFF_RATING",
+            "OFF_RATING",
+            "E_DEF_RATING",
+            "DEF_RATING",
+            "E_NET_RATING",
+            "NET_RATING",
+            "AST_PCT",
+            "AST_TOV",
+            "AST_RATIO",
+            "OREB_PCT",
+            "DREB_PCT",
+            "REB_PCT",
+            "E_TM_TOV_PCT",
+            "TM_TOV_PCT",
+            "EFG_PCT",
+            "TS_PCT",
+            "USG_PCT",
+            "E_USG_PCT",
+            "E_PACE",
+            "PACE",
+            "PACE_PER40",
+            "POSS",
+            "PIE"
+        ]
+    },
+    "endpoint": "BoxScoreAdvancedV2",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "personId", 
+            "firstName", 
+            "familyName", 
+            "nameI", 
+            "playerSlug", 
+            "position", 
+            "comment", 
+            "jerseyNum", 
+            "minutes", 
+            "estimatedOffensiveRating", 
+            "offensiveRating", 
+            "estimatedDefensiveRating", 
+            "defensiveRating", 
+            "estimatedNetRating", 
+            "netRating", 
+            "assistPercentage", 
+            "assistToTurnover", 
+            "assistRatio", 
+            "offensiveReboundPercentage", 
+            "defensiveReboundPercentage", 
+            "reboundPercentage", 
+            "turnoverRatio", 
+            "effectiveFieldGoalPercentage", 
+            "trueShootingPercentage", 
+            "usagePercentage", 
+            "estimatedUsagePercentage", 
+            "estimatedPace", 
+            "pace", 
+            "pacePer40", 
+            "possessions", 
+            "PIE"
+        ],
+        "TeamStats": [
+          "gameId", 
+          "teamId", 
+          "teamCity", 
+          "teamName", 
+          "teamTricode", 
+          "teamSlug", 
+          "minutes", 
+          "estimatedOffensiveRating", 
+          "offensiveRating", 
+          "estimatedDefensiveRating", 
+          "defensiveRating", 
+          "estimatedNetRating", 
+          "netRating", 
+          "assistPercentage", 
+          "assistToTurnover", 
+          "assistRatio", 
+          "offensiveReboundPercentage", 
+          "defensiveReboundPercentage", 
+          "reboundPercentage", 
+          "estimatedTeamTurnoverPercentage", 
+          "turnoverRatio", 
+          "effectiveFieldGoalPercentage", 
+          "trueShootingPercentage", 
+          "usagePercentage", 
+          "estimatedUsagePercentage", 
+          "estimatedPace", 
+          "pace", 
+          "pacePer40", 
+          "possessions", 
+          "PIE"
+        ]
+    },
+    "endpoint": "BoxScoreAdvancedV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "personId", 
+            "firstName", 
+            "familyName", 
+            "nameI", 
+            "playerSlug", 
+            "position", 
+            "comment", 
+            "jerseyNum", 
+            "matchupMinutes", 
+            "partialPossessions", 
+            "switchesOn", 
+            "playerPoints", 
+            "defensiveRebounds", 
+            "matchupAssists", 
+            "matchupTurnovers", 
+            "steals", 
+            "blocks", 
+            "matchupFieldGoalsMade", 
+            "matchupFieldGoalsAttempted", 
+            "matchupFieldGoalPercentage", 
+            "matchupThreePointersMade", 
+            "matchupThreePointersAttempted", 
+            "matchupThreePointerPercentage"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "minutes"
+        ]
+    },
+    "endpoint": "BoxScoreDefensiveV2",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameID": "^\\d{10}$"
+    },
+    "parameters": [
+        "GameID"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "personId", 
+            "firstName", 
+            "familyName", 
+            "nameI", 
+            "playerSlug", 
+            "position", 
+            "comment", 
+            "jerseyNum", 
+            "minutes", 
+            "effectiveFieldGoalPercentage", 
+            "freeThrowAttemptRate", 
+            "teamTurnoverPercentage", 
+            "offensiveReboundPercentage", 
+            "oppEffectiveFieldGoalPercentage", 
+            "oppFreeThrowAttemptRate", 
+            "oppTeamTurnoverPercentage", 
+            "oppOffensiveReboundPercentage"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "minutes", 
+            "effectiveFieldGoalPercentage", 
+            "freeThrowAttemptRate", 
+            "teamTurnoverPercentage", 
+            "offensiveReboundPercentage", 
+            "oppEffectiveFieldGoalPercentage", 
+            "oppFreeThrowAttemptRate", 
+            "oppTeamTurnoverPercentage", 
+            "oppOffensiveReboundPercentage"
+        ]
+    },
+    "endpoint": "BoxScoreFourFactorsV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "personId", 
+            "firstName", 
+            "familyName", 
+            "nameI", 
+            "playerSlug", 
+            "position", 
+            "comment", 
+            "jerseyNum", 
+            "minutes", 
+            "points", 
+            "contestedShots", 
+            "contestedShots2pt",
+            "contestedShots3pt", 
+            "deflections", 
+            "chargesDrawn",
+            "screenAssists",
+            "screenAssistPoints",
+            "looseBallsRecoveredOffensive",
+            "looseBallsRecoveredDefensive",
+            "looseBallsRecoveredTotal",
+            "offensiveBoxOuts",
+            "defensiveBoxOuts",
+            "boxOutPlayerTeamRebounds",
+            "boxOutPlayerRebounds",
+            "boxOuts"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "minutes", 
+            "points", 
+            "contestedShots", 
+            "contestedShots2pt", 
+            "contestedShots3pt", 
+            "deflections", 
+            "chargesDrawn", 
+            "screenAssists", 
+            "screenAssistPoints", 
+            "looseBallsRecoveredOffensive", 
+            "looseBallsRecoveredDefensive", 
+            "looseBallsRecoveredTotal", 
+            "offensiveBoxOuts", 
+            "defensiveBoxOuts", 
+            "boxOutPlayerTeamRebounds", 
+            "boxOutPlayerRebounds", 
+            "boxOuts"
+        ]
+    },
+    "endpoint": "BoxScoreHustleV2",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameID": "^\\d{10}$"
+    },
+    "parameters": [
+        "GameID"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+          "gameId", 
+          "teamId",
+          "teamCity",
+          "teamName",
+          "teamTricode",
+          "teamSlug",
+          "personIdOff",
+          "firstNameOff",
+          "familyNameOff",
+          "nameIOff",
+          "playerSlugOff",
+          "jerseyNumOff",
+          "personIdDef",
+          "firstNameDef",
+          "familyNameDef",
+          "nameIDef",
+          "playerSlugDef",
+          "positionDef",
+          "commentDef",
+          "jerseyNumDef",
+          "matchupMinutes",
+          "matchupMinutesSort",
+          "partialPossessions",
+          "percentageDefenderTotalTime",
+          "percentageOffensiveTotalTime",
+          "percentageTotalTimeBothOn",
+          "switchesOn",
+          "playerPoints",
+          "teamPoints",
+          "matchupAssists",
+          "matchupPotentialAssists",
+          "matchupTurnovers",
+          "matchupBlocks",
+          "matchupFieldGoalsMade",
+          "matchupFieldGoalsAttempted",
+          "matchupFieldGoalsPercentage",
+          "matchupThreePointersMade",
+          "matchupThreePointersAttempted",
+          "matchupThreePointersPercentage",
+          "helpBlocks",
+          "helpFieldGoalsMade",
+          "helpFieldGoalsAttempted",
+          "helpFieldGoalsPercentage",
+          "matchupFreeThrowsMade",
+          "matchupFreeThrowsAttempted",
+          "shootingFouls"
+        ]
+    },
+    "endpoint": "BoxScoreMatchupsV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameID": "^\\d{10}$"
+    },
+    "parameters": [
+        "GameID"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "pointsOffTurnovers",
+            "pointsSecondChance",
+            "pointsFastBreak",
+            "pointsPaint",
+            "oppPointsOffTurnovers",
+            "oppPointsSecondChance",
+            "oppPointsFastBreak",
+            "oppPointsPaint",
+            "blocks",
+            "blocksAgainst",
+            "foulsPersonal",
+            "foulsDrawn"
+        ],
+        "TeamStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "minutes",
+            "pointsOffTurnovers",
+            "pointsSecondChance",
+            "pointsFastBreak",
+            "pointsPaint",
+            "oppPointsOffTurnovers",
+            "oppPointsSecondChance",
+            "oppPointsFastBreak",
+            "oppPointsPaint",
+            "blocks",
+            "blocksAgainst",
+            "foulsPersonal",
+            "foulsDrawn"
+        ]
+    },
+    "endpoint": "BoxScoreMiscV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "speed",
+            "distance",
+            "reboundChancesOffensive",
+            "reboundChancesDefensive",
+            "reboundChancesTotal",
+            "touches",
+            "secondaryAssists",
+            "freeThrowAssists",
+            "passes",
+            "assists",
+            "contestedFieldGoalsMade",
+            "contestedFieldGoalsAttempted",
+            "contestedFieldGoalPercentage",
+            "uncontestedFieldGoalsMade",
+            "uncontestedFieldGoalsAttempted",
+            "uncontestedFieldGoalsPercentage",
+            "fieldGoalPercentage",
+            "defendedAtRimFieldGoalsMade",
+            "defendedAtRimFieldGoalsAttempted",
+            "defendedAtRimFieldGoalPercentage"
+        ],
+        "TeamStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "minutes",
+            "distance",
+            "reboundChancesOffensive",
+            "reboundChancesDefensive",
+            "reboundChancesTotal",
+            "touches",
+            "secondaryAssists",
+            "freeThrowAssists",
+            "passes",
+            "assists",
+            "contestedFieldGoalsMade",
+            "contestedFieldGoalsAttempted",
+            "contestedFieldGoalPercentage",
+            "uncontestedFieldGoalsMade",
+            "uncontestedFieldGoalsAttempted",
+            "uncontestedFieldGoalsPercentage",
+            "fieldGoalPercentage",
+            "defendedAtRimFieldGoalsMade",
+            "defendedAtRimFieldGoalsAttempted",
+            "defendedAtRimFieldGoalPercentage"
+        ]
+    },
+    "endpoint": "BoxScorePlayerTrackV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameID": "^\\d{10}$"
+    },
+    "parameters": [
+        "GameID"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "percentageFieldGoalsAttempted2pt",
+            "percentageFieldGoalsAttempted3pt",
+            "percentagePoints2pt",
+            "percentagePointsMidrange2pt",
+            "percentagePoints3pt",
+            "percentagePointsFastBreak",
+            "percentagePointsFreeThrow",
+            "percentagePointsOffTurnovers",
+            "percentagePointsPaint",
+            "percentageAssisted2pt",
+            "percentageUnassisted2pt",
+            "percentageAssisted3pt",
+            "percentageUnassisted3pt",
+            "percentageAssistedFGM",
+            "percentageUnassistedFGM"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "minutes", 
+            "percentageFieldGoalsAttempted2pt", 
+            "percentageFieldGoalsAttempted3pt",
+            "percentagePoints2pt",
+            "percentagePointsMidrange2pt",
+            "percentagePoints3pt",
+            "percentagePointsFastBreak",
+            "percentagePointsFreeThrow",
+            "percentagePointsOffTurnovers",
+            "percentagePointsPaint",
+            "percentageAssisted2pt",
+            "percentageUnassisted2pt",
+            "percentageAssisted3pt",
+            "percentageUnassisted3pt",
+            "percentageAssistedFGM",
+            "percentageUnassistedFGM"          
+        ]
+    },
+    "endpoint": "BoxScoreScoringV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "percentageFieldGoalsAttempted2pt",
+            "percentageFieldGoalsAttempted3pt",
+            "percentagePoints2pt",
+            "percentagePointsMidrange2pt",
+            "percentagePoints3pt",
+            "percentagePointsFastBreak",
+            "percentagePointsFreeThrow",
+            "percentagePointsOffTurnovers",
+            "percentagePointsPaint",
+            "percentageAssisted2pt",
+            "percentageUnassisted2pt",
+            "percentageAssisted3pt",
+            "percentageUnassisted3pt",
+            "percentageAssistedFGM",
+            "percentageUnassistedFGM"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug", 
+            "minutes", 
+            "percentageFieldGoalsAttempted2pt", 
+            "percentageFieldGoalsAttempted3pt",
+            "percentagePoints2pt",
+            "percentagePointsMidrange2pt",
+            "percentagePoints3pt",
+            "percentagePointsFastBreak",
+            "percentagePointsFreeThrow",
+            "percentagePointsOffTurnovers",
+            "percentagePointsPaint",
+            "percentageAssisted2pt",
+            "percentageUnassisted2pt",
+            "percentageAssisted3pt",
+            "percentageUnassisted3pt",
+            "percentageAssistedFGM",
+            "percentageUnassistedFGM"          
+        ]
+    },
+    "endpoint": "BoxScoreScoringV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "BoxScoreSimilarityScores": [
+            "PERSON_2_ID",
+            "PERSON_2",
+            "PERSON_2_TEAM_ID",
+            "SIMILARITY_SCORE"
+        ]
+    },
+    "endpoint": "BoxScoreSimilarityScore",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "Person1Id": null,
+        "Person1LeagueId": null,
+        "Person1Season": null,
+        "Person1SeasonType": null,
+        "Person2Id": null,
+        "Person2LeagueId": null,
+        "Person2Season": null,
+        "Person2SeasonType": null
+    },
+    "parameters": [
+        "Person1Id",
+        "Person1LeagueId",
+        "Person1Season",
+        "Person1SeasonType",
+        "Person2Id",
+        "Person2LeagueId",
+        "Person2Season",
+        "Person2SeasonType"
+    ],
+    "required_parameters": [
+        "Person1Id",
+        "Person1LeagueId",
+        "Person1Season",
+        "Person1SeasonType",
+        "Person2Id",
+        "Person2LeagueId",
+        "Person2Season",
+        "Person2SeasonType"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "AvailableVideo": [
+            "GAME_ID",
+            "VIDEO_AVAILABLE_FLAG",
+            "PT_AVAILABLE",
+            "PT_XYZ_AVAILABLE",
+            "WH_STATUS",
+            "HUSTLE_STATUS",
+            "HISTORICAL_STATUS"
+        ],
+        "GameInfo": [
+            "GAME_DATE",
+            "ATTENDANCE",
+            "GAME_TIME"
+        ],
+        "GameSummary": [
+            "GAME_DATE_EST",
+            "GAME_SEQUENCE",
+            "GAME_ID",
+            "GAME_STATUS_ID",
+            "GAME_STATUS_TEXT",
+            "GAMECODE",
+            "HOME_TEAM_ID",
+            "VISITOR_TEAM_ID",
+            "SEASON",
+            "LIVE_PERIOD",
+            "LIVE_PC_TIME",
+            "NATL_TV_BROADCASTER_ABBREVIATION",
+            "LIVE_PERIOD_TIME_BCAST",
+            "WH_STATUS"
+        ],
+        "InactivePlayers": [
+            "PLAYER_ID",
+            "FIRST_NAME",
+            "LAST_NAME",
+            "JERSEY_NUM",
+            "TEAM_ID",
+            "TEAM_CITY",
+            "TEAM_NAME",
+            "TEAM_ABBREVIATION"
+        ],
+        "LastMeeting": [
+            "GAME_ID",
+            "LAST_GAME_ID",
+            "LAST_GAME_DATE_EST",
+            "LAST_GAME_HOME_TEAM_ID",
+            "LAST_GAME_HOME_TEAM_CITY",
+            "LAST_GAME_HOME_TEAM_NAME",
+            "LAST_GAME_HOME_TEAM_ABBREVIATION",
+            "LAST_GAME_HOME_TEAM_POINTS",
+            "LAST_GAME_VISITOR_TEAM_ID",
+            "LAST_GAME_VISITOR_TEAM_CITY",
+            "LAST_GAME_VISITOR_TEAM_NAME",
+            "LAST_GAME_VISITOR_TEAM_CITY1",
+            "LAST_GAME_VISITOR_TEAM_POINTS"
+        ],
+        "LineScore": [
+            "GAME_DATE_EST",
+            "GAME_SEQUENCE",
+            "GAME_ID",
+            "TEAM_ID",
+            "TEAM_ABBREVIATION",
+            "TEAM_CITY_NAME",
+            "TEAM_NICKNAME",
+            "TEAM_WINS_LOSSES",
+            "PTS_QTR1",
+            "PTS_QTR2",
+            "PTS_QTR3",
+            "PTS_QTR4",
+            "PTS_OT1",
+            "PTS_OT2",
+            "PTS_OT3",
+            "PTS_OT4",
+            "PTS_OT5",
+            "PTS_OT6",
+            "PTS_OT7",
+            "PTS_OT8",
+            "PTS_OT9",
+            "PTS_OT10",
+            "PTS"
+        ],
+        "Officials": [
+            "OFFICIAL_ID",
+            "FIRST_NAME",
+            "LAST_NAME",
+            "JERSEY_NUM"
+        ],
+        "OtherStats": [
+            "LEAGUE_ID",
+            "TEAM_ID",
+            "TEAM_ABBREVIATION",
+            "TEAM_CITY",
+            "PTS_PAINT",
+            "PTS_2ND_CHANCE",
+            "PTS_FB",
+            "LARGEST_LEAD",
+            "LEAD_CHANGES",
+            "TIMES_TIED",
+            "TEAM_TURNOVERS",
+            "TOTAL_TURNOVERS",
+            "TEAM_REBOUNDS",
+            "PTS_OFF_TO"
+        ],
+        "SeasonSeries": [
+            "GAME_ID",
+            "HOME_TEAM_ID",
+            "VISITOR_TEAM_ID",
+            "GAME_DATE_EST",
+            "HOME_TEAM_WINS",
+            "HOME_TEAM_LOSSES",
+            "SERIES_LEADER"
+        ]
+    },
+    "endpoint": "BoxScoreSummaryV2",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameID": "^\\d{10}$"
+    },
+    "parameters": [
+        "GameID"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId", 
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "usagePercentage",
+            "percentageFieldGoalsMade",
+            "percentageFieldGoalsAttempted",
+            "percentageThreePointersMade",
+            "percentageThreePointersAttempted",
+            "percentageFreeThrowsMade",
+            "percentageFreeThrowsAttempted",
+            "percentageReboundsOffensive",
+            "percentageReboundsDefensive",
+            "percentageReboundsTotal",
+            "percentageAssists",
+            "percentageTurnovers",
+            "percentageSteals",
+            "percentageBlocks",
+            "percentageBlocksAllowed",
+            "percentagePersonalFouls",
+            "percentagePersonalFoulsDrawn",
+            "percentagePoints"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "minutes",
+            "usagePercentage", 
+            "percentageFieldGoalsMade", 
+            "percentageFieldGoalsAttempted", 
+            "percentageThreePointersMade", 
+            "percentageThreePointersAttempted", 
+            "percentageFreeThrowsMade", 
+            "percentageFreeThrowsAttempted", 
+            "percentageReboundsOffensive", 
+            "percentageReboundsDefensive", 
+            "percentageReboundsTotal", 
+            "percentageAssists", 
+            "percentageTurnovers", 
+            "percentageSteals", 
+            "percentageBlocks", 
+            "percentageBlocksAllowed",
+            "percentagePersonalFouls",
+            "percentagePersonalFoulsDrawn",
+            "percentagePoints"
+        ]
+    },
+    "endpoint": "BoxScoreUsageV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayerStats": [
+            "gameId",
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "personId",
+            "firstName",
+            "familyName",
+            "nameI",
+            "playerSlug",
+            "position",
+            "comment",
+            "jerseyNum",
+            "minutes",
+            "fieldGoalsMade",
+            "fieldGoalsAttempted",
+            "fieldGoalsPercentage",
+            "threePointersMade",
+            "threePointersAttempted",
+            "threePointersPercentage",
+            "freeThrowsMade",
+            "freeThrowsAttempted",
+            "freeThrowsPercentage",
+            "reboundsOffensive",
+            "reboundsDefensive",
+            "reboundsTotal",
+            "assists",
+            "steals",
+            "blocks", 
+            "turnovers",
+            "foulsPersonal",
+            "points",
+            "plusMinusPoints"
+        ],
+        "TeamStarterBenchStats": [
+            "gameId", 
+            "teamId",
+            "teamCity",
+            "teamName",
+            "teamTricode",
+            "teamSlug",
+            "minutes",
+            "fieldGoalsMade",
+            "fieldGoalsAttempted",
+            "fieldGoalsPercentage",
+            "threePointersMade",
+            "threePointersAttempted",
+            "threePointersPercentage",
+            "freeThrowsMade",
+            "freeThrowsAttempted",
+            "freeThrowsPercentage",
+            "reboundsOffensive",
+            "reboundsDefensive",
+            "reboundsTotal",
+            "assists",
+            "steals",
+            "blocks",
+            "turnovers",
+            "foulsPersonal",
+            "points",
+            "startersBench"
+        ],
+        "TeamStats": [
+            "gameId", 
+            "teamId", 
+            "teamCity", 
+            "teamName", 
+            "teamTricode", 
+            "teamSlug",
+            "minutes", 
+            "fieldGoalsMade",
+            "fieldGoalsAttempted",
+            "fieldGoalsPercentage",
+            "threePointersMade",
+            "threePointersAttempted",
+            "threePointersPercentage",
+            "freeThrowsMade",
+            "freeThrowsAttempted",
+            "freeThrowsPercentage",
+            "reboundsOffensive",
+            "reboundsDefensive",
+            "reboundsTotal",
+            "assists",
+            "steals",
+            "blocks",
+            "turnovers",
+            "foulsPersonal",
+            "points",
+            "plusMinusPoints"
+        ]
+    },
+    "endpoint": "BoxScoreTraditionalV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "EndRange": null,
+        "GameID": "^\\d{10}$",
+        "RangeType": null,
+        "StartPeriod": null,
+        "StartRange": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "required_parameters": [
+        "EndPeriod",
+        "EndRange",
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "CommonAllPlayers": [
+            "PERSON_ID",
+            "DISPLAY_LAST_COMMA_FIRST",
+            "DISPLAY_FIRST_LAST",
+            "ROSTERSTATUS",
+            "FROM_YEAR",
+            "TO_YEAR",
+            "PLAYERCODE",
+            "TEAM_ID",
+            "TEAM_CITY",
+            "TEAM_NAME",
+            "TEAM_ABBREVIATION",
+            "TEAM_CODE",
+            "GAMES_PLAYED_FLAG",
+            "OTHERLEAGUE_EXPERIENCE_CH"
+        ]
+    },
+    "endpoint": "CommonAllPlayers",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "IsOnlyCurrentSeason": null,
+        "LeagueID": "^\\d{2}$",
+        "Season": null
+    },
+    "parameters": [
+        "IsOnlyCurrentSeason",
+        "LeagueID",
+        "Season"
+    ],
+    "required_parameters": [
+        "IsOnlyCurrentSeason",
+        "LeagueID",
+        "Season"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "AvailableSeasons": [
+            "SEASON_ID"
+        ],
+        "CommonPlayerInfo": [
+            "PERSON_ID",
+            "FIRST_NAME",
+            "LAST_NAME",
+            "DISPLAY_FIRST_LAST",
+            "DISPLAY_LAST_COMMA_FIRST",
+            "DISPLAY_FI_LAST",
+            "PLAYER_SLUG",
+            "BIRTHDATE",
+            "SCHOOL",
+            "COUNTRY",
+            "LAST_AFFILIATION",
+            "HEIGHT",
+            "WEIGHT",
+            "SEASON_EXP",
+            "JERSEY",
+            "POSITION",
+            "ROSTERSTATUS",
+            "TEAM_ID",
+            "TEAM_NAME",
+            "TEAM_ABBREVIATION",
+            "TEAM_CODE",
+            "TEAM_CITY",
+            "PLAYERCODE",
+            "FROM_YEAR",
+            "TO_YEAR",
+            "DLEAGUE_FLAG",
+            "NBA_FLAG",
+            "GAMES_PLAYED_FLAG",
+            "DRAFT_YEAR",
+            "DRAFT_ROUND",
+            "DRAFT_NUMBER"
+        ],
+        "PlayerHeadlineStats": [
+            "PLAYER_ID",
+            "PLAYER_NAME",
+            "TimeFrame",
+            "PTS",
+            "AST",
+            "REB",
+            "PIE"
+        ]
+    },
+    "endpoint": "CommonPlayerInfo",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [
+        "LeagueID"
+    ],
+    "parameter_patterns": {
+        "LeagueID": null,
+        "PlayerID": null
+    },
+    "parameters": [
+        "LeagueID",
+        "PlayerID"
+    ],
+    "required_parameters": [
+        "PlayerID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "PlayoffSeries": [
+            "GAME_ID",
+            "HOME_TEAM_ID",
+            "VISITOR_TEAM_ID",
+            "SERIES_ID",
+            "GAME_NUM"
+        ]
+    },
+    "endpoint": "CommonPlayoffSeries",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [
+        "SeriesID"
+    ],
+    "parameter_patterns": {
+        "LeagueID": null,
+        "Season": null,
+        "SeriesID": null
+    },
+    "parameters": [
+        "LeagueID",
+        "Season",
+        "SeriesID"
+    ],
+    "required_parameters": [
+        "LeagueID",
+        "Season"
+    ],
+    "status": "success"
+}]
+
+
+
+
+
+
+
+

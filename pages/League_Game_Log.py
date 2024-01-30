@@ -25,3 +25,4 @@ if season and season_type:
     data = load_data(season=season, season_type_all_star=season_type)
     data_load_state.text("Done! Currently using cached data.")
     st.write(data)
+

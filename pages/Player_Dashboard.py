@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from nba_api.stats.endpoints import playercareerstats, playerestimatedmetrics, playergamelog, teamplayeronoffsummary
+from nba_api.stats.endpoints import leaguehustlestatsplayer
 from nba_api.stats.static import players
 from scipy.stats import binom, norm
 import plotly.express as px
@@ -232,6 +233,14 @@ def load_on_off_data(player_id):
     team_id = get_player_team(player_id)
     return teamplayeronoffsummary.TeamPlayerOnOffSummary(team_id).get_data_frames()
 
+@st.cache_data
+def load_hustle_stats(per_mode_time, season, season_type_all_star):
+    data = leaguehustlestatsplayer.LeagueHustleStatsPlayer(
+        per_mode_time=per_mode_time,
+        season=season,
+        season_type_all_star=season_type_all_star
+    )
+    return data.get_data_frames()[0]
 
 st.set_page_config(layout="wide")
 with st.expander("Player"):
@@ -403,6 +412,3 @@ if player_name:
         st.plotly_chart(on_court_plus_minus, use_container_width=True)
         off_court_plus_minus = px.scatter(data[2], x='VS_PLAYER_NAME', y="PLUS_MINUS", title="Off court plus/minus")
         st.plotly_chart(off_court_plus_minus, use_container_width=True)
-
-
-
