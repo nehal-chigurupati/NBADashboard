@@ -72,7 +72,6 @@ def render_endpoint(endpoint_dict, key_start):
     param_options = json.load(param_options)
 
     with st.expander(endpoint_name):
-        st.header("Get Data")
         param_input = []
         num_inputs_entered = 0
         for param in req_params:
@@ -147,17 +146,23 @@ team_data = load_team_data()
 
 #Fetch API params
 
-st.header("Call Endpoints")
+st.header("Request Data")
 hide_call = st.checkbox("Hide", value=False, key=1000000)
 if not hide_call:
     f = open("pages/endpoints.json")
     api_params = json.load(f)
     f.close()
     key_start = 0
-    for endpoint in api_params:
-        key_start = render_endpoint(endpoint, key_start)
+    col1, col2 = st.columns(2) 
 
-
+    for i in range(len(api_params)):
+        if i % 2 == 0:
+            with col1:
+                key_start = render_endpoint(api_params[i], key_start)
+        else:
+            with col2:
+                key_start = render_endpoint(api_params[i], key_start)
+                
 
     
 col1, col2 = st.columns(2)
