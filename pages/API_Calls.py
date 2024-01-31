@@ -68,13 +68,18 @@ def load_team_data():
 
 def render_endpoint(endpoint_dict, key_start):
     endpoint_name, import_name, req_params, data_sets = extract_api_params(endpoint_dict)
+    param_options = open("pages/params.json")
+    param_options = json.load(param_options)
 
     with st.expander(endpoint_name):
         st.header("Get Data")
         param_input = []
         num_inputs_entered = 0
         for param in req_params:
-            user_input = st.text_input(param + ": ", key=key_start)
+            if param in param_options.keys():
+                user_input = st.selectbox(param + ":", param_options[param], key=key_start)
+            else:
+                user_input = st.text_input(param + ": ", key=key_start)
             param_input.append(user_input)
             if user_input != "":
                 num_inputs_entered += 1
@@ -108,7 +113,7 @@ def render_endpoint(endpoint_dict, key_start):
 
         st.header("Dataset Info")
         info_col_1, info_col_2, info_col_3 = st.columns(3)
-        hide = st.checkbox("Hide", value=True, key=key_start)
+        hide = st.checkbox("Hide", value=False, key=key_start)
         key_start += 1
         if not hide:
             dataset_names = list(data_sets.keys())
@@ -143,7 +148,7 @@ team_data = load_team_data()
 #Fetch API params
 
 st.header("Call Endpoints")
-hide_call = st.checkbox("Hide", value=True, key=1000000)
+hide_call = st.checkbox("Hide", value=False, key=1000000)
 if not hide_call:
     f = open("pages/endpoints.json")
     api_params = json.load(f)
