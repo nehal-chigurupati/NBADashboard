@@ -4,3 +4,4 @@ nba_api
 plotly
 scipy
 streamlit-autorefresh
+Pillow
