@@ -75,13 +75,13 @@ def load_all_data(game_id):
     return scoreboard_data, pbp_data, away_team_data, home_team_data, away_team_statistics, home_team_statistics
 
 def render_curr_score(scoreboard_data):
-    print(scoreboard_data)
     if scoreboard_data["gameStatusText"] == "Final":
         st.subheader(str(scoreboard_data["awayTeam"]["score"]) + "-" + str(scoreboard_data["homeTeam"]["score"]) + " (Final)")
     else: 
         st.subheader(str(scoreboard_data["awayTeam"]["score"]) + "-" + str(scoreboard_data["homeTeam"]["score"]))
 
 def render_score_breakdown(pbp_data, scoreboard_data):
+    print(scoreboard_data)
     with st.expander("Score Breakdown", expanded=True):
         #Separate page into columns, one for each quarter score plot
         cols = st.columns(len(np.unique(pbp_data["period"])))
@@ -128,7 +128,7 @@ def render_score_breakdown(pbp_data, scoreboard_data):
                     )
                 st.plotly_chart(scoreboard_plot, use_container_width=True)
 
-def render_pbp(pbp_data, scoreboard_data):
+def render_pbp(pbp_data, scoreboard_data, away_team_data, home_team_data):
     #Isolate useful data
     player_names = []
     for index, row in pbp_data.iterrows():

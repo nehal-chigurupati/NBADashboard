@@ -52,7 +52,7 @@ if game:
     
     #Display play by play data
     st.subheader("Play by play")
-    render_pbp(pbp_data, scoreboard_data)
+    render_pbp(pbp_data, scoreboard_data, away_team_data, home_team_data)
 
 # Loop for refreshing data
 if len(active_games) != 0 and auto_refresh:
