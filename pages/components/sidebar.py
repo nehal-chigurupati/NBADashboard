@@ -90,6 +90,8 @@ def render_future_game(away_team_abbrev, home_team_abbrev, away_score, home_scor
     with col3:
         render_team(home_team_abbrev, 50, 50)
         st.write(home_score)
+    
+
 
 def render_todays_games():
     game_data = load_all_scoreboard()
