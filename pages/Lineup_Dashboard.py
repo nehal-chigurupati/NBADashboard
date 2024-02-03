@@ -8,7 +8,10 @@ import matplotlib.pyplot as plt
 import urllib.request
 from PIL import Image
 import plotly.graph_objects as go
+from pages.components.sidebar import *
+
 st.set_page_config(layout="wide")
+render_sidebar()
 
 st.text("***** IN PROGRESS ******")
 
@@ -175,7 +178,7 @@ class ShotCharts:
                 return fig
 
 def load_eppm_data():
-    data = pd.read_csv("pages/lineup_evals_10_min.csv", engine="pyarrow")
+    data = pd.read_csv("pages/data/lineup_evals_10_min.csv", engine="pyarrow")
 
     return data[["LINEUP_ID", "PLAYER_NAMES", "E_VAL_PER_MIN", "PTS_PER_MIN"]]
 

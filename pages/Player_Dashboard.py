@@ -9,9 +9,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from pages.components.Player_Dashboard import *
+from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
 player_name = render_player_selectbox()
+render_sidebar()
 
 if player_name: 
     on_off, bayes_data, curr_season_games, career_data = load_all_data(player_name)

@@ -1104,6 +1104,354 @@
         "Season"
     ],
     "status": "success"
+},
+{
+    "data_sets": {
+        "Coaches": [
+            "TEAM_ID",
+            "SEASON",
+            "COACH_ID",
+            "FIRST_NAME",
+            "LAST_NAME",
+            "COACH_NAME",
+            "IS_ASSISTANT",
+            "COACH_TYPE",
+            "SORT_SEQUENCE"
+        ],
+        "CommonTeamRoster": [
+            "TeamID",
+            "SEASON",
+            "LeagueID",
+            "PLAYER",
+            "PLAYER_SLUG",
+            "NUM",
+            "POSITION",
+            "HEIGHT",
+            "WEIGHT",
+            "BIRTH_DATE",
+            "AGE",
+            "EXP",
+            "SCHOOL",
+            "PLAYER_ID"
+        ]
+    },
+    "endpoint": "CommonTeamRoster",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [
+        "LeagueID"
+    ],
+    "parameter_patterns": {
+        "LeagueID": null,
+        "Season": null,
+        "TeamID": null
+    },
+    "parameters": [
+        "LeagueID",
+        "Season",
+        "TeamID"
+    ],
+    "required_parameters": [
+        "Season",
+        "TeamID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "TeamYears": [
+            "LEAGUE_ID",
+            "TEAM_ID",
+            "MIN_YEAR",
+            "MAX_YEAR",
+            "ABBREVIATION"
+        ]
+    },
+    "endpoint": "CommonTeamYears",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "LeagueID": "^\\d{2}$"
+    },
+    "parameters": [
+        "LeagueID"
+    ],
+    "required_parameters": [
+        "LeagueID"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "GameByGameStats": [
+            "DATE_EST",
+            "VISITOR_TEAM",
+            "HOME_TEAM",
+            "GP",
+            "GS",
+            "ACTUAL_MINUTES",
+            "ACTUAL_SECONDS",
+            "FG",
+            "FGA",
+            "FG_PCT",
+            "FG3",
+            "FG3A",
+            "FG3_PCT",
+            "FT",
+            "FTA",
+            "FT_PCT",
+            "OFF_REB",
+            "DEF_REB",
+            "TOT_REB",
+            "AVG_TOT_REB",
+            "AST",
+            "PF",
+            "DQ",
+            "STL",
+            "TURNOVERS",
+            "BLK",
+            "PTS",
+            "AVG_PTS"
+        ],
+        "TotalPlayerStats": [
+            "DISPLAY_FI_LAST",
+            "PERSON_ID",
+            "JERSEY_NUM",
+            "GP",
+            "GS",
+            "ACTUAL_MINUTES",
+            "ACTUAL_SECONDS",
+            "FG",
+            "FGA",
+            "FG_PCT",
+            "FG3",
+            "FG3A",
+            "FG3_PCT",
+            "FT",
+            "FTA",
+            "FT_PCT",
+            "OFF_REB",
+            "DEF_REB",
+            "TOT_REB",
+            "AST",
+            "PF",
+            "DQ",
+            "STL",
+            "TURNOVERS",
+            "BLK",
+            "PTS",
+            "MAX_ACTUAL_MINUTES",
+            "MAX_ACTUAL_SECONDS",
+            "MAX_REB",
+            "MAX_AST",
+            "MAX_STL",
+            "MAX_TURNOVERS",
+            "MAX_BLK",
+            "MAX_PTS",
+            "AVG_ACTUAL_MINUTES",
+            "AVG_ACTUAL_SECONDS",
+            "AVG_TOT_REB",
+            "AVG_AST",
+            "AVG_STL",
+            "AVG_TURNOVERS",
+            "AVG_BLK",
+            "AVG_PTS",
+            "PER_MIN_TOT_REB",
+            "PER_MIN_AST",
+            "PER_MIN_STL",
+            "PER_MIN_TURNOVERS",
+            "PER_MIN_BLK",
+            "PER_MIN_PTS"
+        ]
+    },
+    "endpoint": "CumeStatsPlayer",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameIDs": null,
+        "LeagueID": null,
+        "PlayerID": null,
+        "Season": null,
+        "SeasonType": "^(Regular Season)|(Pre Season)|(Playoffs)|(All Star)$"
+    },
+    "parameters": [
+        "GameIDs",
+        "LeagueID",
+        "PlayerID",
+        "Season",
+        "SeasonType"
+    ],
+    "required_parameters": [
+        "GameIDs",
+        "LeagueID",
+        "PlayerID",
+        "Season",
+        "SeasonType"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "CumeStatsPlayerGames": [
+            "MATCHUP",
+            "GAME_ID"
+        ]
+    },
+    "endpoint": "CumeStatsPlayerGames",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [
+        "Location",
+        "Outcome",
+        "VsConference",
+        "VsDivision",
+        "VsTeamID"
+    ],
+    "parameter_patterns": {
+        "LeagueID": null,
+        "Location": null,
+        "Outcome": null,
+        "PlayerID": null,
+        "Season": null,
+        "SeasonType": "^(Regular Season)|(Pre Season)|(Playoffs)|(All Star)$",
+        "VsConference": null,
+        "VsDivision": null,
+        "VsTeamID": null
+    },
+    "parameters": [
+        "LeagueID",
+        "Location",
+        "Outcome",
+        "PlayerID",
+        "Season",
+        "SeasonType",
+        "VsConference",
+        "VsDivision",
+        "VsTeamID"
+    ],
+    "required_parameters": [
+        "LeagueID",
+        "PlayerID",
+        "Season",
+        "SeasonType"
+    ],
+    "status": "success"
+},
+{
+    "data_sets": {
+        "GameByGameStats": [
+            "JERSEY_NUM",
+            "PLAYER",
+            "PERSON_ID",
+            "TEAM_ID",
+            "GP",
+            "GS",
+            "ACTUAL_MINUTES",
+            "ACTUAL_SECONDS",
+            "FG",
+            "FGA",
+            "FG_PCT",
+            "FG3",
+            "FG3A",
+            "FG3_PCT",
+            "FT",
+            "FTA",
+            "FT_PCT",
+            "OFF_REB",
+            "DEF_REB",
+            "TOT_REB",
+            "AST",
+            "PF",
+            "DQ",
+            "STL",
+            "TURNOVERS",
+            "BLK",
+            "PTS",
+            "MAX_ACTUAL_MINUTES",
+            "MAX_ACTUAL_SECONDS",
+            "MAX_REB",
+            "MAX_AST",
+            "MAX_STL",
+            "MAX_TURNOVERS",
+            "MAX_BLKP",
+            "MAX_PTS",
+            "AVG_ACTUAL_MINUTES",
+            "AVG_ACTUAL_SECONDS",
+            "AVG_REB",
+            "AVG_AST",
+            "AVG_STL",
+            "AVG_TURNOVERS",
+            "AVG_BLKP",
+            "AVG_PTS",
+            "PER_MIN_REB",
+            "PER_MIN_AST",
+            "PER_MIN_STL",
+            "PER_MIN_TURNOVERS",
+            "PER_MIN_BLK",
+            "PER_MIN_PTS"
+        ],
+        "TotalTeamStats": [
+            "CITY",
+            "NICKNAME",
+            "TEAM_ID",
+            "W",
+            "L",
+            "W_HOME",
+            "L_HOME",
+            "W_ROAD",
+            "L_ROAD",
+            "TEAM_TURNOVERS",
+            "TEAM_REBOUNDS",
+            "GP",
+            "GS",
+            "ACTUAL_MINUTES",
+            "ACTUAL_SECONDS",
+            "FG",
+            "FGA",
+            "FG_PCT",
+            "FG3",
+            "FG3A",
+            "FG3_PCT",
+            "FT",
+            "FTA",
+            "FT_PCT",
+            "OFF_REB",
+            "DEF_REB",
+            "TOT_REB",
+            "AST",
+            "PF",
+            "STL",
+            "TOTAL_TURNOVERS",
+            "BLK",
+            "PTS",
+            "AVG_REB",
+            "AVG_PTS",
+            "DQ"
+        ]
+    },
+    "endpoint": "CumeStatsTeam",
+    "last_validated_date": "2020-08-15",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "GameIDs": null,
+        "LeagueID": null,
+        "Season": null,
+        "SeasonType": "^(Regular Season)|(Pre Season)|(Playoffs)|(All Star)$",
+        "TeamID": null
+    },
+    "parameters": [
+        "GameIDs",
+        "LeagueID",
+        "Season",
+        "SeasonType",
+        "TeamID"
+    ],
+    "required_parameters": [
+        "GameIDs",
+        "LeagueID",
+        "Season",
+        "SeasonType",
+        "TeamID"
+    ],
+    "status": "success"
 }]
 
 

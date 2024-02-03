@@ -6,3 +6,5 @@ scipy
 streamlit-autorefresh
 Pillow
 matplotlib
+retry
+base64

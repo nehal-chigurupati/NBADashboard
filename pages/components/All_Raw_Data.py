@@ -5,6 +5,7 @@ import json
 from nba_api.stats.endpoints import leaguegamelog
 from pathlib import Path
 import importlib
+from retry import retry
 
 def extract_api_params(json_data):
     endpoint_name = json_data["endpoint"]
@@ -15,6 +16,7 @@ def extract_api_params(json_data):
     return endpoint_name, import_name, req_params, data_sets
 
 
+@retry()
 @st.cache_data
 def load_game_data(season_type_all_star, season):
     data = leaguegamelog.LeagueGameLog(season_type_all_star=season_type_all_star, season=season, league_id="00")
@@ -23,6 +25,8 @@ def load_game_data(season_type_all_star, season):
         data[column] = data[column].astype(str)
     return data
 
+@retry()
+@st.cache_data
 def load_player_data():
     player_first_names = []
     player_last_names = []
@@ -44,6 +48,8 @@ def load_player_data():
     
     return pd.DataFrame(out_dict)
 
+@retry()
+@st.cache_data
 def load_team_data():
     team_data = teams.get_teams()
     id = [str(team["id"]) for team in team_data]
@@ -66,9 +72,11 @@ def load_team_data():
 
     return pd.DataFrame(out_dict)
 
+
+@retry()
 def render_endpoint(endpoint_dict, key_start):
     endpoint_name, import_name, req_params, data_sets = extract_api_params(endpoint_dict)
-    param_options = open("pages/params.json")
+    param_options = open("pages/api_endpoints/params.json")
     param_options = json.load(param_options)
 
     with st.expander(endpoint_name):
@@ -89,7 +97,6 @@ def render_endpoint(endpoint_dict, key_start):
             import_statement = f"from nba_api.stats.endpoints import {import_name}"
             exec_string =  import_statement + "\n"
             exec_string = exec_string + "data = " + import_name + "." + endpoint_name + str(param_input).replace("[", "(").replace("]", ")")
-            print(exec_string)
 
             exec_globals = {}
             exec(exec_string, exec_globals)
@@ -131,63 +138,39 @@ def render_endpoint(endpoint_dict, key_start):
                         st.write(data_sets[dataset_names[i]])
 
     return key_start
-        
 
+@st.cache_data
+def load_all_ref_data():
+    player_data = load_player_data()
+    team_data = load_team_data()
+    return player_data, team_data
 
-st.set_page_config(layout="wide")
-print(Path.cwd())
+def render_request_data():
+    st.header("Request Data")
+    hide_call = st.checkbox("Hide", value=False, key=1000000)
+    if not hide_call:
+        f = open("pages/api_endpoints/endpoints.json")
+        api_params = json.load(f)
+        f.close()
+        key_start = 0
+        col1, col2 = st.columns(2) 
 
-st.title("NBA Website Data Retrieval")
-st.caption("For parameter patterns, see the bottom of this page.")
-st.text("**** This page has lots of bugs. It is in progress ****")
+        for i in range(len(api_params)):
+            if i % 2 == 0:
+                with col1:
+                    key_start = render_endpoint(api_params[i], key_start)
+            else:
+                with col2:
+                    key_start = render_endpoint(api_params[i], key_start)
 
-player_data = load_player_data()
-team_data = load_team_data()
+def render_game_api_ids():
+    season = st.text_input("Season (ex: 2023-24): ")
 
-#Fetch API params
+    season_type_options = ["Regular Season", "Playoffs", "Pre Season", "All Star"]
+    season_type = st.selectbox("Season Type: ", season_type_options)
 
-st.header("Request Data")
-hide_call = st.checkbox("Hide", value=False, key=1000000)
-if not hide_call:
-    f = open("pages/endpoints.json")
-    api_params = json.load(f)
-    f.close()
-    key_start = 0
-    col1, col2 = st.columns(2) 
-
-    for i in range(len(api_params)):
-        if i % 2 == 0:
-            with col1:
-                key_start = render_endpoint(api_params[i], key_start)
-        else:
-            with col2:
-                key_start = render_endpoint(api_params[i], key_start)
-                
-
-    
-col1, col2 = st.columns(2)
-
-with col1:
-    st.header("Player API IDs")
-    st.write(player_data)
-
-with col2:
-    st.header("Team API IDs")
-    st.write(team_data)
-
-st.header("Game API IDs")
-
-season = st.text_input("Season (ex: 2023-24): ")
-
-season_type_options = ["Regular Season", "Playoffs", "Pre Season", "All Star"]
-season_type = st.selectbox("Season Type: ", season_type_options)
-
-if season and season_type:
-    data_load_state = st.text("Loading games...")
-    data = load_game_data(season=season, season_type_all_star=season_type)
-    data_load_state.text("Done! Currently using cached data.")
-    st.write(data)
-
-with st.expander("Parameter Patterns", expanded=False):
-    md_text = Path("pages/parameters.md").read_text()
-    st.markdown(md_text)
+    if season and season_type:
+        data_load_state = st.text("Loading games...")
+        data = load_game_data(season=season, season_type_all_star=season_type)
+        data_load_state.text("Done! Currently using cached data.")
+        st.write(data)

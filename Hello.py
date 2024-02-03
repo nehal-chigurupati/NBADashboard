@@ -1,5 +1,5 @@
 import streamlit as st
-
+from pages.components.sidebar import *
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
@@ -9,4 +9,7 @@ For the source code, see below.
 """
 st.write(msg)
 st.markdown("[Github](https://github.com/nehal-chigurupati/NBADashboard)")
+
+render_sidebar()
+
     
