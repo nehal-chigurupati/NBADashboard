@@ -70,8 +70,10 @@ def render_game_score(away_team_abbrev, home_team_abbrev, away_score, home_score
         st.write(away_score)
     
     with col2:
+        time_remaining_in_period = time_remaining_in_period[2:].replace("M", ":")
         st.write(time_remaining_in_period)
-        st.write(period)
+
+        st.markdown("**Quarter " + str(period) + "**")
     
     with col3:
         render_team(home_team_abbrev, 50, 50)
@@ -105,6 +107,7 @@ def render_todays_games():
             away_team_score = game["awayTeam"]["score"]
             home_team_score = game["homeTeam"]["score"]
 
+            print(game)
             period = game['period']
             game_clock = game['gameClock']
 
@@ -114,7 +117,7 @@ def render_todays_games():
                 render_future_game(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, gameStatusText)
             else:
                 render_game_score(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, period, game_clock)
-
+            st.divider()
     
 def render_sidebar():
     with st.sidebar:
