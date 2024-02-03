@@ -1,5 +1,7 @@
 import streamlit as st
+import os
 
+port = int(os.environ.get("PORT", 8501))
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
