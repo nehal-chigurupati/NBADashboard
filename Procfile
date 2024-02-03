@@ -1,1 +1,1 @@
-web: streamlit run Hello.py
+web: sh setup.sh && streamlit run Hello.py
