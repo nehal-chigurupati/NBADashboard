@@ -10,6 +10,11 @@ For the source code, see below.
 st.write(msg)
 st.markdown("[Github](https://github.com/nehal-chigurupati/NBADashboard)")
 
+msg_projects = """
+For my projects, see below.
+"""
+st.write(msg_projects)
+st.markdown("[Medium](https://medium.com/@jxuwrsb)")
 render_sidebar()
 
     
