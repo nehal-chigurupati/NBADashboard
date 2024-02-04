@@ -121,11 +121,11 @@ with st.expander(label="How important is bench production to regular season and 
     summary = """
     To determine the offensive importance of bench production on NBA rosters, I looked at four relationships:
 
-    **(1)** Average bench PPG in the regular season and regular season offensive rating
-    **(2)** Average bench PPG in the regular season and regular season win percentage
-    **(3)** Average proportion of team points per game that come from the bench and regular season offensive rating
-    **(4)** In a playoff series, the relationship between the likelihood of winning and the difference between the proportion of team/opponent points coming from the respective benches.
-    Data for each of these questions was collected from the 2010–11 season to 2022–23. 
+    **(1)** Average bench PPG in the regular season and regular season offensive rating\n
+    **(2)** Average bench PPG in the regular season and regular season win percentage\n
+    **(3)** Average proportion of team points per game that come from the bench and regular season offensive rating\n
+    **(4)** In a playoff series, the relationship between the likelihood of winning and the difference between the proportion of team/opponent points coming from the respective benches.\n
+    Data for each of these questions was collected from the 2010–11 season to 2022–23.
     All of these variables were measured relative to season average (e.g. “average bench PPG” was measured as the z-score relative to season bench PPG for all teams).
 
     I found two key results:
