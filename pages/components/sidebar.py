@@ -84,14 +84,14 @@ def render_future_game(away_team_abbrev, home_team_abbrev, away_score, home_scor
 
     with col1:
         render_team(away_team_abbrev, 50, 50)
-        st.write(away_score)
+        #st.write(away_score)
     
     with col2:
         st.write(gameStatusText)
     
     with col3:
         render_team(home_team_abbrev, 50, 50)
-        st.write(home_score)
+        #st.write(home_score)
     
 
 
