@@ -21,6 +21,34 @@ st.markdown("[Github](https://github.com/nehal-chigurupati/NBADashboard)")
 
 st.header("Projects")
 
+with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
+    st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
+    st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
+
+    summary = """
+    In this project, I attempt to answer the following question:\n\n
+
+    *In constructing a roster, is the best strategy to try and be good at a lot of offensive/defensive plays, or great at a select few plays?*
+
+    \n\n
+    To quantitatively measure diversity of offensive and defensive skill on a roster, I introduce three new metrics, 
+    referred to as offensive, defensive, and net range. These quantities approximate a team’s 
+    range of skill on offense and defense in common play types, including cuts, off-ball screens, isolation, 
+    post-up shooting, spot-up shooting, transition, and the pick and roll. Higher values of offensive range 
+    indicate that a team performs well on many of these play types. Similarly, higher values of defensive range 
+    indicate great diversity of offensive skill, while high values of net range indicate that a team is skilled 
+    in a variety of both offensive and defensive plays. \n\n
+
+    I then computed offensive/defensive/net rating for each team this season, 
+    and examined how defensive, offensive and net range affect offensive rating, 
+    defensive rating, and net rating/win percentage respectively. 
+    I came to a few conclusions, relevant to roster construction.
+    Teams should prioritize diversity of talent in offensive play types and defensive play types.
+     Moreover, teams that are constructed to have a wide range of both offensive and defensive skills 
+     seem to perform much better than teams that are designed to place all their chips on one side of the floor.
+    """
+    st.markdown(summary)
+
 with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
     st.subheader("Evaluating 2024 free agent 3P shooters")
     st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
