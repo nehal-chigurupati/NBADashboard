@@ -36,7 +36,7 @@ with st.expander(label='A metric for measuring the “range” of offensive and 
     range of skill on offense and defense in common play types, including cuts, off-ball screens, isolation, 
     post-up shooting, spot-up shooting, transition, and the pick and roll. Higher values of offensive range 
     indicate that a team performs well on many of these play types. Similarly, higher values of defensive range 
-    indicate great diversity of offensive skill, while high values of net range indicate that a team is skilled 
+    indicate great diversity of defensive skill, while high values of net range indicate that a team is skilled 
     in a variety of both offensive and defensive plays. \n\n
 
     I then computed offensive/defensive/net rating for each team this season, 
