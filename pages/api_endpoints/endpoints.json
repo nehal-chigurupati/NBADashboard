@@ -1452,6 +1452,55 @@
         "TeamID"
     ],
     "status": "success"
+},
+{
+    "data_sets": {
+        "AvailableVideo": [
+            "videoAvailable"
+        ],
+        "PlayByPlay": [
+            "gameId", 
+            "actionNumber", 
+            "clock",
+            "period",
+            "teamId",
+            "teamTricode",
+            "personId",
+            "playerName",
+            "playerNameI",
+            "xLegacy",
+            "yLegacy",
+            "shotDistance",
+            "shotResult",
+            "isFieldGoal",
+            "scoreHome",
+            "scoreAway",
+            "pointsTotal", 
+            "location",
+            "description",
+            "actionType",
+            "subType",
+            "videoAvailable",
+            "actionId"
+        ]
+    },
+    "endpoint": "PlayByPlayV3",
+    "last_validated_date": "2023-09-14",
+    "nullable_parameters": [],
+    "parameter_patterns": {
+        "EndPeriod": null,
+        "GameID": "^\\d{10}$",
+        "StartPeriod": null
+    },
+    "parameters": [
+        "EndPeriod",
+        "GameID",
+        "StartPeriod"
+    ],
+    "required_parameters": [
+        "GameID"
+    ],
+    "status": "success"
 }]
 
 
