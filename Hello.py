@@ -26,27 +26,27 @@ with st.expander(label='A metric for measuring the “range” of offensive and 
     st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
 
     summary = """
-    In this project, I attempt to answer the following question:\n\n
+Summary
 
-    *In constructing a roster, is the best strategy to try and be good at a lot of offensive/defensive plays, or great at a select few plays?*
+In this project, I attempt to answer the following question:
 
-    \n\n
-    To quantitatively measure diversity of offensive and defensive skill on a roster, I introduce three new metrics, 
-    referred to as offensive, defensive, and net range. These quantities approximate a team’s 
-    range of skill on offense and defense in common play types, including cuts, off-ball screens, isolation, 
-    post-up shooting, spot-up shooting, transition, and the pick and roll. Higher values of offensive range 
-    indicate that a team performs well on many of these play types. Similarly, higher values of defensive range 
-    indicate great diversity of defensive skill, while high values of net range indicate that a team is skilled 
-    in a variety of both offensive and defensive plays. \n\n
+*In constructing a roster, is the best strategy to be proficient in a wide range of offensive/defensive plays or excel in a select few plays?*
 
-    I then computed offensive/defensive/net rating for each team this season, 
-    and examined how defensive, offensive and net range affect offensive rating, 
-    defensive rating, and net rating/win percentage respectively. 
-    I came to a few conclusions, relevant to roster construction.
-    Teams should prioritize diversity of talent in offensive play types and defensive play types.
-     Moreover, teams that are constructed to have a wide range of both offensive and defensive skills 
-     seem to perform much better than teams that are designed to place all their chips on one side of the floor.
-    """
+To quantitatively measure the diversity of offensive and defensive skills on a roster, 
+I introduce three new metrics referred to as offensive, defensive, and net range, using techniques from topological data analysis. 
+These metrics approximate the diversity of a team’s proficiencies on offense and defense in common play types, 
+including cuts, off-ball screens, isolation, post-up shooting, spot-up shooting, transition, and the pick and roll. 
+Higher values of offensive range indicate that a team performs well on many of these play types. 
+Similarly, higher values of defensive range indicate great diversity of defensive skill, while high values of net range indicate
+ that a team is proficient in a wide variety of both offensive and defensive scenarios.
+
+I computed offensive/defensive/net range for each team in the 2023–24 season
+and examined how these quantities affect offensive rating, defensive rating, net rating, and win percentage.
+I came to a few conclusions relevant to roster construction. 
+First, teams should prioritize diversity of talent in both offensive and defensive play types.
+Second, teams that are constructed to have a wide range of both offensive and defensive skills seem to perform
+much better than teams that are designed to place all their chips on one side of the floor.
+"""
     st.markdown(summary)
 
 with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
