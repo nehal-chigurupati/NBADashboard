@@ -7,14 +7,14 @@ render_sidebar()
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-This is a work in progress, so there may be bugs. To navigate to pages, see the sidebar. Current pages include: \n
+This is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. Current pages include: \n
 **Live Game Dashboard**: A dashboard containing scores, play by play data, and estimated metrics for active games.\n
 **Player Dashboard**: A host of stats for individual players.\n
 **Lineup Dashboard**: This page is incomplete. Right now, it includes some estimated point per minute values
 for a project I'm working on.\n
 **All Raw Data**: This page provides a graphical interface to request data from the NBA's API. It includes a wide variety of datasets.
 
-For the source code, see below.
+For the source code, see my Github.
 """
 st.markdown(msg)
 st.markdown("[Github](https://github.com/nehal-chigurupati/NBADashboard)")
@@ -26,7 +26,6 @@ with st.expander(label='A metric for measuring the “range” of offensive and 
     st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
 
     summary = """
-Summary
 
 In this project, I attempt to answer the following question:
 
@@ -49,32 +48,40 @@ much better than teams that are designed to place all their chips on one side of
 """
     st.markdown(summary)
 
-with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
-    st.subheader("Evaluating 2024 free agent 3P shooters")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
-    summary = """
-    This project aims to find skilled three point shooters available at a discount in 2024 free agency.
-    I found free agents that are temporarily “hot” and “cold” from three point range this season by introducing a 
-    new three-point efficiency metric called Bayesian 3P%, indicative of a player’s “true” three point skill, 
-    and comparing it to 2023–24 season 3P%. 
-    Among players whose Bayesian 3P% was higher than their season 3P% (i.e. players who are in a slump), 
-    I constructed a model to estimate the discount in 2024–25 salary that a team could expect to get.
-    Four players distinguished themselves as great shooters likely available for cheap: 
-    Robert Covington, Wesley Matthews, Nicolas Batum, and Danilo Gallinari
-    """
-    st.write(summary)
-with st.expander(label="Does pace matter for offensive success?", expanded=False):
-    st.subheader("Does pace matter for offensive success?")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
-    summary = """
-    This analysis was motivated by the following excerpt from Ben Taylor’s Thinking About Basketball:
+with st.expander(label="Predicting the length of three-point slumps", expanded=False):
+    st.subheader("Predicting the length of three-point slumps")
+    st.markdown("[Link](https://medium.com/@jxuwrsb/predicting-the-length-and-occurrence-of-three-point-shooting-slumps-24a320615d76)")
 
-    “Basketball is a per-possession game… It does not matter if a team plays
-    fast or slow; a team scoring 80 points can run a more efficient offense than
-    a team scoring 100 points… if the team scoring 100 points needed more possessions. There is absolutely zero correlation between a team’s pace and its offensive efficiency… Because of alternating possession rules, basketball success is completely determined by per-possession efficiency. There is a near perfect correlation (0.97) between a team’s efficiency and wins” (pg. 32).
+    summary = """
+    The objective of this project is to determine the probability of a three point shooting slump extending to a given number of games, 
+    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis,
+    primarily the Cox Proportional Hazards Model. I reached three conclusions:
 
-    To confirm, I attempted to determine whether there is correlation between pace, offensive rating and wins.
+    **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
+    **Slumps longer than 32 games may be indicative of structural issues with the shot or player.**
+
+    **(2)** The length of a shooting slump is inversely related with its severity (defined as the difference between career and slump 3PT%). 
+    In other words, **the more inefficient a player is shooting during a slump, 
+    the quicker they can expect to return to normal**.
+
+    **(3)** Decreasing three point attempts per game extends slumps, while increasing 3 point attempts per game shortens slumps, 
+    confirming that **shooters can shoot their way out of slumps**.
     """
+
+    st.markdown(summary)
+
+with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
+    st.subheader("Reproducing NBA tracking data with computer vision")
+    st.markdown("[Link](https://github.com/nehal-chigurupati/CourtVision/blob/main/README.pdf)")
+
+    summary = """
+    **This project is in progress**.
+
+    The objective is to use computer vision to generate location and velocity data for players during NBA games, 
+    extracted from broadcast footage. One particular application is also explored, introducing a spacing metric
+    derived from the convex hull of the defenders' positions during a given halfcourt, five-out possession.
+    """
+
     st.markdown(summary)
 
 with st.expander(label="Using clustering to construct an offensively optimal lineup", expanded=False):
@@ -104,6 +111,37 @@ with st.expander(label="Using clustering to construct an offensively optimal lin
     """
     st.markdown(summary)
 
+
+with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
+    st.subheader("Evaluating 2024 free agent 3P shooters")
+    st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
+    summary = """
+    This project aims to find skilled three point shooters available at a discount in 2024 free agency.
+    I found free agents that are temporarily “hot” and “cold” from three point range this season by introducing a 
+    new three-point efficiency metric called Bayesian 3P%, indicative of a player’s “true” three point skill, 
+    and comparing it to 2023–24 season 3P%. 
+    Among players whose Bayesian 3P% was higher than their season 3P% (i.e. players who are in a slump), 
+    I constructed a model to estimate the discount in 2024–25 salary that a team could expect to get.
+    Four players distinguished themselves as great shooters likely available for cheap: 
+    Robert Covington, Wesley Matthews, Nicolas Batum, and Danilo Gallinari
+    """
+    st.write(summary)
+
+with st.expander(label="Does pace matter for offensive success?", expanded=False):
+    st.subheader("Does pace matter for offensive success?")
+    st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
+    summary = """
+    This analysis was motivated by the following excerpt from Ben Taylor’s Thinking About Basketball:
+
+    “Basketball is a per-possession game… It does not matter if a team plays
+    fast or slow; a team scoring 80 points can run a more efficient offense than
+    a team scoring 100 points… if the team scoring 100 points needed more possessions. There is absolutely zero correlation between a team’s pace and its offensive efficiency… Because of alternating possession rules, basketball success is completely determined by per-possession efficiency. There is a near perfect correlation (0.97) between a team’s efficiency and wins” (pg. 32).
+
+    To confirm, I attempted to determine whether there is correlation between pace, offensive rating and wins.
+    """
+    st.markdown(summary)
+
+
 with st.expander(label="Can NBA teams win the year after large roster changes?", expanded=False):
     st.subheader("Can NBA teams win the year after large roster changes?")
     st.markdown("[Link](https://medium.com/@jxuwrsb/can-nba-teams-win-the-year-after-large-roster-changes-fd65b2ee783b)")
@@ -120,27 +158,7 @@ with st.expander(label="Can NBA teams win the year after large roster changes?",
     """
     st.markdown(summary)
 
-with st.expander(label="Predicting the length of three-point slumps", expanded=False):
-    st.subheader("Predicting the length of three-point slumps")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/predicting-the-length-and-occurrence-of-three-point-shooting-slumps-24a320615d76)")
 
-    summary = """
-    The objective of this project is to determine the probability of a three point shooting slump extending to a given number of games, 
-    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis,
-    primarily the Cox Proportional Hazards Model. I reached three conclusions:
-
-    **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
-    **Slumps longer than 32 games may be indicative of structural issues with the shot or player.**
-
-    **(2)** The length of a shooting slump is inversely related with its severity (defined as the difference between career and slump 3PT%). 
-    In other words, **the more inefficient a player is shooting during a slump, 
-    the quicker they can expect to return to normal**.
-
-    **(3)** Decreasing three point attempts per game extends slumps, while increasing 3 point attempts per game shortens slumps, 
-    confirming that **shooters can shoot their way out of slumps**.
-    """
-
-    st.markdown(summary)
 
 with st.expander(label="How important is bench production to regular season and playoff success?", expanded=False):
     st.subheader("How important is bench production to regular season and playoff success?")
@@ -171,19 +189,7 @@ with st.expander(label="How important is bench production to regular season and 
 
     st.markdown(summary)
 
-with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
-    st.subheader("Reproducing NBA tracking data with computer vision")
-    st.markdown("[Link](https://github.com/nehal-chigurupati/CourtVision/blob/main/README.pdf)")
 
-    summary = """
-    **This project is in progress**.
-
-    The objective is to use computer vision to generate location and velocity data for players during NBA games, 
-    extracted from broadcast footage. One particular application is also explored, introducing a spacing metric
-    derived from the convex hull of the defenders' positions during a given halfcourt, five-out possession.
-    """
-
-    st.markdown(summary)
 
 with st.expander(label="Evaluating lineups and players by the quality of looks they generate", expanded=False):
     st.subheader("Evaluating lineups and players by the quality of looks they generate")

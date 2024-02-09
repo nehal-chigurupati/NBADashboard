@@ -62,7 +62,7 @@ def render_teams():
         if f[-3:] == "svg":
             render_svg(open("pages/images/team_logos/" + f).read(), 10, 10)
 
-def render_game_score(away_team_abbrev, home_team_abbrev, away_score, home_score, period, time_remaining_in_period):
+def render_game_score(away_team_abbrev, home_team_abbrev, away_score, home_score, period, time_remaining_in_period, gameStatusText):
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -74,6 +74,9 @@ def render_game_score(away_team_abbrev, home_team_abbrev, away_score, home_score
         st.write(time_remaining_in_period)
 
         st.markdown("**Quarter " + str(period) + "**")
+        if gameStatusText == "Final":
+            st.markdown("**Final Score**")
+
     
     with col3:
         render_team(home_team_abbrev, 50, 50)
@@ -107,7 +110,6 @@ def render_todays_games():
             away_team_score = game["awayTeam"]["score"]
             home_team_score = game["homeTeam"]["score"]
 
-            print(game)
             period = game['period']
             game_clock = game['gameClock']
 
@@ -116,7 +118,7 @@ def render_todays_games():
             if "ET" in gameStatusText:
                 render_future_game(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, gameStatusText)
             else:
-                render_game_score(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, period, game_clock)
+                render_game_score(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, period, game_clock, gameStatusText)
             st.divider()
     
 def render_sidebar():
