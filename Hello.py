@@ -7,17 +7,16 @@ render_sidebar()
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-This is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. Current pages include: \n
-**Live Game Dashboard**: A dashboard containing scores, play by play data, and estimated metrics for active games.\n
-**Player Dashboard**: A host of stats for individual players.\n
-**Lineup Dashboard**: This page is incomplete. Right now, it includes some estimated point per minute values
+This streamlit app is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. Current pages include: \n
+[**Live Game Dashboard**](Live_Game_Dashboard): A dashboard containing scores, play by play data, and estimated metrics for active games.\n
+[**Player Dashboard**](Player_Dashboard): Historical and current season stats for all NBA players.\n
+[**Lineup Dashboard**](Lineup_Dashboard): This page is incomplete. Right now, it includes some estimated point per minute values
 for a project I'm working on.\n
-**All Raw Data**: This page provides a graphical interface to request data from the NBA's API. It includes a wide variety of datasets.
+[**All Raw Data**](All_Raw_Data): This page provides a graphical interface to request data from the NBA's API.
 
-For the source code, see my Github.
+**For the source code, see my [Github](https://github.com/nehal-chigurupati/NBADashboard).**
 """
 st.markdown(msg)
-st.markdown("[Github](https://github.com/nehal-chigurupati/NBADashboard)")
 
 st.header("Projects")
 
