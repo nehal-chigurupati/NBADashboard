@@ -4,6 +4,13 @@ from pages.components.Live_Game_Dashboard import get_active_games, load_scoreboa
 import os
 import base64
 
+nba_team_abbreviations = [
+    'ATL', 'BOS', 'BKN', 'CHA', 'CHI', 'CLE', 'DAL', 'DEN',
+    'DET', 'GSW', 'HOU', 'IND', 'LAC', 'LAL', 'MEM', 'MIA',
+    'MIL', 'MIN', 'NOP', 'NYK', 'OKC', 'ORL', 'PHI', 'PHX',
+    'POR', 'SAC', 'SAS', 'TOR', 'UTA', 'WAS'
+]
+
 def render_svg(svg, width_percentage=None, height_percentage=None):
     """Renders the given svg string."""
     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
@@ -95,11 +102,19 @@ def render_future_game(away_team_abbrev, home_team_abbrev, away_score, home_scor
     with col3:
         render_team(home_team_abbrev, 50, 50)
         #st.write(home_score)
-    
+
+def is_nba_team_game(game):
+    away_team_abbrev = game["awayTeam"]["teamTricode"]
+    home_team_abbrev = game["homeTeam"]["teamTricode"]
+        
+    return ((away_team_abbrev in nba_team_abbreviations) and (home_team_abbrev in nba_team_abbreviations))
+
+def filter_for_nba_team_games(game_data):
+    return [game for game in game_data if is_nba_team_game(game)]
 
 
 def render_todays_games():
-    game_data = load_all_scoreboard()
+    game_data = filter_for_nba_team_games(load_all_scoreboard())
     if len(game_data) == 0:
         st.write("No games today")
     else:
