@@ -1,7 +1,4 @@
-mkdir -p ~/.streamlit/
+#!/bin/bash
 
-echo "[server]
-headless = true
-port = $PORT
-enableCORS = false
-" > ~/.streamlit/config.toml
+#Install FFmpeg using Homebrew
+brew install ffmpeg

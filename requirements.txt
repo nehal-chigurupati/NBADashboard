@@ -7,3 +7,11 @@ streamlit-autorefresh
 Pillow
 matplotlib
 retry
+opencv-python
+scikit-learn
+ultralytics
+tqdm
+jsonlines
+scipy
+moviepy
+bash setup.sh
