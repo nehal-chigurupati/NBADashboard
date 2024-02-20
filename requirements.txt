@@ -14,3 +14,4 @@ tqdm
 jsonlines
 scipy
 moviepy
+tensorflow[and-cuda]
