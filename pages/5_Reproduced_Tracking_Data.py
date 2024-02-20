@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tempfile
-from moviepy.editor import VideoFileClip
 import subprocess
 import sys
 from pages.components.sidebar import *

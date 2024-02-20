@@ -12,6 +12,9 @@ This streamlit app is a work in progress, so there may be bugs. For my projects,
 [**Player Dashboard**](Player_Dashboard): Historical and current season stats for all NBA players.\n
 [**Lineup Dashboard**](Lineup_Dashboard): This page is incomplete. Right now, it includes some estimated point per minute values
 for a project I'm working on.\n
+[**Reproduced Tracking Data**](Reproduced_Tracking_Data): This page allows the user to upload footage of a possession, and use 
+a model I developed to extract tracking information. Note that the current iteration is not final; In particular, there are issues 
+with keeping track of players when obscured by screens.\n
 [**All Raw Data**](All_Raw_Data): This page provides a graphical interface to request data from the NBA's API.
 
 **For the source code, see my [Github](https://github.com/nehal-chigurupati/NBADashboard).**
