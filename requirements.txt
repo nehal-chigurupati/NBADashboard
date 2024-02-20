@@ -14,4 +14,3 @@ tqdm
 jsonlines
 scipy
 moviepy
-bash setup.sh
