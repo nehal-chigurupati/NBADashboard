@@ -21,7 +21,7 @@ with keeping track of players when obscured by screens.\n
 """
 st.markdown(msg)
 
-st.header("Projects")
+st.header("My Projects")
 
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
     st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
