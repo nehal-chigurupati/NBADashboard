@@ -16,6 +16,5 @@ scipy
 moviepy
 tensorflow[and-cuda]
 stqdm
-streamlit-elements-0.1.0
 streamlit-javascript
 pytz
