@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 from pages.components.Live_Game_Dashboard import get_active_games, load_scoreboard_data, render_curr_score, load_all_scoreboard
+from pages.components.ip import loc
 import os
 import base64
 
@@ -137,6 +138,7 @@ def render_todays_games():
             st.divider()
     
 def render_sidebar():
+    loc()
     with st.sidebar:
         st.subheader("Games Today")
         initial_visit = True
