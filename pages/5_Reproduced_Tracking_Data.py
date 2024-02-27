@@ -8,7 +8,6 @@ import sys
 from pages.components.sidebar import *
 from pages.src.CourtVision.TrackProcessing import get_track_data, process_colors
 from pages.src.CourtVision.TrackCollection import generate_tracking_data
-from st_aggrid import AgGrid
 
 st.set_page_config(layout="wide")
 render_sidebar()
