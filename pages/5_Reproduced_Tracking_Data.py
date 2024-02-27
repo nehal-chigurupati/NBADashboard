@@ -6,8 +6,9 @@ import tempfile
 import subprocess
 import sys
 from pages.components.sidebar import *
-from pages.src.CourtVision.TrackCollection import generate_tracking_data
 from pages.src.CourtVision.TrackProcessing import get_track_data, process_colors
+from pages.src.CourtVision.TrackCollection import generate_tracking_data
+from st_aggrid import AgGrid
 
 st.set_page_config(layout="wide")
 render_sidebar()
@@ -23,7 +24,7 @@ def display_json_data(json_out, display):
     if display:
         out_df = get_track_data(json_out)
         if out_df is not None:
-            st.write(out_df[["TRACK_NUM", "X", "Y", "FRAME_NUM", "MODE_TEAM_ABBREV"]])
+            AgGrid(out_df[["TRACK_NUM", "X", "Y", "FRAME_NUM", "MODE_TEAM_ABBREV"]])
 
 def convert_to_h264(input_path, output_path):
     # Load the video clip

@@ -32,4 +32,5 @@ if not check_password():
 
 # Main Streamlit app starts here
 st.header("IP Log")
-st.write(pd.read_csv("pages/components/ips.csv"))
+df = pd.read_csv("pages/components/ips.csv")
+st.write(df)

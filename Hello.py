@@ -22,7 +22,28 @@ with keeping track of players when obscured by screens.\n
 st.markdown(msg)
 
 st.header("My Projects")
+with st.expander(label="Predicting the length of three-point slumps", expanded=False):
+    st.subheader("Predicting the length of three-point slumps")
+    st.markdown("[Link](https://medium.com/@jxuwrsb/predicting-the-length-and-occurrence-of-three-point-shooting-slumps-24a320615d76)")
 
+    summary = """
+    The objective of this project is to determine the probability of a three point shooting slump extending to a given number of games, 
+    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis,
+    primarily the Cox Proportional Hazards Model. I reached three conclusions:
+
+    **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
+    **Slumps longer than 32 games may be indicative of structural issues with the shot or player.**
+
+    **(2)** The length of a shooting slump is inversely related with its severity (defined as the difference between career and slump 3PT%). 
+    In other words, **the more inefficient a player is shooting during a slump, 
+    the quicker they can expect to return to normal**.
+
+    **(3)** Decreasing three point attempts per game extends slumps, while increasing 3 point attempts per game shortens slumps, 
+    confirming that **shooters can shoot their way out of slumps**.
+    """
+
+    st.markdown(summary)
+    
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
     st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
     st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
@@ -50,27 +71,6 @@ much better than teams that are designed to place all their chips on one side of
 """
     st.markdown(summary)
 
-with st.expander(label="Predicting the length of three-point slumps", expanded=False):
-    st.subheader("Predicting the length of three-point slumps")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/predicting-the-length-and-occurrence-of-three-point-shooting-slumps-24a320615d76)")
-
-    summary = """
-    The objective of this project is to determine the probability of a three point shooting slump extending to a given number of games, 
-    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis,
-    primarily the Cox Proportional Hazards Model. I reached three conclusions:
-
-    **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
-    **Slumps longer than 32 games may be indicative of structural issues with the shot or player.**
-
-    **(2)** The length of a shooting slump is inversely related with its severity (defined as the difference between career and slump 3PT%). 
-    In other words, **the more inefficient a player is shooting during a slump, 
-    the quicker they can expect to return to normal**.
-
-    **(3)** Decreasing three point attempts per game extends slumps, while increasing 3 point attempts per game shortens slumps, 
-    confirming that **shooters can shoot their way out of slumps**.
-    """
-
-    st.markdown(summary)
 
 with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
     st.subheader("Reproducing NBA tracking data with computer vision")
