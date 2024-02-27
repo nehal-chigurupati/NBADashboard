@@ -28,8 +28,8 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
 
     summary = """
     The objective of this project is to determine the probability of a three point shooting slump extending to a given number of games, 
-    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis,
-    primarily the Cox Proportional Hazards Model. I reached three conclusions:
+    and to evaluate strategies for ending slumps. To make these determinations, I used techniques from survival analysis, a tool used in clinical studies to determine
+    the mortality risk posed by medical conditions. I reached three conclusions:
 
     **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
     **Slumps longer than 32 games may be indicative of structural issues with the shot or player.**
@@ -43,7 +43,7 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     """
 
     st.markdown(summary)
-    
+
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
     st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
     st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
