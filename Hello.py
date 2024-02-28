@@ -2,7 +2,7 @@ import streamlit as st
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
-render_sidebar()
+render_sidebar("Hello")
 
 st.header("Welcome to my dashboard for basketball-related data.")
 
