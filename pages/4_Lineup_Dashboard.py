@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
-render_sidebar()
+render_sidebar("Lineup_Dashboard")
 
 st.text("***** IN PROGRESS ******")
 

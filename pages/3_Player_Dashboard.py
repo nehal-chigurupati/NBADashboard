@@ -13,7 +13,7 @@ from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
 player_name = render_player_selectbox()
-render_sidebar()
+render_sidebar("Player_Dashboard")
 
 if player_name: 
     on_off, bayes_data, curr_season_games, career_data = load_all_data(player_name)

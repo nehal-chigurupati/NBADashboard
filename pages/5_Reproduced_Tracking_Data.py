@@ -10,7 +10,7 @@ from pages.src.CourtVision.TrackProcessing import get_track_data, process_colors
 from pages.src.CourtVision.TrackCollection import generate_tracking_data
 
 st.set_page_config(layout="wide")
-render_sidebar()
+render_sidebar("Reproduced_Tracking_Data")
 
 @st.cache_data(show_spinner=False, experimental_allow_widgets=True)
 def analyze_video(video_buffer, video_out_path):

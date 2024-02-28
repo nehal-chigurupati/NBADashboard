@@ -58,13 +58,13 @@ def get_est_time_and_date():
 
     return time, day, month, year
 
-def loc():
+def loc(page):
     user_ip = request_ip_address()
     time, day, month, year = get_est_time_and_date()
 
     if user_ip != None:
         city, country, lat, long = get_location(user_ip)
-        access_log = pd.read_csv("pages/components/ips.csv")
+        access_log = pd.read_csv("pages/components/ips_v2.csv")
 
         all_ips = access_log["ip"].tolist()
         all_ips.append(user_ip)
@@ -90,6 +90,9 @@ def loc():
         all_years = access_log["year"].tolist()
         all_years.append(year)
 
+        all_pages = access_log["page"].tolist()
+        all_pages.append(page)
+
         new_log = {
             'ip': all_ips,
             'city': all_cities,
@@ -99,9 +102,10 @@ def loc():
             'day': all_days,
             'month': all_months,
             'year': all_years,
+            'page': all_pages
         }
 
         new_log = pd.DataFrame(new_log)
-        new_log.to_csv("pages/components/ips.csv")
+        new_log.to_csv("pages/components/ips_v2.csv")
         
 

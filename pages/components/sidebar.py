@@ -137,8 +137,8 @@ def render_todays_games():
                 render_game_score(away_team_abbrev, home_team_abbrev, away_team_score, home_team_score, period, game_clock, gameStatusText)
             st.divider()
     
-def render_sidebar():
-    loc()
+def render_sidebar(page_name):
+    loc(page_name)
     with st.sidebar:
         st.subheader("Games Today")
         initial_visit = True

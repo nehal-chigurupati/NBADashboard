@@ -1,7 +1,7 @@
 import hmac
 import streamlit as st
 import pandas as pd
-
+import numpy as np
 
 def check_password():
     """Returns `True` if the user had the correct password."""
@@ -32,5 +32,14 @@ if not check_password():
 
 # Main Streamlit app starts here
 st.header("IP Log")
-df = pd.read_csv("pages/components/ips.csv")
+st.subheader("With pages")
+df = pd.read_csv("pages/components/ips_v2.csv")
 st.write(df)
+
+st.subheader("Old Version")
+df_two = pd.read_csv("pages/components/ips.csv")
+st.write(df_two)
+
+st.subheader("Unique locations")
+locs = np.unique(df_two["city"].tolist() + df["city"].tolist())
+st.write(locs)

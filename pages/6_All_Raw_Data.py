@@ -11,7 +11,7 @@ from pages.components.All_Raw_Data import *
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
-render_sidebar()
+render_sidebar("All_Raw_Data")
 
 st.title("NBA Website Data Retrieval")
 st.caption("For parameter patterns, see the bottom of this page.")

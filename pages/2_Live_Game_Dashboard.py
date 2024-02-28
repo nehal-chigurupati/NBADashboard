@@ -12,7 +12,7 @@ from pages.components.Live_Game_Dashboard import *
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
-render_sidebar()
+render_sidebar("Live_Game_Dashboard")
 
 #Get user input for game
 active_games = get_active_games()
