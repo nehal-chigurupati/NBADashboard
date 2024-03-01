@@ -213,3 +213,7 @@ with st.expander(label="Evaluating lineups and players by the quality of looks t
     should represent their "skill" at generating good looks for teammates. 
     """
     st.markdown(summary)
+
+st.header("Contact Me (Nehal Chigurupati)")
+st.markdown("Email: sfw9tu@virginia.edu")
+st.markdown("Phone: +1 (216)-903-6902")
