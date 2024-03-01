@@ -7,7 +7,8 @@ render_sidebar("Hello")
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-This streamlit app is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. Current pages include: \n
+This streamlit app is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. My contact information is at the bottom of this page.
+ Current pages include: \n
 [**Live Game Dashboard**](Live_Game_Dashboard): A dashboard containing scores, play by play data, and estimated metrics for active games.\n
 [**Player Dashboard**](Player_Dashboard): Historical and current season stats for all NBA players.\n
 [**Lineup Dashboard**](Lineup_Dashboard): This page is incomplete. Right now, it includes some estimated point per minute values
