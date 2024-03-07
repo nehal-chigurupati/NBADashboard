@@ -257,10 +257,10 @@ def render_inputs(player_list):
     available_player_names = []
 
     fixed_player_names = st.multiselect('Select players on roster', player_list)
-    use_free_agents = st.checkbox("Use 2024 free agents as available players?", value=True)
+    use_free_agents = st.checkbox("Use 2024 free agents as available players", value=True)
     free_agents = pd.read_csv(data_dir + "FreeAgents.csv")
     with st.expander("See free agents"):
-        st.write(pd.read_csv(data_dir + "FreeAgents.csv"))
+        st.dataframe(pd.read_csv(data_dir + "FreeAgents.csv"), use_container_width=True)
 
     play_time_constraint = st.checkbox("Impose playing time constraint", value=False)
     if use_free_agents:
