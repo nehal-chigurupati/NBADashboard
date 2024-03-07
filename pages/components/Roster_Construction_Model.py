@@ -14,6 +14,25 @@ k = 13.91
 
 """**utils**"""
 
+def format_dollar_value(value):
+    print("Begin: " + str(value))
+    if value.startswith('-'):
+        prefix = '-$'
+        num_part = value[2:]
+    else:
+        prefix = '$'
+        num_part = value
+    
+    if '.' in num_part:
+        whole, cents = num_part.split('.')
+        formatted_whole = '{:,}'.format(int(whole))
+        print("End: " + f"{prefix}{formatted_whole}.{cents}")
+        return f"{prefix}{formatted_whole}.{cents}"
+    else:
+        formatted_whole = '{:,}'.format(int(num_part))
+        print("End: " + f"{prefix}{formatted_whole}")
+        return f"{prefix}{formatted_whole}"
+    
 def select_n_from_k(k, n):
   k_copy = list(k)
   random.shuffle(k_copy)
@@ -270,16 +289,17 @@ def render_inputs(player_list):
 
     percentage = st.slider('Max percent of salary cap:', 0.9, 2.0, 1.0, step=0.01)
     # Calculate the difference
-
-    st.text("Budget: $" + str(percentage * salary_cap))
+    print(str(percentage * salary_cap))
+    st.text("Budget: " + format_dollar_value(str(percentage * salary_cap)))
+    st.text("Salary cap (2023-24): " + "136,000,000")
     difference = (percentage * salary_cap) - salary_cap
 
     if difference > 0:
-        st.text("$" + str(difference) + " above salary cap")
+        st.text(format_dollar_value(str(difference)) + " above salary cap")
     elif difference == 0:
         st.text("At salary cap")
     else:
-        st.text("$" + str(difference)[1:] + " below the salary cap")
+        st.text(format_dollar_value(str(difference)[1:]) + " below the salary cap")
 
     return fixed_player_names, available_players, percentage, play_time_constraint
 
