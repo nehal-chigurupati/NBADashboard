@@ -7,6 +7,8 @@ from nba_api.stats.static import players
 from scipy.stats import binom, norm
 import plotly.express as px
 import plotly.graph_objects as go
+import os
+import base64
 
 #Compute z-score
 def compute_z_score(element, column):
@@ -261,6 +263,10 @@ def render_seasonal_traditional_stats(player_name):
         else:
             st.table(data.head(5))
 
+@st.cache_data()
+def load_all_estimated_metrics(season, season_type, league_id="00"):
+    return playerestimatedmetrics.PlayerEstimatedMetrics(season=season, season_type=season_type, league_id="00").get_data_frames()[0]
+
 #Estimated metrics
 def render_estimated_metrics(player_name, career_data):
     with st.expander("Params"):
@@ -270,6 +276,8 @@ def render_estimated_metrics(player_name, career_data):
 
             season_type_options = ["Regular Season", "Playoffs", "Pre Season", "All Star"]
             season_type = st.selectbox("Season Type: ", season_type_options, index=0)
+
+    
         
     data_load_state = st.text("Loading stats...")
     estimated_data = load_estimated_metrics_player(player_name=player_name, timespan=timespan, season_type=season_type, career_data=career_data)
@@ -295,8 +303,7 @@ def render_estimated_metrics(player_name, career_data):
     z_score_seasons = [i for i in timespan_options if i != "Career"]
     z_scores = []
     for season in z_score_seasons:
-        e_metrics_season = playerestimatedmetrics.PlayerEstimatedMetrics(season=season, season_type=season_type, league_id="00")
-        e_metrics_season = e_metrics_season.get_data_frames()[0]
+        e_metrics_season = load_all_estimated_metrics(season=season, season_type=season_type, league_id="00")
         player_raw_stat = e_metrics_season[e_metrics_season["PLAYER_ID"] == get_player_id(player_name)][z_score_stat].iloc[0]
         z_scores.append(compute_z_score(player_raw_stat, e_metrics_season[z_score_stat]))
     z_score_data = pd.DataFrame({"Season": z_score_seasons, "Z-Score": z_scores})
@@ -418,3 +425,24 @@ def load_all_data(player_name):
     career_data = playercareerstats.PlayerCareerStats(player_id=player_id).get_data_frames()[0]
     on_off = load_on_off_data(player_id, career_data)
     return on_off, bayes_data, season_game_data, career_data
+
+def render_svg(svg, width_percentage=None, height_percentage=None):
+    """Renders the given svg string."""
+    b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
+    
+    #Build the img tag with optional width and height attributes
+    img_tag = f'<img src="data:image/svg+xml;base64,{b64}"'
+    
+    if width_percentage:
+        img_tag += f' width="{width_percentage}%"'
+    
+    if height_percentage:
+        img_tag += f' height="{height_percentage}%"'
+    
+    img_tag += '/>'
+    
+    #Render the HTML
+    c = st.container()
+    c.write(img_tag, unsafe_allow_html=True)
+
+        
