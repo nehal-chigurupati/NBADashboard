@@ -10,7 +10,7 @@ msg = """
 This streamlit app is a work in progress, so there may be bugs. For my projects, see the section below. To navigate to pages, see the sidebar. My contact information is at the bottom of this page.
  Current pages include: \n
 [**Roster Construction Model**](Roster_Construction_Model): This page implements an optimization model I developed that allows the user to input 
-members of a roster, available free agents, and determines the optimal roster construction for maximizing expected wins while adhering to a salary budget
+members of a roster and available players, and determines the optimal roster construction for maximizing expected wins while adhering to a salary budget
 and playing time constraints.\n
 [**Live Game Dashboard**](Live_Game_Dashboard): A dashboard containing scores, play by play data, and estimated metrics for active games.\n
 [**Player Dashboard**](Player_Dashboard): Historical and current season stats for all NBA players.\n
