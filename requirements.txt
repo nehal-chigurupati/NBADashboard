@@ -18,3 +18,4 @@ tensorflow[and-cuda]
 stqdm
 streamlit-javascript
 pytz
+gekko

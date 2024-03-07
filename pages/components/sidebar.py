@@ -16,7 +16,7 @@ def render_svg(svg, width_percentage=None, height_percentage=None):
     """Renders the given svg string."""
     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
     
-    # Build the img tag with optional width and height attributes
+    #Build the img tag with optional width and height attributes
     img_tag = f'<img src="data:image/svg+xml;base64,{b64}"'
     
     if width_percentage:

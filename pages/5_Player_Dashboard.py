@@ -19,10 +19,11 @@ if player_name:
     on_off, bayes_data, curr_season_games, career_data = load_all_data(player_name)
 
     st.title(player_name)
-    st.header("Seasonal Traditional Stats")
+    st.header("Season Box Score")
     render_seasonal_traditional_stats(player_name)
 
     col1, col2 = st.columns(2)
+    #Z-scores in estimated metrics doesn't load quickly, everything else takes a while
     with col1: 
         st.header("Estimated Metrics")
         estimated_data, timespan_options, season_type_options = render_estimated_metrics(player_name, career_data)
@@ -30,7 +31,6 @@ if player_name:
 
     with col2:
         st.header("Advanced Shooting Stats")
-        st.subheader("Bayesian 3P%")
         render_advanced_shooting_stats(player_name, career_data, bayes_data)
 
 
