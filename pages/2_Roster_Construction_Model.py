@@ -12,7 +12,7 @@ st.markdown("For background on this model, see [here](https://github.com/nehal-c
 player_df = get_player_df()
 fixed_player_names, available_player_names, salary_cap_pct, play_time_constraint = render_inputs(player_df["Player"].tolist())
 
-exec_model = st.button("Run Model")
+exec_model = st.button("Optimize")
 
 if exec_model:
     try:
