@@ -31,8 +31,6 @@ with st.expander(label="Modeling roster construction as an optimization problem"
     st.markdown("[Link](https://github.com/nehal-chigurupati/RosterConstruction/blob/main/README.pdf)")
 
     summary = """
-    **This project is in progress**.
-
     This project attempts to treat roster construction as an optimization problem, where one needs to add players to a roster to maximize pythagorean expected wins subject to salary, playing time and roster size constraints.
     My initial model is a simplification in primarily two areas: \n
     **First**, it assumes a "hard cap" on salary, which can be inputted as a proportion (not necessarily smaller than 1) of the 2023-24 salary cap.\n
@@ -64,6 +62,29 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     """
 
     st.markdown(summary)
+with st.expander(label="Modeling the decision to pull players in foul trouble", expanded=False):
+    st.subheader("Modeling the decision to pull players in foul trouble")
+    st.markdown("[Link](https://github.com/nehal-chigurupati/FoulTrouble/blob/main/README.pdf)")
+
+    summary = """
+    **This project is in progress**
+
+    The objective of this project is to determine when, if at all, pulling a player is the proper response to foul trouble. I evaluate two approaches: first, 
+    to pull the player until they are no longer on pace to foul out, and second, to keep the player in the game until either they foul out or the game clock expires.
+
+    **My initial model assumed that player minutes now have the same value as minutes later, and that changes in point differential now have the same value as changes later (i.e. "clutch" points do not affect the probability of winning a game any more than first quarter points).
+    Under these assumptions, the optimal strategy is to keep the player in.** 
+
+    To validate the "constant value of points" assumption, I measured the effect of changes in point differential in each quarter on the probability of winning a game. There was no significant difference
+    in these probabilities, indicating that **the "constant value of points" assumption is justified.**
+
+    The "constant value of minutes" assumption is more dubious. Players in foul trouble may be hesitant to play aggressively, reducing their effectiveness on the court.
+    To determine if such an effect exists on the offensive side of the floor, I computed the difference in league-wide field goal percentage when the shooter is in foul trouble and when they are not. 
+    There was no significant difference in these quantities, indicating that **foul trouble causes no deterioration of offensive performance**. I'm currently brainstorming
+    different ways to evaluate the analagous statement for the defensive side of the floor. 
+    """
+    st.markdown(summary)
+
 
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
     st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
