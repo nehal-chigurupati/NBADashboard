@@ -6,6 +6,8 @@ from nba_api.stats.endpoints import playerestimatedmetrics
 import unicodedata
 from gekko import GEKKO
 
+print("Importing time: " + str(end_time-start_time))
+
 data_dir = "pages/data/"
 
 #Params
@@ -92,8 +94,11 @@ def get_player_costs():
 
 @st.cache_data()
 def get_estimated_off_rating(player_names, season="2023-24"):
+  """
   estimated_metrics = playerestimatedmetrics.PlayerEstimatedMetrics(season=season, league_id="00", season_type="Regular Season")
   estimated_metrics = estimated_metrics.get_data_frames()[0]
+  """
+  estimated_metrics = pd.read_csv(data_dir + "e_mets.csv", engine="c")
 
   eo = []
   ed = []
@@ -113,8 +118,15 @@ def get_estimated_off_rating(player_names, season="2023-24"):
   return pd.DataFrame(out)
 
 def add_eo_ed(player_costs_df, season="2023-24"):
+  start_time = time.time()
   e_mets_df = get_estimated_off_rating(player_costs_df["Player"].tolist(), season=season)
+  end_time = time.time()
+  print("Get estimated off rating time:  " + str(end_time-start_time))
+
+  start_time = time.time()
   player_costs_df = player_costs_df.merge(e_mets_df, on="Player")
+  end_time = time.time()
+  print("merge time: " + str(end_time-start_time))
   return player_costs_df
 
 """**Next, calculate the number of possessions per game for players**"""
@@ -145,7 +157,9 @@ def calculate_league_poss_per_game(fname=data_dir + "team_possession_data.csv"):
 
 def get_player_df():
     player_costs = get_player_costs()
+
     player_df = add_eo_ed(player_costs)
+
     player_df = add_np(player_df)
 
     return player_df
