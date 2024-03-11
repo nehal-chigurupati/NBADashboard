@@ -177,7 +177,7 @@ def objective_function(x, player_df):
   return (pts_added) / (pts_added + pts_given)
 
 
-@st.cache_data()
+@st.cache()
 def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_time_constraint):
     player_list = player_df["Player"].tolist()
     team_np = calculate_league_poss_per_game()
@@ -188,7 +188,7 @@ def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_
     refined_player_list = refined_player_df["Player"].tolist()
     fixed_players_indices = [refined_player_list.index(i) for i in fixed_players]
 
-    m = GEKKO(remote=False)
+    m = GEKKO(remote=True)
     n = len(refined_player_df)
     salaries = refined_player_df["c"].tolist()
     poss = refined_player_df["np"].tolist()
@@ -286,7 +286,7 @@ def render_inputs(player_list):
     else:
        available_players = st.multiselect('Select Available Players', player_list)
 
-    percentage = st.slider('Max percent of salary cap:', 0.9, 2.0, 1.0, step=0.01)
+    percentage = st.slider('Max percent of salary cap:', 0.9, 1.8, 1.0, step=0.01)
     # Calculate the difference
     st.text("Budget: " + format_dollar_value(str(percentage * salary_cap)))
     st.text("Salary cap (2023-24): " + "136,000,000")

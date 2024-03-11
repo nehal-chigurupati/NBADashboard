@@ -137,6 +137,7 @@ def track_with_color_labels(video_path, video_out_path, kmeans_model, cluster_on
     cap_out.release()
     cv2.destroyAllWindows()
 
+@st.cache()
 def generate_tracking_data(file, with_video=False, video_out_path=""):
     cap = cv2.VideoCapture(file)
     num_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

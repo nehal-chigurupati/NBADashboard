@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from pages.components.sidebar import *
 from pages.components.Roster_Construction_Model import *
-
 st.set_page_config(layout="wide")
 render_sidebar("Roster_Construction_Model")
 
@@ -10,6 +9,7 @@ st.title("Roster Construction Models")
 st.subheader("Model 1: Hard Cap & Single-Year Scope")
 st.markdown("For background on this model, see [here](https://github.com/nehal-chigurupati/RosterConstruction/blob/main/README.pdf)")
 player_df = get_player_df()
+
 fixed_player_names, available_player_names, salary_cap_pct, play_time_constraint = render_inputs(player_df["Player"].tolist())
 
 exec_model = st.button("Optimize")
