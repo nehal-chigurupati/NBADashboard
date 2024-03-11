@@ -6,7 +6,6 @@ from nba_api.stats.endpoints import playerestimatedmetrics
 import unicodedata
 from gekko import GEKKO
 
-print("Importing time: " + str(end_time-start_time))
 
 data_dir = "pages/data/"
 
