@@ -117,15 +117,9 @@ def get_estimated_off_rating(player_names, season="2023-24"):
   return pd.DataFrame(out)
 
 def add_eo_ed(player_costs_df, season="2023-24"):
-  start_time = time.time()
   e_mets_df = get_estimated_off_rating(player_costs_df["Player"].tolist(), season=season)
-  end_time = time.time()
-  print("Get estimated off rating time:  " + str(end_time-start_time))
 
-  start_time = time.time()
   player_costs_df = player_costs_df.merge(e_mets_df, on="Player")
-  end_time = time.time()
-  print("merge time: " + str(end_time-start_time))
   return player_costs_df
 
 """**Next, calculate the number of possessions per game for players**"""
