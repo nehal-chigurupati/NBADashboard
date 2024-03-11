@@ -4,7 +4,6 @@ import pandas as pd
 from nba_api.stats.static import players
 from nba_api.stats.endpoints import playerestimatedmetrics
 import unicodedata
-import random
 from gekko import GEKKO
 
 data_dir = "pages/data/"
@@ -15,7 +14,6 @@ k = 13.91
 """**utils**"""
 
 def format_dollar_value(value):
-    print("Begin: " + str(value))
     if value.startswith('-'):
         prefix = '-$'
         num_part = value[2:]
@@ -26,17 +24,11 @@ def format_dollar_value(value):
     if '.' in num_part:
         whole, cents = num_part.split('.')
         formatted_whole = '{:,}'.format(int(whole))
-        print("End: " + f"{prefix}{formatted_whole}.{cents}")
         return f"{prefix}{formatted_whole}.{cents}"
     else:
         formatted_whole = '{:,}'.format(int(num_part))
-        print("End: " + f"{prefix}{formatted_whole}")
         return f"{prefix}{formatted_whole}"
     
-def select_n_from_k(k, n):
-  k_copy = list(k)
-  random.shuffle(k_copy)
-  return k_copy[:n]
 
 """**Calculate player costs as max of their % salary cap and comparable player % salary cap**"""
 
@@ -49,12 +41,12 @@ def get_all_active_players():
   return active_players
 
 def get_epm_ranks(fname=data_dir + "epm_data.csv"):
-  epm_data = pd.read_csv(fname)
+  epm_data = pd.read_csv(fname, engine="c")
   epm_data['epm_rank'] = epm_data['epm'].rank(method='min', ascending=False).astype('int')
   return epm_data[["nba_id", "name", "epm_rank"]]
 
 def get_pct_salary_cap(fname=data_dir + "salary_data.csv", season="2023-24", salary_cap=123000000):
-  salary_data = pd.read_csv(fname)
+  salary_data = pd.read_csv(fname, engine="c")
   salary_data[season] = salary_data[season].str[1:]
   salary_data[season] = salary_data[season].str.replace(',', '', regex=False)
   salary_data = salary_data[salary_data[season].notna()]
@@ -128,7 +120,7 @@ def add_eo_ed(player_costs_df, season="2023-24"):
 """**Next, calculate the number of possessions per game for players**"""
 
 def get_poss_per_game(fname=data_dir + "usage_data.csv"):
-  usage_data = pd.read_csv(fname)
+  usage_data = pd.read_csv(fname, engine="c")
   usage_data["poss_per_game"] = usage_data["POSS"] / usage_data["GP"]
   return usage_data[["PLAYER", "poss_per_game"]]
 
@@ -147,7 +139,7 @@ def add_np(player_df):
 """**Finally, calculate league-wide team average possessions per game**"""
 
 def calculate_league_poss_per_game(fname=data_dir + "team_possession_data.csv"):
-  team_possession_data = pd.read_csv(fname).dropna()
+  team_possession_data = pd.read_csv(fname, engine="c").dropna()
   team_possession_data["poss_per_game"] = team_possession_data["POSS"].str.replace(",","", regex=False).astype(int) / team_possession_data["GP"]
   return np.mean(team_possession_data["poss_per_game"])
 
@@ -277,9 +269,9 @@ def render_inputs(player_list):
 
     fixed_player_names = st.multiselect('Select players on roster', player_list)
     use_free_agents = st.checkbox("Use 2024 free agents as available players", value=True)
-    free_agents = pd.read_csv(data_dir + "FreeAgents.csv")
+    free_agents = pd.read_csv(data_dir + "FreeAgents.csv", engine="c")
     with st.expander("See free agents"):
-        st.dataframe(pd.read_csv(data_dir + "FreeAgents.csv"), use_container_width=True)
+        st.dataframe(pd.read_csv(data_dir + "FreeAgents.csv", engine="c"), use_container_width=True)
 
     play_time_constraint = st.checkbox("Impose playing time constraint", value=False)
     if use_free_agents:
@@ -289,7 +281,6 @@ def render_inputs(player_list):
 
     percentage = st.slider('Max percent of salary cap:', 0.9, 2.0, 1.0, step=0.01)
     # Calculate the difference
-    print(str(percentage * salary_cap))
     st.text("Budget: " + format_dollar_value(str(percentage * salary_cap)))
     st.text("Salary cap (2023-24): " + "136,000,000")
     difference = (percentage * salary_cap) - salary_cap

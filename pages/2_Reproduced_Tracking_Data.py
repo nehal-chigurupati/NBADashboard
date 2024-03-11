@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tempfile
-import subprocess
 import sys
 from pages.components.sidebar import *
 from pages.src.CourtVision.TrackProcessing import get_track_data, process_colors
