@@ -177,8 +177,8 @@ def objective_function(x, player_df):
   return (pts_added) / (pts_added + pts_given)
 
 
-@st.cache()
-def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_time_constraint):
+@st.cache_resource()
+def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_time_constraint, use_bird_rights):
     player_list = player_df["Player"].tolist()
     team_np = calculate_league_poss_per_game()
 
@@ -227,7 +227,10 @@ def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_
 
     #Add salary cap constraint
     salaries_var = [m.Const(value=salaries[i]) for i in range(n)]
-    m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
+    if use_bird_rights:
+      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n) if i not in fixed_players_indices]) <= salary_cap_pct)
+    else:
+      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
 
     #Add minimum salary 
     m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) >= .9)
@@ -280,6 +283,7 @@ def render_inputs(player_list):
     with st.expander("See free agents"):
         st.dataframe(pd.read_csv(data_dir + "FreeAgents.csv", engine="c"), use_container_width=True)
 
+    bird_rights_constraint = st.checkbox("Use Bird, Early Bird, and Non-Bird rights", value=True)
     play_time_constraint = st.checkbox("Impose playing time constraint", value=False)
     if use_free_agents:
        available_players = [i for i in free_agents["Player"].tolist() if i in player_list]
@@ -299,8 +303,7 @@ def render_inputs(player_list):
     else:
         st.text(format_dollar_value(str(difference)[1:]) + " below the salary cap")
 
-    return fixed_player_names, available_players, percentage, play_time_constraint
-
+    return fixed_player_names, available_players, percentage, play_time_constraint, bird_rights_constraint
 
    
 
