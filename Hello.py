@@ -24,7 +24,8 @@ with st.expander(label="Modeling roster construction as an optimization problem"
    **Second**, the model only considers a single season, so it does not factor in changes to the salary cap, ownership willingness to pay the luxury tax, 
     and other time-dependent factors. 
     \n
-    To try out my first model, see the "Roster Construction Model" tab on the sidebar.
+    My second model implements a soft cap, allowing for the use of Bird, Non-Bird, and Early Bird rights.\n
+    To test out these models, see the "Roster Construction Model" tab on the sidebar.
     """
     st.markdown(summary)
 with st.expander(label="Predicting the length of three-point slumps", expanded=False):
