@@ -228,9 +228,9 @@ def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_
     #Add salary cap constraint
     salaries_var = [m.Const(value=salaries[i]) for i in range(n)]
     if use_bird_rights:
-      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n) if i not in fixed_players_indices]) <= salary_cap_pct)
-    else:
-      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
+      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n) if i not in fixed_players_indices]) <= 1)
+      
+    m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
 
     #Add minimum salary 
     m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) >= .9)
