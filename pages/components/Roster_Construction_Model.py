@@ -290,7 +290,7 @@ def render_inputs(player_list):
     else:
        available_players = st.multiselect('Select Available Players', player_list)
 
-    percentage = st.slider('Max percent of salary cap:', 0.9, 1.8, 1.0, step=0.01)
+    percentage = st.slider('Max proportion of salary cap willing to spend on player compensation:', 0.9, 1.8, 1.0, step=0.01)
     # Calculate the difference
     st.text("Budget: " + format_dollar_value(str(percentage * salary_cap)))
     st.text("Salary cap (2023-24): " + "136,000,000")
