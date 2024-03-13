@@ -18,6 +18,7 @@ with st.expander(label="Modeling roster construction as an optimization problem"
     st.markdown("[Link](https://github.com/nehal-chigurupati/RosterConstruction/blob/main/README.pdf)")
 
     summary = """
+    **This project is in progress.**\n
     This project attempts to treat roster construction as an optimization problem, where one needs to add players to a roster to maximize pythagorean expected wins subject to salary, playing time and roster size constraints.
     My initial model is a simplification in primarily two areas: \n
     **First**, it assumes a "hard cap" on salary, which can be inputted as a proportion (not necessarily smaller than 1) of the 2023-24 salary cap.\n
