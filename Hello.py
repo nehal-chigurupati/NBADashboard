@@ -7,7 +7,7 @@ render_sidebar("Hello")
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-This streamlit app is a work in progress, so there may be bugs. For page descriptions, my projects and contact info, see below. To navigate to pages, see the sidebar.
+This streamlit app is a work in progress, so there may be bugs. For page descriptions and my projects, see below. To navigate to pages, see the sidebar.
 """
 st.markdown(msg)
 
@@ -262,7 +262,3 @@ for a project I'm working on.\n
 """
 
 st.markdown(msg)
-
-st.header("Contact Me (Nehal Chigurupati)")
-st.markdown("Email: sfw9tu@virginia.edu")
-st.markdown("Phone: +1 (216)-903-6902")
