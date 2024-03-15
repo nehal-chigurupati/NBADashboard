@@ -6,6 +6,8 @@ from nba_api.stats.endpoints import playerestimatedmetrics
 import unicodedata
 from gekko import GEKKO
 
+from pages.components.Terminal_Redirect import *
+
 
 data_dir = "pages/data/"
 
@@ -176,21 +178,58 @@ def objective_function(x, player_df):
 
   return (pts_added) / (pts_added + pts_given)
 
+def bird_eligible_array(player_df, fixed_players_indices, num_years_on_team):
+  ind = 0
+  bird_eligible = []
+  early_bird = []
+  non_bird = []
+  for index, row in player_df.iterrows():
+    if ind in fixed_players_indices:
+      num_years = num_years_on_team[fixed_players_indices.index(ind)]
+      if num_years >= 3:
+        bird_eligible.append(1)
+        early_bird.append(1)
+        non_bird.append(1)
+      elif num_years == 2:
+        bird_eligible.append(0)
+        early_bird.append(1)
+        non_bird.append(1)
+      elif num_years == 1:
+        bird_eligible.append(0)
+        early_bird.append(0)
+        non_bird.append(1)
+      else:
+        bird_eligible.append(0)
+        early_bird.append(0)
+        non_bird.append(0)
+    
+    else:
+      bird_eligible.append(0)
+      early_bird.append(0)
+      non_bird.append(0)
+    ind += 1
+  return bird_eligible, early_bird, non_bird
+  
+
 
 @st.cache_resource()
-def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_time_constraint, use_bird_rights):
-    player_list = player_df["Player"].tolist()
-    team_np = calculate_league_poss_per_game()
-
-
-    refined_player_df = player_df[player_df["Player"].isin(available_players) | player_df["Player"].isin(fixed_players)]
+def optimize(fixed_players, available_vets, num_years_on_team, available_players, player_df, salary_cap_pct, play_time_constraint, _callback):
+    refined_player_df = player_df[player_df["Player"].isin(available_players) | player_df["Player"].isin(fixed_players) | player_df["Player"].isin(available_vets)]
 
     refined_player_list = refined_player_df["Player"].tolist()
     fixed_players_indices = [refined_player_list.index(i) for i in fixed_players]
+    available_vets_indices = [refined_player_list.index(i) for i in available_vets]
+    refined_player_df["b"], refined_player_df["eb"], refined_player_df["nb"] = bird_eligible_array(refined_player_df, available_vets_indices, num_years_on_team) 
+    
 
-    m = GEKKO(remote=True)
+    team_np = calculate_league_poss_per_game()
+
+
+    m = GEKKO(remote=False)
     n = len(refined_player_df)
     salaries = refined_player_df["c"].tolist()
+    actual_salaries = refined_player_df["s"].tolist()
+    min_eligible = refined_player_df["min_eligible"].tolist()
     poss = refined_player_df["np"].tolist()
 
     #x = [m.Var(lb=0, ub=1, integer=True) for _ in range(n)]
@@ -222,30 +261,52 @@ def run_model(fixed_players, available_players, player_df, salary_cap_pct, play_
     m.Maximize(objective)
 
     #Add roster size constraint
-    m.Equation(m.sum(x) <= 15)
-    m.Equation(m.sum(x) >= 12)
+    m.Equation(sum(x) <= 15)
+    m.Equation(sum(x) >= 12)
 
     #Add salary cap constraint
     salaries_var = [m.Const(value=salaries[i]) for i in range(n)]
-    if use_bird_rights:
-      m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n) if i not in fixed_players_indices]) <= 1)
-      
-    m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
+    m.Equation(sum([salaries_var[i] * x[i] for i in range(n) if i not in fixed_players_indices]) <= 1)
+
+    #Add salary cap constraint
+    salaries_var = [m.Const(value=salaries[i]) for i in range(n)]
+    actual_salaries_var = [m.Const(value=actual_salaries[i]) for i in range(n)]
+
+    all_salaries = [salaries_var[i] * x[i] for i in range(n) if (i not in fixed_players_indices)]
+    all_salaries = all_salaries + [actual_salaries_var[i] for i in fixed_players_indices]
+    m.Equation(sum(all_salaries) <= 1.5)
+    m.Equation(sum([salaries_var[i] * x[i] * (1 - min_eligible[i]) for i in range(n) if i not in fixed_players_indices]) <= 1)
+
+    #Add early bird salary constraint - require that, if player is included with bird rights, then cost <= 1.75 * last salary
+    b_var = [m.Const(value=refined_player_df.iloc[i]["b"]) for i in range(n)]
+    eb_var = [m.Const(value=refined_player_df.iloc[i]["eb"]) for i in range(n)]
+
+    for i in range(n):
+        condition = m.Intermediate(x[i] * (1 - b_var[i]) * eb_var[i])
+        #This is a trick to apply conditional constraints: we use m.max3 to ensure c[i] <= 1.75 * s[i] when condition is 1
+        #and ignore the constraint when condition is 0 by setting a high upper limit.
+        m.Equation(salaries_var[i] <= m.if3(condition, 1.75 * actual_salaries[i], 1e5))
+
+          
+        m.Equation(sum([salaries_var[i] * x[i] for i in range(n)]) <= salary_cap_pct)
 
     #Add minimum salary 
-    m.Equation(m.sum([salaries_var[i] * x[i] for i in range(n)]) >= .9)
+    m.Equation(sum([salaries_var[i] * x[i] for i in range(n)]) >= .9)
 
     if play_time_constraint:
         #Add play time constraint
         poss_var = [m.Const(value=poss[i]) for i in range(n)]
-        m.Equation(m.sum([poss_var[i] * x[i] for i in range(n)]) >= 5*team_np)
+        m.Equation(sum([poss_var[i] * x[i] for i in range(n)]) >= 5*team_np)
 
     #Add fixed players constraint
     for idx in fixed_players_indices:
         m.Equation(x[idx] == 1)
 
+
     m.options.SOLVER=1
-    m.solve(disp=True)
+    stprint = capture_output(m.solve)
+    stprint(disp=True, callback=_callback)
+    m.solve(disp=True, callback=_callback)
     solution = [x[i].value[0] for i in range(n)]
 
     player_names = []
@@ -277,20 +338,35 @@ def render_inputs(player_list):
     fixed_player_names = []
     available_player_names = []
 
-    fixed_player_names = st.multiselect('Select players on roster', player_list)
+    default = [
+       "Darius Garland",
+       "Jarrett Allen",
+       "Evan Mobley",
+       "Donovan Mitchell",
+       "Max Strus",
+       "Georges Niang"
+    ]
+
+    av_vets_default = [
+       "Caris LeVert",
+       "Tristan Thompson"
+    ]
+    fixed_player_names = st.multiselect('Select players on roster who are on contract next season', player_list, default=default)
+    available_vets = st.multiselect("Indicate rostered players from this season who will be free agents", player_list, default=av_vets_default)
+
+    
     use_free_agents = st.checkbox("Use 2024 free agents as available players", value=True)
     free_agents = pd.read_csv(data_dir + "FreeAgents.csv", engine="c")
     with st.expander("See free agents"):
         st.dataframe(pd.read_csv(data_dir + "FreeAgents.csv", engine="c"), use_container_width=True)
 
-    bird_rights_constraint = st.checkbox("Use Bird, Early Bird, and Non-Bird rights", value=True)
     play_time_constraint = st.checkbox("Impose playing time constraint", value=False)
     if use_free_agents:
        available_players = [i for i in free_agents["Player"].tolist() if i in player_list]
     else:
        available_players = st.multiselect('Select Available Players', player_list)
 
-    percentage = st.slider('Max proportion of salary cap willing to spend on player compensation:', 0.9, 1.8, 1.0, step=0.01)
+    percentage = st.slider('Max proportion of salary cap willing to spend on player compensation:', 0.9, 3.0, 1.4, step=0.01)
     # Calculate the difference
     st.text("Budget: " + format_dollar_value(str(percentage * salary_cap)))
     st.text("Salary cap (2023-24): " + "136,000,000")
@@ -303,7 +379,7 @@ def render_inputs(player_list):
     else:
         st.text(format_dollar_value(str(difference)[1:]) + " below the salary cap")
 
-    return fixed_player_names, available_players, percentage, play_time_constraint, bird_rights_constraint
+    return fixed_player_names, available_vets, available_players, percentage, play_time_constraint
 
    
 
