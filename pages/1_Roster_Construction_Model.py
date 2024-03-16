@@ -27,8 +27,11 @@ exec_model = st.button("Optimize")
 
 
 if exec_model:
-    roster, e_win_pct = optimize(fixed_player_names, available_vets, num_years_on_team, available_player_names, player_df, salary_cap_pct, play_time_constraint, _callback=gekko_callback)
+    try:
+        roster, e_win_pct = optimize(fixed_player_names, available_vets, num_years_on_team, available_player_names, player_df, salary_cap_pct, play_time_constraint, _callback=gekko_callback)
 
-    st.dataframe(roster, use_container_width=True)
-    st.write("Expected win percent: " + str(e_win_pct * 100) + "%")
-    #st.write("Percent of salary cap spent: " + str(np.sum(roster["Salary Cap Percent"]) * 100) + "%")
+        st.dataframe(roster, use_container_width=True)
+        st.write("Expected win percent: " + str(e_win_pct * 100) + "%")
+        #st.write("Percent of salary cap spent: " + str(np.sum(roster["Salary Cap Percent"]) * 100) + "%")
+    except:
+        st.write("No possible roster configuration possible (this may be because I haven't programmed all exceptions yet). Try increasing the total budget")
