@@ -15,18 +15,29 @@ st.markdown(msg)
 st.header("My Projects")
 with st.expander(label="Modeling roster construction as an optimization problem", expanded=False):
     st.subheader("Modeling roster construction as an optimization problem")
-    st.markdown("[Link](https://github.com/nehal-chigurupati/RosterConstruction/blob/main/README.pdf)")
+    st.markdown("[Link (Test out model)](Roster_Construction_Model)")
+    st.markdown("[Link (Technical details)](https://github.com/nehal-chigurupati/RosterConstruction/blob/main/README.pdf)")
 
     summary = """
-    **This project is in progress.**\n
-    This project attempts to treat roster construction as an optimization problem, where one needs to add players to a roster to maximize pythagorean expected wins subject to salary, playing time and roster size constraints.
-    My initial model is a simplification in primarily two areas: \n
-    **First**, it assumes a "hard cap" on salary, which can be inputted as a proportion (not necessarily smaller than 1) of the 2023-24 salary cap.\n
-   **Second**, the model only considers a single season, so it does not factor in changes to the salary cap, ownership willingness to pay the luxury tax, 
-    and other time-dependent factors. 
+    **This project is in progress.**
+
+    This project attempts to treat roster construction as an optimization problem, where one needs to find the roster with the highest expected regular season win percent, subject to the following constraints:
+
+    **First:** The total annual salary paid out to players (minus compensation excluded from salary cap calculations by exceptions) must be less than the 2023-24 salary cap.\n
+    **Second:** The total salary paid out to players (including compensation exempt from salary cap calculations) must be less than some predefined limit.\n
+    **Third:** The total salary paid out to players (including compensation exempt from salary cap calculations) must be greater than 90 percent of the 2023-24 salary cap.\n
+    **Fourth:** Players on contract for the next season must be included in any roster.\n
+    **Fifth:** The sum of the average possessions per game for each player on the roster must be no greater than five times the NBA team league-average possessions per game (in effect, requiring that the team does not overpromise playing time).\n
     \n
-    My second model implements a soft cap, allowing for the use of Bird, Non-Bird, and Early Bird rights.\n
-    To test out these models, see the "Roster Construction Model" tab on the sidebar.
+    To evaluate the annual salary "required" to sign a player, I ranked players by estimated plus-minus, and calculated the maximum of:\n
+     **(a)** The mean annual salary paid out to players less than or equal to three ranks away, and\n
+     **(b)** The annual salary provided for by the player's last contract.
+    \n
+    \n
+    The current iteration of the model computes the salary cap constraint with consideration for Bird, Early Bird, Non-Bird, and Minimum Salary exceptions. I'm working
+    on expanding support.
+
+    To test it out, see the "Roster Construction Model" tab on the sidebar.
     """
     st.markdown(summary)
 with st.expander(label="Predicting the length of three-point slumps", expanded=False):
