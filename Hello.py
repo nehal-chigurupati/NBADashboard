@@ -234,27 +234,6 @@ with st.expander(label="How important is bench production to regular season and 
     st.markdown(summary)
 
 
-
-with st.expander(label="Evaluating lineups and players by the quality of looks they generate", expanded=False):
-    st.subheader("Evaluating lineups and players by the quality of looks they generate")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/evaluating-lineups-by-the-quality-of-looks-generated-e5f7f5b3fa4d)")
-
-    summary = """
-    **This project is in progress**. 
-    
-    The objective is to assign an expected point-per-minute value
-    to each lineup. To compute expected point-per-minute, I take every shot a lineup has attempted,
-    find the exact location of the shot and the distance to the nearest defender. For the player who attempted the shot,
-    I compute their shooting percentage on similar attempts, and multiply the shot value by this quantity. I then sum
-    the resulting values over all attempts and divide by the number of minutes a lineup has played together, to get an 
-    expected point production per minute. 
-
-    After assigning an expected point per minute value to each lineup, a secondary objective is to run 
-    a ridge regression to try and isolate individual player impact. The associated coefficient for each player
-    should represent their "skill" at generating good looks for teammates. 
-    """
-    st.markdown(summary)
-
 st.header("Page descriptions")
 msg = """
 Current pages include: \n
