@@ -4,6 +4,7 @@ from pages.components.Live_Game_Dashboard import get_active_games, load_scoreboa
 from pages.components.ip import loc
 import os
 import base64
+from retry import retry
 
 nba_team_abbreviations = [
     'ATL', 'BOS', 'BKN', 'CHA', 'CHI', 'CLE', 'DAL', 'DEN',
@@ -52,6 +53,7 @@ def render_svgs_horizontally(svgs, width_percentage=None, height_percentage=None
         # Write the img tag to the container
         container.write(img_tag, unsafe_allow_html=True)
 
+@retry()
 def render_sidebar_game_scores():
     st.subheader("Game Scores")
     active_games = get_active_games()
