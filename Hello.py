@@ -163,11 +163,7 @@ with st.expander(label="Determining three point percentages through Bayesian inf
     summary = """
     For a given player, I constructed their three point percentage through Bayesian inference (using PyMC), 
     with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
-    and a Bernoulli distribution as the likelihood.
-    \n
-    \n
-    With every game the player participates in, the stat updates, and a Kalman filter (Filterpy) is used to 
-    spit out a single three-point percentage that favors more recent observations.
+    and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
     \n
     \n
     Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
