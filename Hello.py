@@ -64,33 +64,6 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     st.markdown(summary)
 
 
-with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
-    st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
-    st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
-
-    summary = """
-
-In this project, I attempt to answer the following question:
-
-*In constructing a roster, is the best strategy to be proficient in a wide range of offensive/defensive plays or excel in a select few plays?*
-
-To quantitatively measure the diversity of offensive and defensive skills on a roster, 
-I introduce three new metrics referred to as offensive, defensive, and net range, using techniques from topological data analysis. 
-These metrics approximate the diversity of a team’s proficiencies on offense and defense in common play types, 
-including cuts, off-ball screens, isolation, post-up shooting, spot-up shooting, transition, and the pick and roll. 
-Higher values of offensive range indicate that a team performs well on many of these play types. 
-Similarly, higher values of defensive range indicate great diversity of defensive skill, while high values of net range indicate
- that a team is proficient in a wide variety of both offensive and defensive scenarios.
-
-I computed offensive/defensive/net range for each team in the 2023–24 season
-and examined how these quantities affect offensive rating, defensive rating, net rating, and win percentage.
-I came to a few conclusions relevant to roster construction. 
-First, teams should prioritize diversity of talent in both offensive and defensive play types.
-Second, teams that are constructed to have a wide range of both offensive and defensive skills seem to perform
-much better than teams that are designed to place all their chips on one side of the floor.
-"""
-    st.markdown(summary)
-
 with st.expander(label="Determining three point percentages through Bayesian inference", expanded=False):
     st.subheader("Determining three point percentages through Bayesian inference")
     st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
@@ -150,6 +123,33 @@ with st.expander(label="Using Kalman Filters to measure offensive rating", expan
     \n
     To view this stat (abbreviated kORTG, for Kalman Offensive Rating), click the link above, or visit the [My Random Stats](My_Random_Stats) page on the sidebar.
     """
+    st.markdown(summary)
+
+with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
+    st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
+    st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
+
+    summary = """
+
+In this project, I attempt to answer the following question:
+
+*In constructing a roster, is the best strategy to be proficient in a wide range of offensive/defensive plays or excel in a select few plays?*
+
+To quantitatively measure the diversity of offensive and defensive skills on a roster, 
+I introduce three new metrics referred to as offensive, defensive, and net range, using techniques from topological data analysis. 
+These metrics approximate the diversity of a team’s proficiencies on offense and defense in common play types, 
+including cuts, off-ball screens, isolation, post-up shooting, spot-up shooting, transition, and the pick and roll. 
+Higher values of offensive range indicate that a team performs well on many of these play types. 
+Similarly, higher values of defensive range indicate great diversity of defensive skill, while high values of net range indicate
+ that a team is proficient in a wide variety of both offensive and defensive scenarios.
+
+I computed offensive/defensive/net range for each team in the 2023–24 season
+and examined how these quantities affect offensive rating, defensive rating, net rating, and win percentage.
+I came to a few conclusions relevant to roster construction. 
+First, teams should prioritize diversity of talent in both offensive and defensive play types.
+Second, teams that are constructed to have a wide range of both offensive and defensive skills seem to perform
+much better than teams that are designed to place all their chips on one side of the floor.
+"""
     st.markdown(summary)
 
 with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
