@@ -19,3 +19,7 @@ stqdm
 streamlit-javascript
 pytz
 gekko
+flask
+retry
+pymc
+arviz
