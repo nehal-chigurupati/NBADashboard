@@ -159,15 +159,15 @@ with st.expander(label="Using clustering to construct an offensively optimal lin
 with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
     st.subheader("Evaluating 2024 free agent 3P shooters")
     st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
+    st.markdown("[View Stats Here](Bayesian_Shooting_Stats)")
     summary = """
     This project aims to find skilled three point shooters available at a discount in 2024 free agency.
     I found free agents that are temporarily “hot” and “cold” from three point range this season by introducing a 
     new three-point efficiency metric called Bayesian 3P%, indicative of a player’s “true” three point skill, 
     and comparing it to 2023–24 season 3P%. 
     Among players whose Bayesian 3P% was higher than their season 3P% (i.e. players who are in a slump), 
-    I constructed a model to estimate the discount in 2024–25 salary that a team could expect to get.
-    Four players distinguished themselves as great shooters likely available for cheap: 
-    Robert Covington, Wesley Matthews, Nicolas Batum, and Danilo Gallinari
+    four players distinguished themselves as great shooters likely available for cheap: 
+    Robert Covington, Wesley Matthews, Nicolas Batum, and Danilo Gallinari.
     """
     st.write(summary)
 
