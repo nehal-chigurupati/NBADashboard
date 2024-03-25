@@ -155,19 +155,24 @@ with st.expander(label="Using clustering to construct an offensively optimal lin
     """
     st.markdown(summary)
 
-
-with st.expander(label="Evaluating 2024 free agent 3P shooters", expanded=False):
-    st.subheader("Evaluating 2024 free agent 3P shooters")
-    st.markdown("[Link](https://medium.com/@jxuwrsb/number-of-possessions-or-efficiency-per-possession-which-better-determines-offensive-success-a9a2282bdc2c)")
+with st.expander(label="Determining three point percentages through Bayesian inference", expanded=False):
+    st.subheader("Determining three point percentages through Bayesian inference")
+    st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
     st.markdown("[View Stats Here](Bayesian_Shooting_Stats)")
+
     summary = """
-    This project aims to find skilled three point shooters available at a discount in 2024 free agency.
-    I found free agents that are temporarily “hot” and “cold” from three point range this season by introducing a 
-    new three-point efficiency metric called Bayesian 3P%, indicative of a player’s “true” three point skill, 
-    and comparing it to 2023–24 season 3P%. 
-    Among players whose Bayesian 3P% was higher than their season 3P% (i.e. players who are in a slump), 
-    four players distinguished themselves as great shooters likely available for cheap: 
-    Robert Covington, Wesley Matthews, Nicolas Batum, and Danilo Gallinari.
+    For a given player, I constructed their three point percentage through Bayesian inference (using PyMC), 
+    with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
+    and a Bernoulli distribution as the likelihood.
+    \n
+    \n
+    With every game the player participates in, the stat updates, and a Kalman filter (Filterpy) is used to 
+    spit out a single three-point percentage that favors more recent observations.
+    \n
+    \n
+    Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
+    more accurately genuine improvements to 3-point shooting skill, while also suppressing
+    the effects of temporary slumps. 
     """
     st.write(summary)
 
