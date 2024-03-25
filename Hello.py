@@ -121,6 +121,10 @@ with st.expander(label="Using Kalman Filters to measure offensive rating", expan
     **(3)** Short-duration player injuries
     \n
     \n
+    To make predictions of team A's offensive rating in games against team B, I used the following linear expression:
+    \n
+    **[(Team A Offensive Rating) * (Team B Defensive Rating)] / (League Average Offensive Rating)]**
+    \n
     To view this stat (abbreviated kORTG, for Kalman Offensive Rating), click the link above, or visit the [My Random Stats](My_Random_Stats) page on the sidebar.
     """
     st.markdown(summary)
