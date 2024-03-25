@@ -62,28 +62,6 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     """
 
     st.markdown(summary)
-with st.expander(label="Modeling the decision to pull players in foul trouble", expanded=False):
-    st.subheader("Modeling the decision to pull players in foul trouble")
-    st.markdown("[Link](https://github.com/nehal-chigurupati/FoulTrouble/blob/main/README.pdf)")
-
-    summary = """
-    **This project is in progress**
-
-    The objective of this project is to determine when, if at all, pulling a player is the proper response to foul trouble. I evaluate two approaches: first, 
-    to pull the player until they are no longer on pace to foul out, and second, to keep the player in the game until either they foul out or the game clock expires.
-
-    **My initial model assumed that player minutes now have the same value as minutes later, and that changes in point differential now have the same value as changes later (i.e. "clutch" points do not affect the probability of winning a game any more than first quarter points).
-    Under these assumptions, the optimal strategy is to keep the player in.** 
-
-    To validate the "constant value of points" assumption, I measured the effect of changes in point differential in each quarter on the probability of winning a game. There was no significant difference
-    in these probabilities, indicating that **the "constant value of points" assumption is justified.**
-
-    The "constant value of minutes" assumption is more dubious. Players in foul trouble may be hesitant to play aggressively, reducing their effectiveness on the court.
-    To determine if such an effect exists on the offensive side of the floor, I computed the difference in league-wide field goal percentage when the shooter is in foul trouble and when they are not. 
-    There was no significant difference in these quantities, indicating that **foul trouble causes no deterioration of offensive performance**. I'm currently brainstorming
-    different ways to evaluate the analagous statement for the defensive side of the floor. 
-    """
-    st.markdown(summary)
 
 
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
@@ -113,6 +91,66 @@ much better than teams that are designed to place all their chips on one side of
 """
     st.markdown(summary)
 
+with st.expander(label="Determining three point percentages through Bayesian inference", expanded=False):
+    st.subheader("Determining three point percentages through Bayesian inference")
+    st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
+    st.markdown("[View Stats Here](My_Random_Stats)")
+
+    summary = """
+    For a given player, I constructed their three point percentage through Bayesian inference (using PyMC), 
+    with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
+    and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
+    \n
+    \n
+    Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
+    more accurately genuine improvements to 3-point shooting skill, while also suppressing
+    the effects of temporary slumps. 
+    """
+    st.write(summary)
+
+with st.expander(label="Modeling the decision to pull players in foul trouble", expanded=False):
+    st.subheader("Modeling the decision to pull players in foul trouble")
+    st.markdown("[Link](https://github.com/nehal-chigurupati/FoulTrouble/blob/main/README.pdf)")
+
+    summary = """
+    **This project is in progress**
+
+    The objective of this project is to determine when, if at all, pulling a player is the proper response to foul trouble. I evaluate two approaches: first, 
+    to pull the player until they are no longer on pace to foul out, and second, to keep the player in the game until either they foul out or the game clock expires.
+
+    **My initial model assumed that player minutes now have the same value as minutes later, and that changes in point differential now have the same value as changes later (i.e. "clutch" points do not affect the probability of winning a game any more than first quarter points).
+    Under these assumptions, the optimal strategy is to keep the player in.** 
+
+    To validate the "constant value of points" assumption, I measured the effect of changes in point differential in each quarter on the probability of winning a game. There was no significant difference
+    in these probabilities, indicating that **the "constant value of points" assumption is justified.**
+
+    The "constant value of minutes" assumption is more dubious. Players in foul trouble may be hesitant to play aggressively, reducing their effectiveness on the court.
+    To determine if such an effect exists on the offensive side of the floor, I computed the difference in league-wide field goal percentage when the shooter is in foul trouble and when they are not. 
+    There was no significant difference in these quantities, indicating that **foul trouble causes no deterioration of offensive performance**. I'm currently brainstorming
+    different ways to evaluate the analagous statement for the defensive side of the floor. 
+    """
+    st.markdown(summary)
+
+with st.expander(label="Using Kalman Filters to measure offensive rating", expanded=False):
+    st.subheader("Using Kalman Filters to measure offensive rating")
+    st.markdown("[Code](https://github.com/nehal-chigurupati/KalmanOffensiveRating/tree/main)")
+    st.markdown("[View Stats Here](My_Random_Stats)")
+    st.markdown("**Write-up in progress.**")
+
+    summary = """
+    This project uses Kalman filters to determine an offensive rating for each team in the 2023-24 season that is stable to the following variables:
+    \n
+    \n
+    **(1)** Defensive skill of season opponents
+    \n
+    **(2)** Transitory slumps in shooting performance
+    \n
+    **(3)** Short-duration player injuries
+    \n
+    \n
+    To view this stat (abbreviated kORTG, for Kalman Offensive Rating), click the link above, or visit the [My Random Stats](My_Random_Stats) page on the sidebar.
+    """
+    st.markdown(summary)
 
 with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
     st.subheader("Reproducing NBA tracking data with computer vision")
@@ -154,23 +192,6 @@ with st.expander(label="Using clustering to construct an offensively optimal lin
     **Teams should target such versatile big men** during free agency and the trading season.
     """
     st.markdown(summary)
-
-with st.expander(label="Determining three point percentages through Bayesian inference", expanded=False):
-    st.subheader("Determining three point percentages through Bayesian inference")
-    st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
-    st.markdown("[View Stats Here](Bayesian_Shooting_Stats)")
-
-    summary = """
-    For a given player, I constructed their three point percentage through Bayesian inference (using PyMC), 
-    with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
-    and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
-    \n
-    \n
-    Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
-    more accurately genuine improvements to 3-point shooting skill, while also suppressing
-    the effects of temporary slumps. 
-    """
-    st.write(summary)
 
 with st.expander(label="Does pace matter for offensive success?", expanded=False):
     st.subheader("Does pace matter for offensive success?")
