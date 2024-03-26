@@ -255,6 +255,13 @@ def render_kORTG_team_selection():
 
   return team_name
 
+def render_tRNG_team_selection():
+  options = [i for i in list(get_nba_teams().keys()) if i != "LAC"]
+  default_ind = options.index("CLE")
+  team_name = st.selectbox(options=options, label="Select team:", index=default_ind)
+
+  return team_name
+
 def render_kORTG_leaguewide_plot(values, names):
   percentiles = [stats.percentileofscore(values, value) for value in values]
   sorted_data = sorted(zip(percentiles, names, values), reverse=True)
@@ -434,5 +441,116 @@ def render_bWPM(player):
       
       render_bWPM_box_plot(bWPM_data)
 
+def render_tRNG_leaguewide_plot(values, names, stat_name):
+  percentiles = [stats.percentileofscore(values, value) for value in values]
+  sorted_data = sorted(zip(percentiles, names, values), reverse=True)
+  sorted_data = sorted_data[:-1]
+
+  sections = {
+      '90-100th percentile': [],
+      '80-90th percentile': [],
+      '70-80th percentile': [],
+      '60-70th percentile': [],
+      '50-60th percentile': [],
+      '40-50th percentile': [],
+      '30-40th percentile': [],
+      '20-30th percentile': []
+  }
+
+  for percentile, name, value in sorted_data:
+      if percentile >= 90:
+          sections['90-100th percentile'].append((percentile, value, name))
+      elif percentile >= 80:
+          sections['80-90th percentile'].append((percentile, value, name))
+      elif percentile >= 70:
+          sections['70-80th percentile'].append((percentile, value, name))
+      elif percentile >= 60:
+          sections['60-70th percentile'].append((percentile, value, name))
+      elif percentile >= 50:
+          sections['50-60th percentile'].append((percentile, value, name))
+      elif percentile >= 40:
+          sections['40-50th percentile'].append((percentile, value, name))
+      elif percentile >= 30:
+          sections['30-40th percentile'].append((percentile, value, name))
+      else:
+          sections['20-30th percentile'].append((percentile, value, name))
+
+  traces = []
+  for section_name, section_data in sections.items():
+      percentiles, values, names = zip(*section_data)
+      trace = go.Scatter(
+          x=percentiles,
+          y=values,
+          mode='markers',
+          text=names,
+          marker=dict(
+              size=10,
+              opacity=0.7,
+              line=dict(width=1),
+          ),
+          name=section_name
+      )
+      traces.append(trace)
+
+  layout = go.Layout(
+      title='League-wide ' + stat_name,
+      xaxis=dict(title='Percentile Range'),
+      yaxis=dict(title=stat_name),
+      showlegend=True,
+  )
+
+  fig = go.Figure(data=traces, layout=layout)
+
+  st.plotly_chart(fig, use_container_width=True)
+
+def render_tORNG(team_abbrev):
+  with st.expander("Topological Offensive Range", expanded=True):
+    tRNG_df = pd.read_csv("pages/data/PERSISTENCE_MEANS.csv")
+    values = tRNG_df["OFF_MEAN_H0_DEATH"].tolist()
+    team_abbrevs = tRNG_df["abbreviation_x"].tolist()
+    percentiles = [stats.percentileofscore(values, value) for value in values]
+    st.markdown("**tORNG**")
+    try:
+      team_dict = get_nba_teams()
+      off_val = tRNG_df[tRNG_df["abbreviation_x"] == team_abbrev]["OFF_MEAN_H0_DEATH"]
+      st.code("Percentile: " + str(percentiles[team_abbrevs.index(team_abbrev)]))
+      st.code("Raw Score: " + str(off_val.iloc[0]))
+      render_tRNG_leaguewide_plot(tRNG_df["OFF_MEAN_H0_DEATH"].tolist(), tRNG_df["abbreviation_x"].tolist(), stat_name = "tORG")
+    except:
+      st.code("Error in computation. Reporting bug. ")
+
+def render_tDRNG(team_abbrev):
+  with st.expander("Topological Defensive Range", expanded=True):
+    tRNG_df = pd.read_csv("pages/data/PERSISTENCE_MEANS.csv")
+    values = tRNG_df["DEF_MEAN_H0_DEATH"].tolist()
+    team_abbrevs = tRNG_df["abbreviation_x"].tolist()
+    percentiles = [stats.percentileofscore(values, value) for value in values]
+    st.markdown("**tORNG**")
+    try:
+      team_dict = get_nba_teams()
+      off_val = tRNG_df[tRNG_df["abbreviation_x"] == team_abbrev]["DEF_MEAN_H0_DEATH"]
+      st.code("Percentile: " + str(percentiles[team_abbrevs.index(team_abbrev)]))
+      st.code("Raw Score: " + str(off_val.iloc[0]))
+      render_tRNG_leaguewide_plot(tRNG_df["DEF_MEAN_H0_DEATH"].tolist(), tRNG_df["abbreviation_x"].tolist(), stat_name="tDRNG")
+    except:
+      st.code("Error in computation. Reporting bug. ")
+
+def render_tNRNG(team_abbrev):
+  with st.expander("Topological Net Range", expanded=True):
+    tRNG_df = pd.read_csv("pages/data/PERSISTENCE_MEANS.csv")
+    values = tRNG_df["NET_MEAN_H0_DEATH"].tolist()
+    team_abbrevs = tRNG_df["abbreviation_x"].tolist()
+    percentiles = [stats.percentileofscore(values, value) for value in values]
+    st.markdown("**tNRNG**")
+    try:
+      team_dict = get_nba_teams()
+      off_val = tRNG_df[tRNG_df["abbreviation_x"] == team_abbrev]["NET_MEAN_H0_DEATH"]
+      st.code("Percentile: " + str(percentiles[team_abbrevs.index(team_abbrev)]))
+      st.code("Raw Score: " + str(off_val.iloc[0]))
+      render_tRNG_leaguewide_plot(tRNG_df["NET_MEAN_H0_DEATH"].tolist(), tRNG_df["abbreviation_x"].tolist(), stat_name="tNRNG")
+    except:
+      st.code("Error in computation. Reporting bug. ")
+          
+   
    
    

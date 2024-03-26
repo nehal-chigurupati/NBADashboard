@@ -139,7 +139,8 @@ with st.expander(label="Using Kalman Filters to measure offensive rating", expan
 
 with st.expander(label='A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season', expanded=False):
     st.subheader('A metric for measuring the “range” of offensive and defensive talent for NBA teams in the 2023–24 season')
-    st.markdown("[Link](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
+    st.markdown("[Write-up](https://medium.com/@jxuwrsb/a-metric-for-measuring-the-range-of-offensive-and-defensive-talent-for-teams-a81944f78350)")
+    st.markdown("[View stats here](My_Random_Stats)")
 
     summary = """
 
