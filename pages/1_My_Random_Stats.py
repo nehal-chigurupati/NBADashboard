@@ -12,14 +12,15 @@ render_bWPM(player)
 
 st.title("Team Stats")
 team_abbrev = render_kORTG_team_selection()
+st.subtitle("Kalman Stats")
+render_kORTG(team_abbrev)
 
+st.subtitle("Topological Range")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.title("Kalman Stats")
-    render_kORTG(team_abbrev)
-with col2:
-    st.title("Topological Range")
     render_tORNG(team_abbrev)
+with col2:
     render_tDRNG(team_abbrev)
-    render_tNRNG(team_abbrev)
+
+render_tNRNG(team_abbrev)
