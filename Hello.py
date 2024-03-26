@@ -47,7 +47,7 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     summary = """
     The objective of this project is to determine the probability of a three-point shooting slump extending over a given number of games, 
     and to evaluate strategies for overcoming such slumps. To make these determinations,
-      I applied techniques from survival analysis, a method commonly used in clinical studies to assess mortality risks.
+      I applied techniques from survival analysis, a method commonly used in medical studies to assess mortality risks.
      I reached three main conclusions:
 
     **(1)** For volume three point shooters (> 250 3PA per season), there is only a 5 percent chance that a shooting slump extends past 32 games. 
