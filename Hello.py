@@ -64,13 +64,15 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     st.markdown(summary)
 
 
-with st.expander(label="Determining three point percentages through Bayesian inference", expanded=False):
-    st.subheader("Determining three point percentages through Bayesian inference")
+with st.expander(label="Determining three point percentages and plus-minus statistics through Bayesian inference", expanded=False):
+    st.subheader("Determining three point percentages and plus-minus statistics through Bayesian inference")
     st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
     st.markdown("[View Stats Here](My_Random_Stats)")
 
     summary = """
-    For a given player, I constructed their three point percentage through Bayesian inference (using PyMC), 
+    In this project, I used Bayesian inference to construct two different player metrics.\n\n
+
+    **First**, for a given player, I measured their three point percentage through Bayesian inference (using PyMC), 
     with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
     and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
     \n
@@ -78,6 +80,12 @@ with st.expander(label="Determining three point percentages through Bayesian inf
     Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
     more accurately genuine improvements to 3-point shooting skill, while also suppressing
     the effects of temporary slumps. 
+    \n
+    \n
+    **Second**, for a given player in the top 100 minutes played per game in the 2023-24 season, I took their plus-minus  
+    in every career game (adjusted for the final game margin), weighted using an exponential function (to factor in every game a player has played in while also accounting for recent improvements), and inferred a plus-minus stat, referred to as Bayesian Weighted Plus-Minus (bWPM). For the prior, I used a uniform beta distribution, and for the likelihood, I used a normal
+    distribution. I then calculated player bWPM as a percentile, creating a "relative" measure of player impact on the court. 
+
     """
     st.write(summary)
 

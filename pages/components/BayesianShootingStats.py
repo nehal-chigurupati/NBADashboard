@@ -72,6 +72,18 @@ def compute_b3P(player_id):
 
   return trace, mean, hdi_lower, hdi_upper
 
+@st.cache_data()
+def compute_bWPM(player_id, bWPM_df):
+   player_data = bWPM_df[bWPM_df["PLAYER_ID"] == player_id]
+   percentile = player_data["PERCENTILE"]
+   mean = player_data["MEAN"]
+   lower_bound = player_data["HDI_LOWER_BOUND"]
+   upper_bound = player_data["HDI_UPPER_BOUND"]
+
+   return percentile, mean, lower_bound, upper_bound
+
+    
+
 @retry()
 @st.cache_data()
 def get_estimated_metrics(season="2023-24"):
@@ -92,7 +104,8 @@ def get_league_avg_ratings(data):
 
 def render_player_selection():
    active_players = pd.json_normalize(players.get_active_players())
-   player_name = st.selectbox(options=active_players["full_name"].tolist(), label="Select player")
+   default_index = active_players["full_name"].tolist().index("Donovan Mitchell")
+   player_name = st.selectbox(options=active_players["full_name"].tolist(), label="Select player", index=default_index)
 
    return active_players[active_players["full_name"] == player_name]
 
@@ -217,8 +230,8 @@ def get_nba_teams():
 
 def render_b3P(player_df):
     player_id = player_df["id"].tolist()[0]
-    with st.expander("Bayesian Statistics", expanded=True):
-        st.markdown("**Bayesian 3P%**")
+    with st.expander("Bayesian Three Point Percent", expanded=True):
+        st.markdown("**b3P%**")
         try:
             trace, mean, lower, upper = compute_b3P(player_id)
             out = {
@@ -227,8 +240,10 @@ def render_b3P(player_df):
                 "95% HDI upper bound": [upper]
             }
             st.table(pd.DataFrame(out))
+
         except:
            st.code("Insufficient 3 point shot attempts.")
+        
   
 def render_kORTG_team_selection():
   team_name = st.selectbox(options=get_nba_teams().keys(), label="Select team")
@@ -236,8 +251,8 @@ def render_kORTG_team_selection():
   return team_name
 
 def render_kORTG(team_abbrev):
-  with st.expander("Kalman Filtered Stats", expanded=True):
-    st.markdown("**Kalman Offensive Rating**")
+  with st.expander("Kalman Offensive Rating", expanded=True):
+    st.markdown("**kORTG**")
     try:
       team_dict = get_nba_teams()
       vals = compute_kORTG_filterpy(team_dict[team_abbrev], team_abbrev)
@@ -257,6 +272,98 @@ def render_kORTG(team_abbrev):
            st.code("Error in computation. Reporting bug. ")
   
 
+def render_bWPM_box_plot(bWPM_df):
+  names = bWPM_df["PLAYER_NAME"].tolist()
+  values = bWPM_df["MEAN"].tolist()
+  percentiles = bWPM_df["PERCENTILE"].tolist()
+  sorted_data = sorted(zip(percentiles, names, values), reverse=True)
+
+  # Separate data into sections based on percentiles
+  sections = {
+      '90-100th percentile': [],
+      '80-90th percentile': [],
+      '70-80th percentile': [],
+      '60-70th percentile': [],
+      '50-60th percentile': [],
+      '40-50th percentile': [],
+      '30-40th percentile': [],
+      '20-30th percentile': []
+  }
+
+  for percentile, name, value in sorted_data:
+      if percentile >= 90:
+          sections['90-100th percentile'].append((percentile, value, name))
+      elif percentile >= 80:
+          sections['80-90th percentile'].append((percentile, value, name))
+      elif percentile >= 70:
+          sections['70-80th percentile'].append((percentile, value, name))
+      elif percentile >= 60:
+          sections['60-70th percentile'].append((percentile, value, name))
+      elif percentile >= 50:
+          sections['50-60th percentile'].append((percentile, value, name))
+      elif percentile >= 40:
+          sections['40-50th percentile'].append((percentile, value, name))
+      elif percentile >= 30:
+          sections['30-40th percentile'].append((percentile, value, name))
+      else:
+          sections['20-30th percentile'].append((percentile, value, name))
+
+  # Create traces for each section
+  traces = []
+  for section_name, section_data in sections.items():
+      percentiles, values, names = zip(*section_data)
+      trace = go.Scatter(
+          x=percentiles,
+          y=values,
+          mode='markers',
+          text=names,
+          marker=dict(
+              size=10,
+              opacity=0.7,
+              line=dict(width=1),
+          ),
+          name=section_name
+      )
+      traces.append(trace)
+
+  # Create layout for the plot
+  layout = go.Layout(
+      title='League-wide bWPM',
+      xaxis=dict(title='Percentile Range'),
+      yaxis=dict(title='bWPM'),
+      showlegend=True,
+  )
+
+  # Create figure and add traces and layout
+  fig = go.Figure(data=traces, layout=layout)
+
+  # Show the plot
+  st.plotly_chart(fig, use_container_width=True)
+
+def render_bWPM(player):
+   player_id = player["id"].tolist()[0]
+   
+   bWPM_data = pd.read_csv("pages/data/bWPM.csv")
+   with st.expander('Bayesian Weighted Plus-Minus', expanded=True):
+      st.markdown("**bWPM**")
+      if player_id in bWPM_data["PLAYER_ID"].tolist():
+        percentile, mean, hdi_lower, hdi_upper = compute_bWPM(player_id, bWPM_data)
+        st.code("Percentile: " + str(percentile.iloc[0]))
+        st.code("Raw Score: " + str(mean.iloc[0]))
+
+        out = {
+          "95% HDI Lower Bound": [hdi_lower.iloc[0]],
+          "Posterior Mean": [mean.iloc[0]],
+          "95% HDI Upper Bound": [hdi_upper.iloc[0]]
+        }
+
+        st.table(pd.DataFrame(out))
+
+
+      else:
+         st.text("bWPM only available for players in the top 200 minutes per game played in the 2023-24 season.")
+      
+      render_bWPM_box_plot(bWPM_data)
 
    
    

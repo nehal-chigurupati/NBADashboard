@@ -7,6 +7,7 @@ render_sidebar("My_Random_Stats")
 st.title("Bayesian Statistics")
 player = render_player_selection()
 render_b3P(player)
+render_bWPM(player)
 
 st.title("Kalman Filter Statistics")
 team_abbrev = render_kORTG_team_selection()
