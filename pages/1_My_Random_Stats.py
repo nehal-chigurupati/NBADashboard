@@ -19,11 +19,11 @@ st.title("Topological Range")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.header("Offensive Range")
+    st.header("Offensive Range (tORNG)")
     render_tORNG(team_abbrev)
 with col2:
-    st.header("Defensive Range")
+    st.header("Defensive Range (tDRNG)")
     render_tDRNG(team_abbrev)
 
-st.header("Net Range")
+st.header("Net Range (tNRNG)")
 render_tNRNG(team_abbrev)
