@@ -246,7 +246,8 @@ def render_b3P(player_df):
         
   
 def render_kORTG_team_selection():
-  team_name = st.selectbox(options=get_nba_teams().keys(), label="Select team")
+  default_ind = list(get_nba_teams().keys()).index("CLE")
+  team_name = st.selectbox(options=list(get_nba_teams().keys()), label="Select team", index=default_ind)
 
   return team_name
 
