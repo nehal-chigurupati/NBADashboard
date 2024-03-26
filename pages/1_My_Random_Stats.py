@@ -12,6 +12,7 @@ render_bWPM(player)
 
 st.title("Team Stats")
 team_abbrev = render_kORTG_team_selection()
+st.header("Kalman Offensive Rating (kORTG)")
 render_kORTG(team_abbrev)
 
 col1, col2 = st.columns(2)
