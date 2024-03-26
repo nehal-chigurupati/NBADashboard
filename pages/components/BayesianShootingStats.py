@@ -6,8 +6,9 @@ import arviz as az
 import time
 from retry import retry
 import streamlit as st
-from filterpy.kalman import KalmanFilter
+#from filterpy.kalman import KalmanFilter
 import plotly.graph_objs as go
+from scipy import stats
 
 
 from nba_api.stats.endpoints import playercareerstats, playergamelog, teamestimatedmetrics, boxscoreadvancedv3
@@ -108,7 +109,7 @@ def render_player_selection():
    player_name = st.selectbox(options=active_players["full_name"].tolist(), label="Select player", index=default_index)
 
    return active_players[active_players["full_name"] == player_name]
-
+"""
 @retry()
 @st.cache_data()
 def get_boxscore(game_id):
@@ -147,6 +148,7 @@ def get_matchup_ratings(team_A_name, team_A_abbrev, season="2023-24"):
 
 def linear_prediction(team_A_off_rtg, team_A_def_rtg, team_B_off_rtg, team_B_def_rtg, league_avg):
   return ((team_A_off_rtg)*(team_B_def_rtg)) / league_avg, ((team_A_def_rtg)*(team_B_off_rtg)) / league_avg
+
 
 @st.cache_data()
 def compute_kORTG_filterpy(team_full_name, team_abbrev):
@@ -191,6 +193,7 @@ def compute_kORTG_filterpy(team_full_name, team_abbrev):
       filtered_ratings.append(kf.x[0, 0])
 
   return filtered_ratings
+"""
 
 def get_nba_teams():
   nba_teams = {
@@ -246,40 +249,17 @@ def render_b3P(player_df):
         
   
 def render_kORTG_team_selection():
-  default_ind = list(get_nba_teams().keys()).index("CLE")
-  team_name = st.selectbox(options=list(get_nba_teams().keys()), label="Select team", index=default_ind)
+  options = [i for i in list(get_nba_teams().keys()) if i != "LAC"]
+  default_ind = options.index("CLE")
+  team_name = st.selectbox(options=options, label="Select team", index=default_ind)
 
   return team_name
 
-def render_kORTG(team_abbrev):
-  with st.expander("Kalman Offensive Rating", expanded=True):
-    st.markdown("**kORTG**")
-    try:
-      team_dict = get_nba_teams()
-      vals = compute_kORTG_filterpy(team_dict[team_abbrev], team_abbrev)
-      st.text("kORTG:")
-      st.code(vals[-1])
-
-
-      fig = go.Figure()
-      fig.add_trace(go.Scatter(x=np.arange(len(vals)), y=vals, mode='lines+markers', name='kORTG'))
-      fig.update_layout(
-        title="kORTG Trajectory",
-        xaxis_title="Game Number",
-        yaxis_title="Season Offensive Rating"
-      )
-      st.plotly_chart(fig, use_container_width=True)
-    except:
-           st.code("Error in computation. Reporting bug. ")
-  
-
-def render_bWPM_box_plot(bWPM_df):
-  names = bWPM_df["PLAYER_NAME"].tolist()
-  values = bWPM_df["MEAN"].tolist()
-  percentiles = bWPM_df["PERCENTILE"].tolist()
+def render_kORTG_leaguewide_plot(values, names):
+  percentiles = [stats.percentileofscore(values, value) for value in values]
   sorted_data = sorted(zip(percentiles, names, values), reverse=True)
+  sorted_data = sorted_data[:-1]
 
-  # Separate data into sections based on percentiles
   sections = {
       '90-100th percentile': [],
       '80-90th percentile': [],
@@ -309,7 +289,6 @@ def render_bWPM_box_plot(bWPM_df):
       else:
           sections['20-30th percentile'].append((percentile, value, name))
 
-  # Create traces for each section
   traces = []
   for section_name, section_data in sections.items():
       percentiles, values, names = zip(*section_data)
@@ -327,7 +306,98 @@ def render_bWPM_box_plot(bWPM_df):
       )
       traces.append(trace)
 
-  # Create layout for the plot
+  layout = go.Layout(
+      title='League-wide kORTG',
+      xaxis=dict(title='Percentile Range'),
+      yaxis=dict(title='kORTG'),
+      showlegend=True,
+  )
+
+  fig = go.Figure(data=traces, layout=layout)
+
+  st.plotly_chart(fig, use_container_width=True)
+   
+
+def render_kORTG(team_abbrev):
+  with st.expander("Kalman Offensive Rating", expanded=True):
+    kORTG_df = pd.read_csv("pages/data/kORTG.csv")
+    st.markdown("**kORTG**")
+    try:
+      team_dict = get_nba_teams()
+      vals = kORTG_df[team_abbrev].dropna().tolist()
+      st.text("kORTG:")
+      st.code(vals[-1])
+
+
+      fig = go.Figure()
+      fig.add_trace(go.Scatter(x=np.arange(len(vals)), y=vals, mode='lines+markers', name='kORTG'))
+      fig.update_layout(
+        title=team_abbrev + "'s " + "kORTG Trajectory",
+        xaxis_title="Game Number",
+        yaxis_title="Season Offensive Rating"
+      )
+      st.plotly_chart(fig, use_container_width=True)
+
+      teams = list(kORTG_df.columns)
+      kortg_vals = [[i for i in kORTG_df[i].dropna().tolist()][-1] for i in teams]
+      render_kORTG_leaguewide_plot(kortg_vals, teams)
+
+    except:
+           st.code("Error in computation. Reporting bug. ")
+  
+
+def render_bWPM_box_plot(bWPM_df):
+  names = bWPM_df["PLAYER_NAME"].tolist()
+  values = bWPM_df["MEAN"].tolist()
+  percentiles = bWPM_df["PERCENTILE"].tolist()
+  sorted_data = sorted(zip(percentiles, names, values), reverse=True)
+
+  sections = {
+      '90-100th percentile': [],
+      '80-90th percentile': [],
+      '70-80th percentile': [],
+      '60-70th percentile': [],
+      '50-60th percentile': [],
+      '40-50th percentile': [],
+      '30-40th percentile': [],
+      '20-30th percentile': []
+  }
+
+  for percentile, name, value in sorted_data:
+      if percentile >= 90:
+          sections['90-100th percentile'].append((percentile, value, name))
+      elif percentile >= 80:
+          sections['80-90th percentile'].append((percentile, value, name))
+      elif percentile >= 70:
+          sections['70-80th percentile'].append((percentile, value, name))
+      elif percentile >= 60:
+          sections['60-70th percentile'].append((percentile, value, name))
+      elif percentile >= 50:
+          sections['50-60th percentile'].append((percentile, value, name))
+      elif percentile >= 40:
+          sections['40-50th percentile'].append((percentile, value, name))
+      elif percentile >= 30:
+          sections['30-40th percentile'].append((percentile, value, name))
+      else:
+          sections['20-30th percentile'].append((percentile, value, name))
+
+  traces = []
+  for section_name, section_data in sections.items():
+      percentiles, values, names = zip(*section_data)
+      trace = go.Scatter(
+          x=percentiles,
+          y=values,
+          mode='markers',
+          text=names,
+          marker=dict(
+              size=10,
+              opacity=0.7,
+              line=dict(width=1),
+          ),
+          name=section_name
+      )
+      traces.append(trace)
+
   layout = go.Layout(
       title='League-wide bWPM',
       xaxis=dict(title='Percentile Range'),
@@ -335,10 +405,8 @@ def render_bWPM_box_plot(bWPM_df):
       showlegend=True,
   )
 
-  # Create figure and add traces and layout
   fig = go.Figure(data=traces, layout=layout)
 
-  # Show the plot
   st.plotly_chart(fig, use_container_width=True)
 
 def render_bWPM(player):
