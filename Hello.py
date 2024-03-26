@@ -272,6 +272,7 @@ with st.expander(label="How important is bench production to regular season and 
 st.header("Page descriptions")
 msg = """
 Current pages include: \n
+[**My Random Stats**](My_Random_Stats): This page contains an assortment of stats I've developed in the projects above.\n
 [**Roster Construction Model**](Roster_Construction_Model): This page implements an optimization model I developed that allows the user to input 
 members of a roster and available players, and determines the optimal roster construction for maximizing expected wins while adhering to a salary budget
 and playing time constraints.\n
