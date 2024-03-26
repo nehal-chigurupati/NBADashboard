@@ -12,7 +12,6 @@ scikit-learn
 ultralytics
 tqdm
 jsonlines
-scipy
 moviepy
 tensorflow[and-cuda]
 stqdm
@@ -23,4 +22,3 @@ flask
 retry
 pymc
 arviz
-filterpy
