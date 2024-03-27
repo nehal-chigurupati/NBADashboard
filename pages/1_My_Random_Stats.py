@@ -10,8 +10,11 @@ tab1, tab2 = st.tabs(["Player Stats (b3P%, bWPM)", "Team Stats (kORTG, tRNG)"])
 with tab1:
     st.title("Player Stats")
     player = render_player_selection()
-    render_b3P(player)
-    render_bWPM(player)
+    col1, col2 = st.columns(2)
+    with col1:
+        render_b3P(player)
+    with col2:
+        render_bWPM(player)
 
 with tab2:
     st.title("Team Stats")
@@ -19,12 +22,12 @@ with tab2:
     st.header("Kalman Offensive Rating (kORTG)")
     render_kORTG(team_abbrev)
 
-    col1, col2 = st.columns(2)
+    col3, col4 = st.columns(2)
 
-    with col1:
+    with col3:
         st.header("Topological Offensive Range (tORNG)")
         render_tORNG(team_abbrev)
-    with col2:
+    with col4:
         st.header("Topological Defensive Range (tDRNG)")
         render_tDRNG(team_abbrev)
 

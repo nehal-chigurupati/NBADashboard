@@ -50,7 +50,7 @@ def convert_to_binary_array(attempts, makes):
         arr.extend([1] * make)
         arr.extend([0] * (attempt - make))
     return arr
-
+"""
 @st.cache_data
 def compute_b3P(player_id):
   shooting_attempts, shooting_successes, perc = get_player_game_percentages(player_id)
@@ -72,7 +72,7 @@ def compute_b3P(player_id):
   #return mean_shooting_skill, hdi_lower, hdi_upper
 
   return trace, mean, hdi_lower, hdi_upper
-
+"""
 @st.cache_data()
 def compute_bWPM(player_id, bWPM_df):
    player_data = bWPM_df[bWPM_df["PLAYER_ID"] == player_id]
@@ -231,12 +231,78 @@ def get_nba_teams():
 
   return nba_teams
 
+def render_b3P_leaguewide_plot(values, names):
+  percentiles = [stats.percentileofscore(values, value) for value in values]
+  sorted_data = sorted(zip(percentiles, names, values), reverse=True)
+  sorted_data = sorted_data[:-1]
+
+  sections = {
+      '90-100th percentile': [],
+      '80-90th percentile': [],
+      '70-80th percentile': [],
+      '60-70th percentile': [],
+      '50-60th percentile': [],
+      '40-50th percentile': [],
+      '30-40th percentile': [],
+      '20-30th percentile': []
+  }
+
+  for percentile, name, value in sorted_data:
+      if percentile >= 90:
+          sections['90-100th percentile'].append((percentile, value, name))
+      elif percentile >= 80:
+          sections['80-90th percentile'].append((percentile, value, name))
+      elif percentile >= 70:
+          sections['70-80th percentile'].append((percentile, value, name))
+      elif percentile >= 60:
+          sections['60-70th percentile'].append((percentile, value, name))
+      elif percentile >= 50:
+          sections['50-60th percentile'].append((percentile, value, name))
+      elif percentile >= 40:
+          sections['40-50th percentile'].append((percentile, value, name))
+      elif percentile >= 30:
+          sections['30-40th percentile'].append((percentile, value, name))
+      else:
+          sections['20-30th percentile'].append((percentile, value, name))
+
+  traces = []
+  for section_name, section_data in sections.items():
+      percentiles, values, names = zip(*section_data)
+      trace = go.Scatter(
+          x=percentiles,
+          y=values,
+          mode='markers',
+          text=names,
+          marker=dict(
+              size=10,
+              opacity=0.7,
+              line=dict(width=1),
+          ),
+          name=section_name
+      )
+      traces.append(trace)
+
+  layout = go.Layout(
+      title='League-wide b3P%'
+      xaxis=dict(title='Percentile Range'),
+      yaxis=dict(title="b3P%"),
+      showlegend=True,
+  )
+
+  fig = go.Figure(data=traces, layout=layout)
+
+  st.plotly_chart(fig, use_container_width=True)
+
 def render_b3P(player_df):
     player_id = player_df["id"].tolist()[0]
     with st.expander("Bayesian Three Point Percent", expanded=True):
         st.markdown("**b3P%**")
+        b3P_df = pd.read_csv("pages/data/b3P.csv")
+
         try:
-            trace, mean, lower, upper = compute_b3P(player_id)
+            #trace, mean, lower, upper = compute_b3P(player_id)
+            player_row = b3P_df[b3P_df["player_id"] == player_id]
+            mean, lower, upper = player_row["mean"].iloc[0], player_row["lower"].iloc[0], player_row["upper"].iloc[0]
             out = {
                 "95% HDI lower bound": [lower],
                 "Mean": [mean],
@@ -245,7 +311,9 @@ def render_b3P(player_df):
             st.table(pd.DataFrame(out))
 
         except:
-           st.code("Insufficient 3 point shot attempts.")
+          st.text("Precomputed value unavailable. This could be because the player does not take sufficiently many 3P shots, or because this stat is only available for players in the top 200 minutes played per game in the 2023-24 season. ")
+        
+        render_b3P_leaguewide_plot(b3P_df["mean"].tolist(), b3P_df["player_name"].tolist())
         
   
 def render_kORTG_team_selection():
