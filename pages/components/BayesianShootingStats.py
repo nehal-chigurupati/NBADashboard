@@ -9,7 +9,7 @@ import streamlit as st
 #from filterpy.kalman import KalmanFilter
 import plotly.graph_objs as go
 from scipy import stats
-
+from pygwalker.api.streamlit import StreamlitRenderer
 
 from nba_api.stats.endpoints import playercareerstats, playergamelog, teamestimatedmetrics, boxscoreadvancedv3
 from nba_api.stats.static import players
@@ -195,6 +195,12 @@ def compute_kORTG_filterpy(team_full_name, team_abbrev):
   return filtered_ratings
 """
 
+@st.cache_resource
+def get_pyg_renderer(fname) -> "StreamlitRenderer":
+    df = pd.read_csv(fname)
+    # If you want to use feature of saving chart config, set `spec_io_mode="rw"`
+    return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw")
+
 def get_nba_teams():
   nba_teams = {
     "ATL": "Atlanta Hawks",
@@ -292,6 +298,10 @@ def render_b3P(player_df):
     player_id = player_df["id"].tolist()[0]
     with st.expander("Bayesian Three Point Percent", expanded=True):
         st.markdown("**b3P%**")
+        render_explore_b3P = st.toggle("Explore Data", value=False)
+        if render_explore_b3P:
+          renderer = get_pyg_renderer("pages/data/b3P.csv")
+          renderer.render_explore()
         b3P_df = pd.read_csv("pages/data/b3P.csv")
 
         try:
@@ -393,6 +403,10 @@ def render_kORTG_leaguewide_plot(values, names):
 def render_kORTG(team_abbrev):
   with st.expander("Kalman Offensive Rating", expanded=True):
     kORTG_df = pd.read_csv("pages/data/kORTG.csv")
+    render_explore_kORTG = st.toggle("Explore Data", value=False, key=2)
+    if render_explore_kORTG:
+      renderer = get_pyg_renderer("pages/data/kORTG.csv")
+      renderer.render_explore()
     st.markdown("**kORTG**")
     try:
       team_dict = get_nba_teams()
@@ -486,6 +500,10 @@ def render_bWPM(player):
    
    bWPM_data = pd.read_csv("pages/data/bWPM.csv")
    with st.expander('Bayesian Weighted Plus-Minus', expanded=True):
+      render_explore_bWPM = st.toggle("Explore Data", value=False, key=3)
+      if render_explore_bWPM:
+        renderer = get_pyg_renderer("pages/data/bWPM.csv")
+        renderer.render_explore()
       st.markdown("**bWPM**")
       if player_id in bWPM_data["PLAYER_ID"].tolist():
         percentile, mean, hdi_lower, hdi_upper = compute_bWPM(player_id, bWPM_data)
@@ -590,7 +608,7 @@ def render_tDRNG(team_abbrev):
     values = tRNG_df["DEF_MEAN_H0_DEATH"].tolist()
     team_abbrevs = tRNG_df["abbreviation_x"].tolist()
     percentiles = [stats.percentileofscore(values, value) for value in values]
-    st.markdown("**tORNG**")
+    st.markdown("**tDRNG**")
     try:
       team_dict = get_nba_teams()
       off_val = tRNG_df[tRNG_df["abbreviation_x"] == team_abbrev]["DEF_MEAN_H0_DEATH"]

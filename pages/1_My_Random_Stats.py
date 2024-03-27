@@ -19,6 +19,11 @@ with tab2:
     st.header("Kalman Offensive Rating (kORTG)")
     render_kORTG(team_abbrev)
 
+    render_explore_tRNG = st.toggle("Explore Topological Range Data", value=False, key=6)
+    if render_explore_tRNG:
+      renderer = get_pyg_renderer("pages/data/PERSISTENCE_MEANS.csv")
+      renderer.render_explore()
+
     col3, col4 = st.columns(2)
 
     with col3:

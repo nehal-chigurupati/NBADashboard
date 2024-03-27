@@ -22,3 +22,4 @@ flask
 retry
 pymc
 arviz
+pygwalker
