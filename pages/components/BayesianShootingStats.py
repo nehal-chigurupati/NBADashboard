@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-import pymc as pm
+#import pymc as pm
 from stqdm import stqdm
-import arviz as az
+#import arviz as az
 import time
 from retry import retry
 import streamlit as st
@@ -293,12 +293,13 @@ def render_b3P(player_df):
     with st.expander("Bayesian Three Point Percent", expanded=True):
         st.markdown("**b3P%**")
         b3P_df = pd.read_csv("pages/data/b3P.csv")
-        player_row = b3P_df[b3P_df["player_id"] == player_id]
-        mean, lower, upper = player_row["mean"].iloc[0], player_row["hdi_lower"].iloc[0], player_row["hdi_upper"].iloc[0]
+
         try:
             #trace, mean, lower, upper = compute_b3P(player_id)
             player_row = b3P_df[b3P_df["player_id"] == player_id]
-            mean, lower, upper = player_row["mean"].iloc[0], player_row["hdi_lower"].iloc[0], player_row["hdi_upper"].iloc[0]
+            mean, lower, upper, percentile = player_row["mean"].iloc[0], player_row["hdi_lower"].iloc[0], player_row["hdi_upper"].iloc[0], player_row["percentile"].iloc[0]
+            st.code("Percentile: " + str(percentile))
+            st.code("Raw b3P: " + str(mean * 100) + "%")
             out = {
                 "95% HDI lower bound": [lower],
                 "Mean": [mean],
