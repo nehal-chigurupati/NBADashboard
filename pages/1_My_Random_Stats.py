@@ -10,11 +10,8 @@ tab1, tab2 = st.tabs(["Player Stats (b3P%, bWPM)", "Team Stats (kORTG, tRNG)"])
 with tab1:
     st.title("Player Stats")
     player = render_player_selection()
-    col1, col2 = st.columns(2)
-    with col1:
-        render_b3P(player)
-    with col2:
-        render_bWPM(player)
+    render_b3P(player)
+    render_bWPM(player)
 
 with tab2:
     st.title("Team Stats")

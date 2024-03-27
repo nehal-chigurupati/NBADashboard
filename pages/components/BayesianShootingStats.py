@@ -282,12 +282,7 @@ def render_b3P_leaguewide_plot(values, names):
       )
       traces.append(trace)
 
-  layout = go.Layout(
-      title='League-wide b3P%'
-      xaxis=dict(title='Percentile Range'),
-      yaxis=dict(title="b3P%"),
-      showlegend=True,
-  )
+  layout = go.Layout(title='League-wide b3P%', xaxis=dict(title='Percentile Range'), yaxis=dict(title="b3P%"), showlegend=True)
 
   fig = go.Figure(data=traces, layout=layout)
 
@@ -298,11 +293,12 @@ def render_b3P(player_df):
     with st.expander("Bayesian Three Point Percent", expanded=True):
         st.markdown("**b3P%**")
         b3P_df = pd.read_csv("pages/data/b3P.csv")
-
+        player_row = b3P_df[b3P_df["player_id"] == player_id]
+        mean, lower, upper = player_row["mean"].iloc[0], player_row["hdi_lower"].iloc[0], player_row["hdi_upper"].iloc[0]
         try:
             #trace, mean, lower, upper = compute_b3P(player_id)
             player_row = b3P_df[b3P_df["player_id"] == player_id]
-            mean, lower, upper = player_row["mean"].iloc[0], player_row["lower"].iloc[0], player_row["upper"].iloc[0]
+            mean, lower, upper = player_row["mean"].iloc[0], player_row["hdi_lower"].iloc[0], player_row["hdi_upper"].iloc[0]
             out = {
                 "95% HDI lower bound": [lower],
                 "Mean": [mean],
