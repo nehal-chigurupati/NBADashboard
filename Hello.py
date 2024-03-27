@@ -168,6 +168,7 @@ much better than teams that are designed to place all their chips on one side of
 with st.expander(label="Reproducing NBA tracking data with computer vision", expanded=False):
     st.subheader("Reproducing NBA tracking data with computer vision")
     st.markdown("[Link](https://github.com/nehal-chigurupati/CourtVision/blob/main/README.pdf)")
+    st.markdown("[Test it out here](Reproduced_Tracking_Data)")
 
     summary = """
     **This project is in progress**.
