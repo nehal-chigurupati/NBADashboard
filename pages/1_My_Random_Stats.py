@@ -10,12 +10,14 @@ tab1, tab2 = st.tabs(["Player Stats (b3P%, bWPM)", "Team Stats (kORTG, tRNG)"])
 with tab1:
     st.title("Player Stats")
     player = render_player_selection()
+    st.title(player["full_name"].iloc[0])
     render_b3P(player)
     render_bWPM(player)
 
 with tab2:
     st.title("Team Stats")
     team_abbrev = render_kORTG_team_selection()
+    st.title(team_abbrev)
     st.header("Kalman Offensive Rating (kORTG)")
     render_kORTG(team_abbrev)
 
