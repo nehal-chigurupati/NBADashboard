@@ -144,10 +144,9 @@ def render_sidebar(page_name):
     st.toast("Please excuse the slow speeds, Streamlit's community cloud heavily limits compute.\n I'm working on some optimizations.", icon="⏱️")
     with st.sidebar:
         st.subheader("Games Today")
+        initial_visit = True
+        refresh = st.button("Refresh")
         try:
-            initial_visit = True
-            refresh = st.button("Refresh")
-        
             if refresh or initial_visit:
                 render_todays_games()
                 if initial_visit:
