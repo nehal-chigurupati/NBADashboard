@@ -23,3 +23,4 @@ retry
 pymc
 arviz
 pygwalker
+pypokerengine
