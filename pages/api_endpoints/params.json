@@ -1,0 +1,8 @@
+{
+    "LeagueID": ["00"],
+    "PerMode": ["Totals", "PerGame", "Per36"],
+    "SeasonType": ["Regular Season", "Playoffs"],
+    "PlayerOrTeam": ["Player", "Team"],
+    "EndPeriod": ["0", "1", "2", "3", "4"],
+    "EndRange": ["None"]
+}
