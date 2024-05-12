@@ -82,9 +82,9 @@ with st.expander(label="Determining three point percentages and plus-minus stati
     the effects of temporary slumps. 
     \n
     \n
-    **Second**, for a given player, I constructed a 3 point percentage that is resilient to low volume, while also 
-    adjusting for the fact that some players are guarded much closer from three point range than others. The 3 point percentage is a convex linear
-    combination of two different estimates. The first estimate is a Bayesian multihierarchical model in which the likelihood factors in shot distance.
+    **Second**, for a given player, I constructed a 3 point percentage that is resilient to low volume, 
+    adjusted for the fact that some players are guarded much closer from three point range than others. The 3 point percentage is a convex linear
+    combination of two different estimates. The first estimate is derived from a Bayesian multihierarchical model in which the likelihood factors in shot distance.
     Intuitively, it represents an estimate of 3 point percentage if the given player was guarded at a league-average distance. The second estimate 
     is a simple 3 point percentage adjusted for shot volume via DARKO's padding method. The final estimate is created by taking a convex linear
     combination of the two estimates, where the coefficients are determined by the z-score of the player's shot volume relative to the league. 
