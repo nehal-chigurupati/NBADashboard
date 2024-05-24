@@ -13,6 +13,47 @@ st.markdown(msg)
 
 
 st.header("My Projects")
+with st.expander(label="Determining three point percentages and plus-minus statistics through Bayesian inference", expanded=False):
+    st.subheader("Determining three point percentages and plus-minus statistics through Bayesian inference")
+    st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
+    st.markdown("[View Stats Here](My_Random_Stats)")
+
+    summary = """
+    In this project, I used Bayesian inference to construct three different player metrics.\n\n
+
+    **First**, for a given player, I measured their three point percentage through Bayesian inference (using PyMC), 
+    with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
+    and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
+    \n
+    \n
+    Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
+    more accurately genuine improvements to 3-point shooting skill, while also suppressing
+    the effects of temporary slumps. 
+    \n
+    \n
+    **Second**, for a given player, I constructed a 3 point percentage that is resilient to low volume, 
+    adjusted for the fact that some players are guarded much closer from three point range than others. The 3 point percentage is a convex linear
+    combination of two different estimates. The first estimate is derived from a Bayesian multihierarchical model in which the likelihood factors in shot distance.
+    Intuitively, it represents an estimate of 3 point percentage if the given player was guarded at a league-average distance. The second estimate 
+    is a simple 3 point percentage adjusted for shot volume via DARKO's padding method. The final estimate is created by taking a convex linear
+    combination of the two estimates, where the coefficients are determined by the z-score of the player's shot volume relative to the league. 
+    I refer to this metric as distance-volume robust 3 point percentage, abbreviated dvr3P%. 
+    \n
+    \n
+    Informally, dvr3P% can be thought of as an estimation of player three point percentage while guarded at a league-average distance. 
+    For players with low volume, dvr3P% biases estimates towards league-average 3 point percentage. 
+    \n
+    \n
+    **Third**, for a given player in the top 100 minutes played per game in the 2023-24 season, I took their plus-minus  
+    in every career game (adjusted for the final game margin), weighted using an exponential function (to factor in every game a player has played in while also accounting for recent improvements), and inferred a plus-minus stat, referred to as Bayesian Weighted Plus-Minus (bWPM). For the prior, I used a uniform beta distribution, and for the likelihood, I used a normal
+    distribution. I then calculated player bWPM as a percentile, creating a "relative" measure of player impact on the court.
+    \n
+    \b
+    Informally, bWPM is a measurement of player plus-minus, adjusted both for the other players on the floor and for genuine improvements in player skill.
+ 
+
+    """
+    st.write(summary)
 with st.expander(label="Modeling roster construction as an optimization problem", expanded=False):
     st.subheader("Modeling roster construction as an optimization problem")
     st.markdown("[Link (Test out model)](Roster_Construction_Model)")
@@ -64,40 +105,6 @@ with st.expander(label="Predicting the length of three-point slumps", expanded=F
     st.markdown(summary)
 
 
-with st.expander(label="Determining three point percentages and plus-minus statistics through Bayesian inference", expanded=False):
-    st.subheader("Determining three point percentages and plus-minus statistics through Bayesian inference")
-    st.markdown("[Code](https://github.com/nehal-chigurupati/Bayesian3PTPercentage)")
-    st.markdown("[View Stats Here](My_Random_Stats)")
-
-    summary = """
-    In this project, I used Bayesian inference to construct three different player metrics.\n\n
-
-    **First**, for a given player, I measured their three point percentage through Bayesian inference (using PyMC), 
-    with an observation dataset consisting of makes/misses, a prior modeled as a uniform beta distribution,
-    and a Bernoulli distribution as the likelihood. With every game the player participates in, the stat updates.
-    \n
-    \n
-    Informally, this statistic, which I refer to as Bayesian 3PT Percentage (b3PT%) should represent
-    more accurately genuine improvements to 3-point shooting skill, while also suppressing
-    the effects of temporary slumps. 
-    \n
-    \n
-    **Second**, for a given player, I constructed a 3 point percentage that is resilient to low volume, 
-    adjusted for the fact that some players are guarded much closer from three point range than others. The 3 point percentage is a convex linear
-    combination of two different estimates. The first estimate is derived from a Bayesian multihierarchical model in which the likelihood factors in shot distance.
-    Intuitively, it represents an estimate of 3 point percentage if the given player was guarded at a league-average distance. The second estimate 
-    is a simple 3 point percentage adjusted for shot volume via DARKO's padding method. The final estimate is created by taking a convex linear
-    combination of the two estimates, where the coefficients are determined by the z-score of the player's shot volume relative to the league. 
-    I refer to this metric as distance-volume robust 3 point percentage, abbreviated dvr3P%. 
-    \n
-    \n
-    **Third**, for a given player in the top 100 minutes played per game in the 2023-24 season, I took their plus-minus  
-    in every career game (adjusted for the final game margin), weighted using an exponential function (to factor in every game a player has played in while also accounting for recent improvements), and inferred a plus-minus stat, referred to as Bayesian Weighted Plus-Minus (bWPM). For the prior, I used a uniform beta distribution, and for the likelihood, I used a normal
-    distribution. I then calculated player bWPM as a percentile, creating a "relative" measure of player impact on the court.
- 
-
-    """
-    st.write(summary)
 
 with st.expander(label="Modeling the decision to pull players in foul trouble", expanded=False):
     st.subheader("Modeling the decision to pull players in foul trouble")
