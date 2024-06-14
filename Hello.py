@@ -7,7 +7,8 @@ render_sidebar("Hello")
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-This streamlit app is a work in progress, so there may be bugs. For page descriptions and my projects, see below. To navigate to pages, see the sidebar.
+My name is Nehal, I'm a data scientist at Utah's front office. I built this streamlit app to display some of my work during college.
+For page descriptions and my projects, see below. To navigate to pages, see the sidebar.
 """
 st.markdown(msg)
 
@@ -49,7 +50,7 @@ with st.expander(label="Determining three point percentages and plus-minus stati
     distribution. I then calculated player bWPM as a percentile, creating a "relative" measure of player impact on the court.
     \n
     \b
-    Informally, bWPM is a measurement of player plus-minus, adjusted both for the other players on the floor and for genuine improvements in player skill.
+    Informally, bWPM is a measurement of player plus-minus, adjusted both for the other players on the floor and for genuine improvements in player abilities.
  
 
     """
