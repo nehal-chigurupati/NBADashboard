@@ -4,7 +4,7 @@ from pages.components.BayesianShootingStats import *
 st.set_page_config(layout="wide")
 render_sidebar("My_Random_Stats")
 
-st.text("For b3P% and bWPM, see the Player Stats tab. For kORTG and topological range, see the Team Stats tab.")
+st.text("For b3P% and bWPM, see the Player Stats tab. For kORTG and topological range, see Team Stats.")
 tab1, tab2 = st.tabs(["Player Stats (b3P%, dvr3P%, bWPM, )", "Team Stats (kORTG, tRNG)"])
 
 with tab1:

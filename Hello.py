@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
