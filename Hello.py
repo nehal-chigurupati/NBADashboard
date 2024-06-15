@@ -1,6 +1,5 @@
 import streamlit as st
 import numpy as np
-import pandas as pd
 from pages.components.sidebar import *
 
 st.set_page_config(layout="wide")
@@ -9,7 +8,7 @@ render_sidebar("Hello")
 st.header("Welcome to my dashboard for basketball-related data.")
 
 msg = """
-My name is Nehal, I'm a data scientist at Utah's front office. I built this streamlit app to display some of my work during college. Feel free to reach
+My name is Nehal, I'm a data scientist at Utah's front office. I built this streamlit app to display some projects I worked on during college at UVA. Feel free to reach
 out to me at nehal.chigurupati@gmail.com with any questions.
 """
 st.markdown(msg)
